@@ -811,3 +811,83 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
     opacity: 0.04;
   }
 }
+
+/* ── PACKAGES GRID FIX ───────────────────────────────── */
+.pkg-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 22px !important;
+  align-items: stretch !important;
+}
+@media (max-width: 580px) {
+  .pkg-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── NAV FIX — collapse earlier, fix mobile overlay ─── */
+@media (max-width: 1160px) {
+  .nav-toggle { display: block !important; }
+  .nav-cta { display: none !important; }
+  .nav-links {
+    position: fixed !important;
+    inset: 0 !important;
+    background: var(--ivory) !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 28px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    z-index: 105 !important;
+    transition: opacity 0.3s !important;
+    pointer-events: none !important;
+  }
+  .nav-links.open {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: all !important;
+  }
+  .nav-links a.nav-item {
+    font-size: 15px !important;
+    letter-spacing: 0.22em !important;
+  }
+  .has-dropdown .dropdown {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+    min-width: 0 !important;
+    padding: 6px 0 !important;
+    text-align: center !important;
+    display: none !important;
+  }
+  .has-dropdown.open-sub .dropdown { display: block !important; }
+  .dropdown a { padding: 8px 0 !important; font-size: 12px !important; }
+  .dropdown a:hover { background: transparent !important; padding-left: 0 !important; }
+  .nav-links .mobile-cta { display: block !important; margin-top: 10px !important; }
+}
+@media (min-width: 1161px) {
+  .nav-toggle { display: none !important; }
+  .nav-cta { display: block !important; }
+  .nav-links .mobile-cta { display: none !important; }
+  .nav-links {
+    position: static !important;
+    flex-direction: row !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: transparent !important;
+    pointer-events: all !important;
+  }
+}
+
+/* ── MOBILE M WATERMARK FIX ─────────────────────────── */
+@media (max-width: 768px) {
+  .page-hero .m-watermark,
+  .cta-band .m-watermark,
+  .project-featured .m-watermark,
+  .hero-arc {
+    display: none !important;
+  }
+}
