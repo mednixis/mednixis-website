@@ -11,9 +11,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <style>
-.pkg-grid { grid-template-columns: repeat(4, 1fr); }
-@media (max-width: 1100px) { .pkg-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px)  { .pkg-grid { grid-template-columns: 1fr; } }
+.pkg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+@media (min-width: 1200px) {
+  .pkg-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 580px) {
+  .pkg-grid { grid-template-columns: 1fr; }
+}
 </style>
 <link rel="canonical" href="https://mednixis.com/packages.html">
 <meta property="og:type" content="website">
@@ -81,7 +90,7 @@
 
 <section class="section" style="padding-top:20px">
   <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;align-items:stretch" class="pkg-grid">
+    <div class="pkg-grid">
       <div class="package-card reveal "><span class="pkg-tier">Tier I</span><span class="pkg-name">Core</span><p class="best-for"><strong>Best for:</strong> Doctors, new clinic founders, and small healthcare practices that need clarity, positioning, and launch direction.</p><ul><li>Strategic discovery session</li><li>Brand and business audit</li><li>Basic market review</li><li>Positioning direction</li><li>Service structure recommendations</li><li>Website structure direction</li><li>Initial content direction</li><li>Growth roadmap</li></ul><a class="btn btn-primary" href="contact.html">Request Core Assessment</a></div>
       <div class="package-card reveal d1"><span class="pkg-tier">Tier II</span><span class="pkg-name">Elevate</span><p class="best-for"><strong>Best for:</strong> Clinics and medical centers that already operate but need stronger branding, clearer patient communication, and structured growth.</p><ul><li>Full brand strategy</li><li>Patient journey review</li><li>Competitor analysis</li><li>Content creation direction</li><li>Website and social media structure</li><li>Operational improvement recommendations</li><li>Monthly growth planning</li><li>Reporting framework</li></ul><a class="btn btn-primary" href="contact.html">Request Elevate Proposal</a></div>
       <div class="package-card featured reveal d2"><span class="pkg-tier">Tier III</span><span class="pkg-name">Signature</span><p class="best-for"><strong>Best for:</strong> Premium clinics, specialty centers, dental centers, and healthcare brands seeking full transformation.</p><ul><li>Brand strategy and identity system</li><li>Healthcare management review</li><li>Research and competitor analysis</li><li>Patient experience design</li><li>Website structure and copy direction</li><li>Content system</li><li>Growth workflow design</li><li>Internal KPI structure</li><li>Monthly strategic support</li></ul><a class="btn btn-copper" href="contact.html">Request Signature Proposal</a></div>
