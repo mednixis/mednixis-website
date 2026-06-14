@@ -751,3 +751,63 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
 }
 .skip-link:focus { left: 0; }
 :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+
+/* ── PACKAGES — responsive fix ───────────────────────── */
+.pkg-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 22px;
+  align-items: stretch;
+}
+@media (min-width: 1200px) {
+  .pkg-grid { grid-template-columns: repeat(4, 1fr) !important; }
+}
+@media (max-width: 580px) {
+  .pkg-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── NAV — prevent overlap on mid-size screens ───────── */
+@media (min-width: 961px) and (max-width: 1140px) {
+  .nav-links {
+    gap: 14px;
+  }
+  .nav-links a.nav-item {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+  .nav-cta .btn {
+    padding: 11px 16px;
+    font-size: 9.5px;
+  }
+  .logo-word {
+    font-size: 17px;
+  }
+}
+
+/* ── M WATERMARK — contain on mobile ─────────────────── */
+.page-hero .m-watermark,
+.cta-band .m-watermark,
+.project-featured .m-watermark {
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  .page-hero .m-watermark {
+    width: clamp(140px, 48vw, 240px);
+    right: -5%;
+    bottom: -10%;
+    opacity: 0.035;
+  }
+  .cta-band .m-watermark {
+    width: clamp(140px, 48vw, 220px);
+    opacity: 0.05;
+  }
+  .project-featured .m-watermark {
+    width: 180px;
+    opacity: 0.04;
+  }
+  .hero-arc {
+    width: 80%;
+    right: -20%;
+    opacity: 0.04;
+  }
+}
