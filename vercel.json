@@ -1,7 +1,27 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "version": 2,
+  "builds": [
+    { "src": "**/*.html", "use": "@vercel/static" },
+    { "src": "css/**", "use": "@vercel/static" },
+    { "src": "js/**", "use": "@vercel/static" },
+    { "src": "*.svg", "use": "@vercel/static" },
+    { "src": "*.xml", "use": "@vercel/static" },
+    { "src": "*.txt", "use": "@vercel/static" },
+    { "src": "*.json", "use": "@vercel/static" }
+  ],
   "routes": [
-    { "src": "/(.*)", "dest": "/$1" }
+    { "src": "/about", "dest": "/about.html" },
+    { "src": "/services", "dest": "/services.html" },
+    { "src": "/healthcare-management", "dest": "/healthcare-management.html" },
+    { "src": "/branding-marketing", "dest": "/branding-marketing.html" },
+    { "src": "/research-strategy", "dest": "/research-strategy.html" },
+    { "src": "/growth-digital-systems", "dest": "/growth-digital-systems.html" },
+    { "src": "/packages", "dest": "/packages.html" },
+    { "src": "/strategic-projects", "dest": "/strategic-projects.html" },
+    { "src": "/insights", "dest": "/insights.html" },
+    { "src": "/contact", "dest": "/contact.html" },
+    { "src": "/privacy", "dest": "/privacy.html" },
+    { "src": "/(.*)\\.html", "dest": "/$1.html" },
+    { "src": "/(.*)", "dest": "/$1.html" }
   ]
 }
