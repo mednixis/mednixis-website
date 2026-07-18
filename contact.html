@@ -257,5 +257,17 @@ src="https://www.facebook.com/tr?id=1976979802943674&ev=PageView&noscript=1"
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script>
+/* Fire Meta Lead event once per confirmed form submission (?sent=1) */
+(function () {
+  try {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get("sent") === "1" && !sessionStorage.getItem("mdx_lead_fired")) {
+      if (typeof fbq === "function") { fbq("track", "Lead"); }
+      sessionStorage.setItem("mdx_lead_fired", "1");
+    }
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
