@@ -191,21 +191,22 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
 }
 
 /* Logo — renders the M monogram as inline SVG */
-.logo { display: flex; align-items: center; gap: 14px; color: var(--navy); }
+.logo { display: flex; align-items: center; gap: 14px; color: var(--navy); flex-shrink: 0; }
 .logo-mark { height: 42px; width: auto; flex-shrink: 0; }
 .logo-word {
   font-family: var(--font-display);
   font-size: 21px;
   font-weight: 600;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--navy);
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: clamp(16px, 2.2vw, 32px);
+  gap: clamp(12px, 1.5vw, 26px);
   list-style: none;
 }
 .nav-links > li { position: relative; }
@@ -214,7 +215,8 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  white-space: nowrap;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--graphite);
   padding: 8px 0;
@@ -285,7 +287,7 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-@media (max-width: 960px) {
+@media (max-width: 1140px) {
   .nav-toggle { display: block; }
   .nav-cta { display: none; }
   .nav-links {
@@ -311,7 +313,7 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
   .dropdown a:hover { background: transparent; padding-left: 0; color: var(--copper); }
   .nav-links .mobile-cta { display: block; margin-top: 10px; }
 }
-@media (min-width: 961px) { .nav-links .mobile-cta { display: none; } }
+@media (min-width: 1141px) { .nav-links .mobile-cta { display: none; } }
 
 /* ── Hero ────────────────────────────────────────────── */
 

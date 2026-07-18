@@ -34,8 +34,10 @@
 .cs-tab.active { background:var(--navy); border-color:var(--navy); color:var(--ivory); }
 
 .cs-panel { display:none; }
-.cs-panel.active { display:grid; grid-template-columns:1.2fr .8fr; gap:48px; align-items:start; animation:csFade .45s var(--ease); }
-@media (max-width:880px){ .cs-panel.active{ grid-template-columns:1fr; } }
+.cs-panel.active { display:block; animation:csFade .45s var(--ease); }
+.cs-panel p { max-width:680px; }
+.cs-feat { columns:2; column-gap:56px; margin-top:8px; }
+@media (max-width:760px){ .cs-feat{ columns:1; } }
 @keyframes csFade { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
 .cs-panel h3 { font-size:clamp(24px,2.6vw,32px); margin-bottom:14px; }
 .cs-panel p { margin-bottom:18px; }
@@ -43,23 +45,10 @@
 .cs-feat li { padding:11px 0 11px 30px; position:relative; border-bottom:1px solid var(--line); font-size:15px; color:var(--graphite); }
 .cs-feat li::before { content:"—"; position:absolute; left:0; color:var(--copper); font-weight:700; }
 
-.cs-frame { border:1px solid var(--line); background:var(--navy-deep); border-radius:var(--radius); overflow:hidden; box-shadow:0 30px 70px rgba(15,23,32,.16); }
-.cs-frame-bar { display:flex; align-items:center; gap:8px; padding:13px 16px; background:var(--navy); }
-.cs-dot { width:10px; height:10px; border-radius:50%; background:var(--copper); opacity:.55; }
-.cs-dot:first-child { opacity:.85; }
-.cs-url { flex:1; margin-left:12px; background:rgba(247,245,241,.08); color:rgba(247,245,241,.6); font-size:12px; padding:6px 14px; letter-spacing:.03em; }
-.cs-frame-body { position:relative; background:#0B121B; aspect-ratio:16/10; }
-.cs-frame-body img { width:100%; height:100%; object-fit:cover; object-position:top; cursor:zoom-in; }
-.cs-ph { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:rgba(247,245,241,.5); text-align:center; padding:24px; }
-.cs-ph .t { font-family:var(--font-display); font-size:20px; color:rgba(247,245,241,.8); }
-.cs-ph .s { font-size:13px; max-width:320px; }
 
 .cs-privacy { display:flex; gap:16px; align-items:flex-start; background:var(--white); border:1px solid var(--line); border-left:3px solid var(--copper); padding:22px 26px; margin-top:44px; font-size:14px; color:var(--graphite); }
 .cs-privacy strong { color:var(--navy); }
 
-.cs-lightbox { position:fixed; inset:0; z-index:120; background:rgba(9,14,21,.93); display:none; align-items:center; justify-content:center; padding:32px; cursor:zoom-out; }
-.cs-lightbox.open { display:flex; }
-.cs-lightbox img { max-width:min(1200px,94vw); max-height:88vh; box-shadow:0 40px 90px rgba(0,0,0,.5); }
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -188,7 +177,7 @@ src="https://www.facebook.com/tr?id=1976979802943674&ev=PageView&noscript=1"
   <div class="container">
     <span class="eyebrow reveal">A Guided Tour</span>
     <h2 class="reveal d1">See the Backend, Module by Module.</h2>
-    <p class="lead reveal d2" style="max-width:640px">Select a module below — every screen is a real, working part of the platform, shown here from a demonstration environment. For the full experience, launch the interactive demo.</p>
+    <p class="lead reveal d2" style="max-width:640px">Select a module below to see what it covers — then launch the interactive demo and click through the real thing, populated with sample data.</p>
 
     <div class="cs-tabs reveal d2" role="tablist">
       <button class="cs-tab active" data-panel="csp1" role="tab">Dashboard</button>
@@ -201,51 +190,37 @@ src="https://www.facebook.com/tr?id=1976979802943674&ev=PageView&noscript=1"
     </div>
 
     <div class="cs-panel active" id="csp1">
-      <div class="cs-frame"><div class="cs-frame-bar"><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-url">system &middot; dashboard</span></div>
-      <div class="cs-frame-body"><img src="assets/system/dashboard.png" alt="Clinic dashboard with daily KPIs" loading="lazy" onerror="csPh(this)"></div></div>
       <div><h3>The Clinic at a Glance</h3><p>One screen that tells the owner exactly how the practice is performing — today, this week, this month.</p>
       <ul class="cs-feat"><li>Daily bookings, revenue, and patient flow</li><li>Clinic-by-clinic performance comparison</li><li>Upcoming surgeries and follow-ups</li></ul></div>
     </div>
     <div class="cs-panel" id="csp2">
-      <div class="cs-frame"><div class="cs-frame-bar"><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-url">system &middot; bookings</span></div>
-      <div class="cs-frame-body"><img src="assets/system/bookings.png" alt="Bookings and schedule management" loading="lazy" onerror="csPh(this)"></div></div>
       <div><h3>Bookings Without Chaos</h3><p>Online bookings from the website land directly in the secretary's queue — organized by clinic, day, and slot, with slots opened only on real clinic days.</p>
       <ul class="cs-feat"><li>Multi-clinic schedules and slot management</li><li>Local and international patient pathways</li><li>Status flow: pending &rarr; confirmed &rarr; attended</li></ul></div>
     </div>
     <div class="cs-panel" id="csp3">
-      <div class="cs-frame"><div class="cs-frame-bar"><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-url">system &middot; patient records</span></div>
-      <div class="cs-frame-body"><img src="assets/system/patients.png" alt="Structured patient medical records" loading="lazy" onerror="csPh(this)"></div></div>
       <div><h3>Medical Records Built With the Doctor</h3><p>Structured case files designed to mirror the doctor's real clinical sheets — not generic forms.</p>
       <ul class="cs-feat"><li>Specialty case types with multi-step forms</li><li>Full visit history per patient</li><li>Fast progressive loading for large patient lists</li></ul></div>
     </div>
     <div class="cs-panel" id="csp4">
-      <div class="cs-frame"><div class="cs-frame-bar"><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-url">system &middot; surgeries</span></div>
-      <div class="cs-frame-body"><img src="assets/system/surgeries.png" alt="Surgery scheduling and tracking" loading="lazy" onerror="csPh(this)"></div></div>
       <div><h3>Surgery Pipeline, Managed</h3><p>From decision to operation to recovery — every surgical case tracked in one place, linked to the full medical record.</p>
       <ul class="cs-feat"><li>Surgery scheduling and case status</li><li>Automated post-operative follow-up triggers</li><li>Clear pipeline view for the whole team</li></ul></div>
     </div>
     <div class="cs-panel" id="csp5">
-      <div class="cs-frame"><div class="cs-frame-bar"><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-url">system &middot; payments &amp; reports</span></div>
-      <div class="cs-frame-body"><img src="assets/system/reports.png" alt="Payments and reporting" loading="lazy" onerror="csPh(this)"></div></div>
       <div><h3>Know the Numbers</h3><p>Payments recorded at the source, reports generated automatically — no end-of-month spreadsheet marathons.</p>
       <ul class="cs-feat"><li>Payment recording per visit and per clinic</li><li>Revenue reports by period, clinic, and service</li><li>Owner-level financial visibility</li></ul></div>
     </div>
     <div class="cs-panel" id="csp6">
-      <div class="cs-frame"><div class="cs-frame-bar"><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-url">system &middot; whatsapp automation</span></div>
-      <div class="cs-frame-body"><img src="assets/system/whatsapp.png" alt="WhatsApp automation flows" loading="lazy" onerror="csPh(this)"></div></div>
       <div><h3>The Patient Journey, on WhatsApp</h3><p>Built on the official Meta Cloud API — the channel patients in Egypt and the GCC actually use.</p>
       <ul class="cs-feat"><li>Instant booking confirmations</li><li>Post-surgery follow-up sequences</li><li>Review and feedback requests</li></ul></div>
     </div>
     <div class="cs-panel" id="csp7">
-      <div class="cs-frame"><div class="cs-frame-bar"><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-dot"></span><span class="cs-url">system &middot; roles &amp; access</span></div>
-      <div class="cs-frame-body"><img src="assets/system/roles.png" alt="Role-based access control" loading="lazy" onerror="csPh(this)"></div></div>
       <div><h3>The Right Access for Every Role</h3><p>Owner, doctor, secretary, and content editor each see exactly what they need — nothing more.</p>
       <ul class="cs-feat"><li>Role-based permissions across every module</li><li>Medical records visible only to clinical roles</li><li>Owner keeps full oversight</li></ul></div>
     </div>
 
     <div class="cs-privacy reveal">
       <span aria-hidden="true" style="font-size:18px">&#128737;</span>
-      <span><strong>Patient privacy, by design.</strong> All screenshots and demos on this page use a demonstration environment with sample data. No real patient information is ever displayed, shared, or used in Mednixis marketing — the same confidentiality standard we build into every system we deliver.</span>
+      <span><strong>Patient privacy, by design.</strong> All demos on this page run on a demonstration environment with sample data. No real patient information is ever displayed, shared, or used in Mednixis marketing — the same confidentiality standard we build into every system we deliver.</span>
     </div>
   </div>
 </section>
@@ -328,7 +303,6 @@ src="https://www.facebook.com/tr?id=1976979802943674&ev=PageView&noscript=1"
   </div>
 </footer>
 
-<div class="cs-lightbox" id="csLightbox" aria-hidden="true"><img id="csLightboxImg" src="" alt="Screenshot enlarged"></div>
 <script src="js/main.js" defer></script>
 <script>
 document.querySelectorAll('.cs-tab').forEach(function(tab){
@@ -339,19 +313,6 @@ document.querySelectorAll('.cs-tab').forEach(function(tab){
     document.getElementById(tab.dataset.panel).classList.add('active');
   });
 });
-function csPh(img){
-  var wrap=img.parentElement; img.style.display='none';
-  if(wrap.querySelector('.cs-ph'))return;
-  var ph=document.createElement('div'); ph.className='cs-ph';
-  ph.innerHTML='<div class="t">Screenshot coming soon</div><div class="s">This module preview will appear once the demo capture is uploaded to assets/system/.</div>';
-  wrap.appendChild(ph);
-}
-var csLb=document.getElementById('csLightbox'), csLbImg=document.getElementById('csLightboxImg');
-document.querySelectorAll('.cs-frame-body img').forEach(function(img){
-  img.addEventListener('click', function(){ if(img.style.display==='none')return; csLbImg.src=img.src; csLb.classList.add('open'); });
-});
-csLb.addEventListener('click', function(){ csLb.classList.remove('open'); csLbImg.src=''; });
-document.addEventListener('keydown', function(e){ if(e.key==='Escape') csLb.classList.remove('open'); });
 </script>
 </body>
 </html>

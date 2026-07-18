@@ -26,7 +26,7 @@
     const servicesBtn = document.querySelector(".has-dropdown > a");
     if (servicesBtn) {
       servicesBtn.addEventListener("click", e => {
-        if (window.innerWidth <= 960) {
+        if (window.innerWidth <= 1140) {
           e.preventDefault();
           servicesBtn.parentElement.classList.toggle("open-sub");
         }
