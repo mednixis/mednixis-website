@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Demo — Dr. Maged Ragab Platform | Mednixis</title>
+<meta name="robots" content="noindex">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+ /* Adjust these to the exact drmagedragab.com brand hexes if needed */
+ --navy:#12203A;--navy2:#0D1830;--gold:#C9A15C;--gold2:#B4894A;
+ --bg:#FBF9F5;--ink:#1E2635;--mut:#5A6478;--line:#E8E4DB;--card:#fff;
+}
+body{font-family:'Segoe UI',-apple-system,'DejaVu Sans',Tahoma,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.65}
+button{font-family:inherit;cursor:pointer;border:none;background:none;font-size:inherit;color:inherit}
+img{max-width:100%}
+.serif{font-family:Georgia,'Times New Roman',serif}
+/* language switching */
+.ar{display:none}
+body.lang-ar{direction:rtl}
+body.lang-ar .ar{display:inline}
+body.lang-ar .en{display:none}
+body.lang-ar .keep-ltr{direction:ltr;display:inline-block}
+h1 .ar,h2 .ar,h3 .ar{display:none}
+body.lang-ar h1 .ar,body.lang-ar h2 .ar,body.lang-ar h3 .ar{display:inline}
+
+/* demo banner */
+.banner{background:linear-gradient(90deg,#1B2434,#2A3650);color:#fff;padding:10px 22px;display:flex;align-items:center;gap:13px;flex-wrap:wrap;font-size:13px}
+.banner .b-pill{background:#B0793F;color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;padding:5px 12px;border-radius:999px;white-space:nowrap}
+.banner a{margin-left:auto;color:#C9955C;font-weight:600;text-decoration:none;white-space:nowrap}
+body.lang-ar .banner a{margin-left:0;margin-right:auto}
+.banner a:hover{text-decoration:underline}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:40;background:var(--navy);color:#fff;display:flex;align-items:center;gap:22px;padding:0 40px;height:76px}
+.logo{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.ring{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:14px}
+.logo .n{font-size:18px;font-weight:600}
+.logo .s{font-size:10.5px;color:var(--gold);letter-spacing:.13em;text-transform:uppercase}
+.links{display:flex;gap:22px;font-size:13.5px;color:#C5CBD8;flex-wrap:wrap}
+.links button:hover,.links .on{color:#fff}
+.links .on{border-bottom:2px solid var(--gold);padding-bottom:3px}
+.langbtn{margin-left:auto;color:var(--gold);font-size:13.5px;font-weight:600;border:1px solid rgba(201,161,92,.4);border-radius:999px;padding:8px 16px}
+body.lang-ar .langbtn{margin-left:0;margin-right:auto}
+.langbtn:hover{background:rgba(201,161,92,.12)}
+.bookbtn{background:var(--gold);color:var(--navy);font-weight:700;font-size:13.5px;padding:12px 22px;border-radius:999px}
+.bookbtn:hover{background:#D6B276}
+@media(max-width:1000px){.links{display:none}.nav{padding:0 20px}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;padding:66px 40px 54px;align-items:center;max-width:1240px;margin:0 auto}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding:44px 20px}}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8A6A2F;background:#F4EBDB;border:1px solid #E8D9BC;padding:8px 16px;border-radius:999px;margin-bottom:20px;font-weight:600}
+body.lang-ar .eyebrow{letter-spacing:0}
+h1{font-family:Georgia,serif;font-size:clamp(34px,4.6vw,52px);line-height:1.14;color:var(--navy);margin-bottom:18px;font-weight:600}
+h1 em{color:var(--gold2);font-style:italic}
+.lede{font-size:17px;color:var(--mut);max-width:520px;margin-bottom:28px}
+.ctas{display:flex;gap:12px;margin-bottom:34px;flex-wrap:wrap}
+.c1{background:var(--gold);color:var(--navy);font-weight:700;padding:14px 26px;border-radius:999px;font-size:14px}
+.c1:hover{background:#D6B276}
+.c2{border:1.5px solid #D8DCE4;color:var(--navy);font-weight:600;padding:14px 26px;border-radius:999px;font-size:14px}
+.c2:hover{border-color:var(--gold)}
+.stats{display:flex;gap:40px;flex-wrap:wrap}
+.st .v{font-family:Georgia,serif;font-size:29px;color:var(--navy);font-weight:700}
+.st .l{font-size:12.5px;color:#7A8496;margin-top:2px}
+.visual{position:relative;min-height:400px}
+.photo{position:absolute;inset:0 26px 56px 0;background:linear-gradient(160deg,#1A2A47,#0F1B31);border-radius:18px;overflow:hidden;box-shadow:0 30px 70px rgba(18,32,58,.28)}
+body.lang-ar .photo{inset:0 0 56px 26px}
+.photo .glow{position:absolute;top:-40px;right:-40px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(201,161,92,.32),transparent 65%)}
+.photo .cent{position:absolute;left:0;right:0;top:64px;text-align:center;color:var(--gold);font-family:Georgia,serif}
+.photo .sym{font-size:60px;line-height:1}
+.photo .t{margin-top:16px;font-size:20px;color:#fff}
+.photo .u{margin-top:6px;font-size:12.5px;color:#9FB0CC;letter-spacing:.05em}
+.badge{position:absolute;bottom:20px;right:0;background:#fff;border-radius:14px;box-shadow:0 18px 44px rgba(18,32,58,.16);padding:16px 20px;width:296px;font-size:13px}
+body.lang-ar .badge{right:auto;left:0}
+.badge .b1{font-weight:700;font-size:14px;color:var(--navy);margin-bottom:4px}
+.badge .b2{color:#7A8496;line-height:1.6}
+
+/* feature strip */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+@media(max-width:900px){.strip{grid-template-columns:1fr}}
+.f{padding:26px 34px;border-right:1px solid var(--line)}
+body.lang-ar .f{border-right:none;border-left:1px solid var(--line)}
+.f:last-child{border:none}
+.f .t{font-weight:700;font-size:15px;color:var(--navy);margin-bottom:6px}
+.f .t span{color:var(--gold2);margin-right:8px}
+body.lang-ar .f .t span{margin-right:0;margin-left:8px}
+.f .d{font-size:13px;color:#6B7484;line-height:1.65}
+
+/* sections */
+section{padding:70px 40px;max-width:1240px;margin:0 auto}
+@media(max-width:900px){section{padding:48px 20px}}
+.kick{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);font-weight:700;margin-bottom:12px}
+body.lang-ar .kick{letter-spacing:0}
+h2{font-family:Georgia,serif;font-size:clamp(26px,3.4vw,38px);color:var(--navy);line-height:1.2;margin-bottom:14px;font-weight:600}
+.about{display:grid;grid-template-columns:1fr 1.15fr;gap:52px;align-items:center}
+@media(max-width:900px){.about{grid-template-columns:1fr}}
+.aphoto{background:linear-gradient(160deg,#1A2A47,#0F1B31);border-radius:18px;min-height:340px;display:flex;align-items:center;justify-content:center;color:var(--gold);flex-direction:column;gap:14px;box-shadow:0 24px 56px rgba(18,32,58,.22)}
+.aphoto .big{width:110px;height:110px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:34px}
+.aphoto .cap{color:#fff;font-family:Georgia,serif;font-size:18px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:12.5px;font-weight:600;color:var(--navy)}
+.chip:hover{border-color:var(--gold);color:var(--gold2)}
+
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+@media(max-width:900px){.why{grid-template-columns:1fr}}
+.w{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 24px}
+.w .num{font-family:Georgia,serif;color:var(--gold2);font-size:22px;font-weight:700;margin-bottom:8px}
+.w .t{font-weight:700;color:var(--navy);margin-bottom:6px;font-size:15px}
+.w .d{font-size:13px;color:#6B7484}
+
+.svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+@media(max-width:900px){.svcs{grid-template-columns:1fr}}
+.svc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 24px;transition:box-shadow .2s,transform .2s}
+.svc:hover{box-shadow:0 16px 40px rgba(18,32,58,.10);transform:translateY(-3px)}
+.svc .ico{font-size:26px;margin-bottom:12px}
+.svc .t{font-family:Georgia,serif;font-size:17px;color:var(--navy);font-weight:600;margin-bottom:8px}
+.svc .d{font-size:13px;color:#6B7484}
+
+/* pathways */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+@media(max-width:900px){.paths{grid-template-columns:1fr}}
+.path{background:#fff;border:1px solid var(--line);border-radius:16px;padding:30px 28px}
+.path.hl{border-color:var(--gold);box-shadow:0 16px 44px rgba(201,161,92,.14)}
+.path h3{font-family:Georgia,serif;font-size:20px;color:var(--navy);margin-bottom:16px;font-weight:600}
+.path li{list-style:none;padding:9px 0 9px 28px;position:relative;font-size:14px;border-bottom:1px solid #F1EEE7}
+body.lang-ar .path li{padding:9px 28px 9px 0}
+.path li::before{content:"✓";position:absolute;left:0;top:9px;color:var(--gold2);font-weight:700}
+body.lang-ar .path li::before{left:auto;right:0}
+.path li:last-child{border-bottom:none}
+
+/* clinics */
+.clinics{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+@media(max-width:900px){.clinics{grid-template-columns:1fr}}
+.clinic{background:var(--navy);color:#fff;border-radius:16px;padding:30px 28px}
+.clinic h3{font-family:Georgia,serif;font-size:20px;color:var(--gold);margin-bottom:6px;font-weight:600}
+.clinic .loc{color:#9FB0CC;font-size:13.5px;margin-bottom:12px}
+.clinic .sched{font-size:14px;margin-bottom:18px;color:#E5EAF3}
+.clinic .row{display:flex;gap:10px;flex-wrap:wrap}
+.cbtn{border:1px solid rgba(201,161,92,.45);color:var(--gold);font-size:12.5px;font-weight:600;padding:9px 15px;border-radius:999px}
+.cbtn:hover{background:rgba(201,161,92,.12)}
+.cbtn.solid{background:var(--gold);color:var(--navy)}
+
+/* testimonials */
+.tests{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+@media(max-width:900px){.tests{grid-template-columns:1fr}}
+.test{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 24px;font-size:13.5px;color:#4A5468;line-height:1.75}
+.test .who{margin-top:14px;font-weight:700;color:var(--navy);font-size:12.5px}
+.test .q{font-family:Georgia,serif;color:var(--gold);font-size:30px;line-height:0;display:block;margin-bottom:14px}
+
+/* cta + footer */
+.cta{background:linear-gradient(160deg,var(--navy),var(--navy2));border-radius:20px;text-align:center;padding:58px 30px;color:#fff}
+.cta h2{color:#fff}
+footer{background:var(--navy2);color:#8FA0BC;padding:40px;font-size:13px;margin-top:70px}
+.foot{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.foot .mdx{color:#C9A15C;font-weight:700;letter-spacing:.06em}
+
+/* ============ BOOKING MODAL (real flow) ============ */
+.overlay{position:fixed;inset:0;background:rgba(13,24,48,.72);z-index:80;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:18px;max-width:640px;width:100%;padding:34px 32px;position:relative;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.modal .x{position:absolute;top:16px;right:20px;font-size:22px;color:#98A1B2}
+body.lang-ar .modal .x{right:auto;left:20px}
+.modal h3{font-family:Georgia,serif;font-size:23px;color:var(--navy);margin-bottom:6px;font-weight:600}
+.modal .msub{font-size:13.5px;color:var(--mut);margin-bottom:22px}
+.mstep{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);font-weight:700;margin-bottom:14px}
+body.lang-ar .mstep{letter-spacing:0}
+.opt2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.opt2{grid-template-columns:1fr}}
+.optc{border:1.5px solid var(--line);border-radius:14px;padding:24px 20px;text-align:center;transition:border-color .15s,box-shadow .15s;width:100%}
+.optc:hover,.optc.sel{border-color:var(--gold);box-shadow:0 10px 30px rgba(201,161,92,.15)}
+.optc .oi{font-size:30px;margin-bottom:10px}
+.optc .ot{font-weight:700;color:var(--navy);margin-bottom:4px;font-size:15px}
+.optc .od{font-size:12.5px;color:var(--mut)}
+.slotgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media(max-width:600px){.slotgrid{grid-template-columns:repeat(3,1fr)}}
+.slot{border:1.5px solid var(--line);border-radius:10px;padding:11px 6px;text-align:center;font-size:13px;font-weight:600;color:var(--navy)}
+.slot:hover{border-color:var(--gold)}
+.slot.sel{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.slot.dis{opacity:.35;pointer-events:none;text-decoration:line-through}
+.daterow{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}
+.dchip{border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;font-size:12.5px;font-weight:600;text-align:center;min-width:86px}
+.dchip .dw{color:var(--mut);font-weight:500;font-size:11px}
+.dchip:hover{border-color:var(--gold)}
+.dchip.sel{background:var(--navy);border-color:var(--navy);color:#fff}
+.dchip.sel .dw{color:#C9CFDC}
+.dchip.dis{opacity:.35;pointer-events:none}
+.mnote{background:#F6F1E6;border:1px solid #EADFC6;border-radius:11px;padding:13px 16px;font-size:13px;color:#6B5A33;margin-top:16px;line-height:1.6}
+.mnav{display:flex;justify-content:space-between;margin-top:24px;gap:10px}
+.back{color:var(--mut);font-weight:600;font-size:13.5px;padding:12px 8px}
+.next{background:var(--gold);color:var(--navy);font-weight:700;padding:13px 28px;border-radius:999px;font-size:14px}
+.next:disabled{opacity:.4;cursor:not-allowed}
+.confirmbox{text-align:center;padding:12px 4px}
+.confirmbox .ok{width:64px;height:64px;border-radius:50%;background:#E6F5EC;color:#237A4B;font-size:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.sumline{display:flex;justify-content:space-between;font-size:13.5px;padding:10px 0;border-bottom:1px solid #F1EEE7;text-align:start}
+.wa-note{margin-top:16px;background:#E9F7EF;border:1px solid #CBEAD8;color:#1F6B43;border-radius:11px;padding:13px 16px;font-size:13px;line-height:1.6;text-align:start}
+input.field,select.field{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;margin-bottom:12px;outline:none;background:#fff;color:var(--ink)}
+input.field:focus{border-color:var(--gold)}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1976979802943674');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1976979802943674&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<div class="banner">
+ <span class="b-pill">WEBSITE DEMO</span>
+ <span><span class="en">Interactive demonstration of the patient-facing platform built by Mednixis — the live site is at drmagedragab.com. Sample data only.</span><span class="ar">عرض تفاعلي لمنصة المرضى المبنية بواسطة Mednixis — الموقع الفعلي drmagedragab.com. بيانات تجريبية فقط.</span></span>
+ <a href="clinic-system.html"><span class="en">← Back to the product page</span><span class="ar">← العودة لصفحة المنتج</span></a>
+</div>
+
+<!-- NAV (real structure) -->
+<nav class="nav">
+ <div class="logo"><div class="ring">MR</div><div><div class="n"><span class="en">Dr. Maged Ragab</span><span class="ar">د. ماجد رجب</span></div><div class="s"><span class="en">Urology & Men's Health</span><span class="ar">المسالك البولية وصحة الرجال</span></div></div></div>
+ <div class="links">
+  <button class="on"><span class="en">Home</span><span class="ar">الرئيسية</span></button>
+  <button><span class="en">About</span><span class="ar">عن الدكتور</span></button>
+  <button><span class="en">Services</span><span class="ar">الخدمات</span></button>
+  <button><span class="en">International Patients</span><span class="ar">المرضى الدوليون</span></button>
+  <button><span class="en">Media</span><span class="ar">الإعلام</span></button>
+  <button><span class="en">FAQs</span><span class="ar">الأسئلة الشائعة</span></button>
+  <button><span class="en">Contact</span><span class="ar">التواصل</span></button>
+ </div>
+ <button class="langbtn" id="langT"><span class="en">العربية</span><span class="ar">English</span></button>
+ <button class="bookbtn" onclick="openBooking()"><span class="en">Book Appointment</span><span class="ar">احجز موعد</span></button>
+</nav>
+
+<!-- HERO (real copy) -->
+<header class="hero">
+ <div>
+  <span class="eyebrow"><span class="en">Professor & Head of Urology Department, Tanta University</span><span class="ar">أستاذ ورئيس قسم المسالك البولية - جامعة طنطا</span></span>
+  <h1><span class="en">Excellence in Urology & <em>Men's Health</em></span><span class="ar">التميز في المسالك البولية <em>وصحة الرجال</em></span></h1>
+  <p class="lede"><span class="en">World-Class Urology & Men's Health Care Led by Academic Excellence.</span><span class="ar">رعاية عالمية في المسالك وصحة الرجال بقيادة أكاديمية متميزة.</span></p>
+  <div class="ctas">
+   <button class="c1" onclick="openBooking()"><span class="en">Book Appointment</span><span class="ar">احجز موعد</span></button>
+   <button class="c2"><span class="en">Explore Services</span><span class="ar">استكشف الخدمات</span></button>
+   <button class="c2" onclick="openBooking('intl')"><span class="en">International Consultation</span><span class="ar">استشارة دولية</span></button>
+  </div>
+  <div class="stats">
+   <div class="st"><div class="v">25+</div><div class="l"><span class="en">Years Experience</span><span class="ar">سنة خبرة</span></div></div>
+   <div class="st"><div class="v">10,000+</div><div class="l"><span class="en">Surgeries</span><span class="ar">عملية جراحية</span></div></div>
+   <div class="st"><div class="v">300+</div><div class="l"><span class="en">Conferences</span><span class="ar">مؤتمر دولي</span></div></div>
+  </div>
+ </div>
+ <div class="visual">
+  <div class="photo"><div class="glow"></div>
+   <div class="cent"><div class="sym">⚕</div><div class="t"><span class="en">Prof. Dr. Maged Ragab</span><span class="ar">أ.د. ماجد رجب</span></div><div class="u"><span class="en keep-ltr">Male Infertility · Micro-TESE · Advanced Urology</span><span class="ar">تأخر الإنجاب · Micro-TESE · مسالك متقدمة</span></div></div>
+  </div>
+  <div class="badge">
+   <div class="b1"><span class="en">Two Premium Clinics</span><span class="ar">عيادتان متميزتان</span></div>
+   <div class="b2"><span class="en">Kafr El Sheikh — Sun · Tue · Sat<br>Mivida, New Cairo — Wed · Thu<br>3:00 – 9:00 PM</span><span class="ar">كفر الشيخ — الأحد · الثلاثاء · السبت<br>ميفيدا، القاهرة الجديدة — الأربعاء · الخميس<br>3:00 – 9:00 م</span></div>
+  </div>
+ </div>
+</header>
+
+<!-- FEATURE STRIP (real copy) -->
+<div class="strip">
+ <div class="f"><div class="t"><span>◆</span><span class="en">Advanced Diagnostics</span><span class="ar">تشخيص متقدم</span></div><div class="d"><span class="en">Evidence-led assessment for complex urology, male fertility, and men's health cases.</span><span class="ar">تقييم قائم على الدليل للحالات المعقدة في المسالك وخصوبة الرجال وصحة الرجال.</span></div></div>
+ <div class="f"><div class="t"><span>◆</span><span class="en">Minimally Invasive Care</span><span class="ar">علاجات قليلة التدخل</span></div><div class="d"><span class="en">Modern procedures designed for precision, comfort, faster recovery, and reduced surgical burden.</span><span class="ar">إجراءات حديثة مصممة للدقة والراحة وسرعة التعافي وتقليل العبء الجراحي.</span></div></div>
+ <div class="f"><div class="t"><span>◆</span><span class="en">International Patients</span><span class="ar">مرضى خارج مصر</span></div><div class="d"><span class="en">Online consultation paths with report upload, time-zone guidance, and treatment planning.</span><span class="ar">مسارات استشارة أونلاين مع رفع التقارير وإرشاد التوقيت وخطة علاج للمرضى خارج مصر.</span></div></div>
+</div>
+
+<!-- ABOUT (real copy + stats) -->
+<section>
+ <div class="about">
+  <div class="aphoto"><div class="big">MR</div><div class="cap"><span class="en">Prof. Dr. Maged Ragab</span><span class="ar">أ.د. ماجد رجب</span></div></div>
+  <div>
+   <div class="kick"><span class="en">About Dr. Maged</span><span class="ar">عن د. ماجد</span></div>
+   <h2><span class="en">Academic Leadership. Surgical Precision. Human Care.</span><span class="ar">قيادة أكاديمية. دقة جراحية. رعاية إنسانية.</span></h2>
+   <p style="color:var(--mut);font-size:15px"><span class="en">Professor Dr. Maged Ragab is a Professor of Urology & Andrology and Head of the Andrology Unit at Tanta University Hospital, with over 25 years of experience in advanced urology, male infertility, and men's health.</span><span class="ar">الأستاذ الدكتور ماجد رجب أستاذ المسالك البولية والأندرولوجيا ورئيس وحدة الأندرولوجيا بمستشفى جامعة طنطا، بخبرة تزيد عن 25 عامًا في المسالك المتقدمة وتأخر الإنجاب وصحة الرجال.</span></p>
+   <div class="chips">
+    <span class="chip"><span class="en">Male Infertility</span><span class="ar">تأخر الإنجاب</span></span>
+    <span class="chip"><span class="en">Azoospermia</span><span class="ar">انعدام الحيوانات المنوية</span></span>
+    <span class="chip keep-ltr">Micro-TESE</span>
+    <span class="chip"><span class="en">Varicocele</span><span class="ar">دوالي الخصية</span></span>
+    <span class="chip"><span class="en">Erectile Dysfunction</span><span class="ar">ضعف الانتصاب</span></span>
+    <span class="chip"><span class="en">Penile Prosthesis</span><span class="ar">الدعامات</span></span>
+    <span class="chip"><span class="en">Peyronie's Disease</span><span class="ar">مرض بيروني</span></span>
+    <span class="chip"><span class="en">Prostate Diseases</span><span class="ar">أمراض البروستاتا</span></span>
+    <span class="chip keep-ltr">Rezum</span>
+    <span class="chip keep-ltr">Echolaser</span>
+    <span class="chip"><span class="en">Kidney Stones</span><span class="ar">حصوات الكلى</span></span>
+    <span class="chip"><span class="en">Endoscopic Urology</span><span class="ar">مناظير المسالك</span></span>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- SERVICES (real six) -->
+<section style="padding-top:10px">
+ <div class="kick"><span class="en">Services</span><span class="ar">الخدمات</span></div>
+ <h2><span class="en">What We Treat</span><span class="ar">ما نعالجه</span></h2>
+ <div class="svcs">
+  <div class="svc"><div class="ico">🔬</div><div class="t"><span class="en">Male Infertility & Andrology</span><span class="ar">تأخر الإنجاب وطب الذكورة</span></div><div class="d"><span class="en">Comprehensive evaluation and treatment of male infertility including advanced microsurgical techniques.</span><span class="ar">تقييم شامل وعلاج تأخر الإنجاب عند الرجال بما يشمل تقنيات جراحية مجهرية متقدمة.</span></div></div>
+  <div class="svc"><div class="ico">🧬</div><div class="t"><span class="en keep-ltr">Micro-TESE / Sperm Retrieval</span><span class="ar">Micro-TESE / استخراج الحيوانات المنوية</span></div><div class="d"><span class="en">Microscopic testicular sperm extraction and advanced sperm retrieval techniques for azoospermia.</span><span class="ar">استخراج الحيوانات المنوية المجهري من الخصية وتقنيات متقدمة لحالات انعدام الحيوانات المنوية.</span></div></div>
+  <div class="svc"><div class="ico">🔭</div><div class="t"><span class="en">Microsurgical Subinguinal Varicocelectomy</span><span class="ar">استئصال دوالي الخصية المجهري</span></div><div class="d"><span class="en">Microsurgical ligation of varicocele through a subinguinal approach for optimal fertility outcomes.</span><span class="ar">ربط دوالي الخصية بالمجهر عبر المسار تحت الأربي لأفضل نتائج الخصوبة.</span></div></div>
+  <div class="svc"><div class="ico">⚗️</div><div class="t"><span class="en">Non-Obstructive Azoospermia</span><span class="ar">انعدام الحيوانات المنوية غير الانسدادي</span></div><div class="d"><span class="en">Specialized management including advanced diagnostic and surgical options.</span><span class="ar">إدارة متخصصة بما يشمل خيارات تشخيصية وجراحية متقدمة.</span></div></div>
+  <div class="svc"><div class="ico">💊</div><div class="t"><span class="en">Erectile Dysfunction Management</span><span class="ar">علاج ضعف الانتصاب</span></div><div class="d"><span class="en">Comprehensive treatment including medical, surgical and regenerative therapy options.</span><span class="ar">علاج شامل يشمل الخيارات الطبية والجراحية والعلاج التجديدي.</span></div></div>
+  <div class="svc"><div class="ico">🩺</div><div class="t"><span class="en">Prostate & Advanced Urology</span><span class="ar">البروستاتا والمسالك المتقدمة</span></div><div class="d"><span class="en">Rezum & Echolaser technology, kidney stones, and endoscopic urology.</span><span class="ar">تقنيات Rezum وEcholaser وحصوات الكلى ومناظير المسالك.</span></div></div>
+ </div>
+</section>
+
+<!-- PATIENT PATHWAYS (real bullets) -->
+<section style="padding-top:10px">
+ <div class="kick"><span class="en">Patient Pathways</span><span class="ar">مسارات المرضى</span></div>
+ <h2><span class="en">Two clear ways to reach the clinic.</span><span class="ar">مساران واضحان للوصول إلى العيادة.</span></h2>
+ <div class="paths">
+  <div class="path">
+   <h3><span class="en">🏥 Egyptian / Local Patients</span><span class="ar">🏥 المرضى داخل مصر</span></h3>
+   <ul>
+    <li><span class="en">Choose clinic location</span><span class="ar">اختيار العيادة</span></li>
+    <li><span class="en">Choose available date</span><span class="ar">اختيار اليوم المتاح</span></li>
+    <li><span class="en">Choose appointment slot</span><span class="ar">اختيار الموعد</span></li>
+    <li><span class="en">Payment at clinic only</span><span class="ar">الدفع داخل العيادة فقط</span></li>
+    <li><span class="en">Receive WhatsApp confirmation</span><span class="ar">استلام تأكيد واتساب</span></li>
+   </ul>
+  </div>
+  <div class="path hl">
+   <h3><span class="en">🌍 International Patients</span><span class="ar">🌍 المرضى الدوليون</span></h3>
+   <ul>
+    <li><span class="en">Dedicated Zoom slots</span><span class="ar">مواعيد Zoom مخصصة</span></li>
+    <li><span class="en">Optional report upload</span><span class="ar">رفع التقارير اختياري</span></li>
+    <li><span class="en">50% deposit required</span><span class="ar">مطلوب إيداع 50%</span></li>
+    <li><span class="en">Human approval before confirmation</span><span class="ar">مراجعة بشرية قبل التأكيد</span></li>
+    <li><span class="en">WhatsApp confirmation</span><span class="ar">تأكيد واتساب</span></li>
+   </ul>
+  </div>
+ </div>
+ <div style="text-align:center;margin-top:28px"><button class="c1" onclick="openBooking()"><span class="en">Start Booking — Try the Real Flow</span><span class="ar">ابدأ الحجز — جرّب المسار الفعلي</span></button></div>
+</section>
+
+<!-- CLINICS (real data) -->
+<section style="padding-top:10px">
+ <div class="kick"><span class="en">Clinics</span><span class="ar">العيادات</span></div>
+ <h2><span class="en">Two premium clinic routes in Kafr El Sheikh and New Cairo.</span><span class="ar">مساران متميزان للحجز في كفر الشيخ والقاهرة الجديدة.</span></h2>
+ <div class="clinics">
+  <div class="clinic">
+   <h3><span class="en">Kafr El Sheikh Clinic</span><span class="ar">عيادة كفر الشيخ</span></h3>
+   <div class="loc"><span class="en">Kafr El Sheikh, Egypt</span><span class="ar">كفر الشيخ، مصر</span></div>
+   <div class="sched">📅 <span class="en">Sun · Tue · Sat</span><span class="ar">الأحد · الثلاثاء · السبت</span> &nbsp;·&nbsp; 🕒 <span class="en keep-ltr">3:00 – 9:00 PM</span><span class="ar">3:00 – 9:00 م</span></div>
+   <div class="row"><button class="cbtn"><span class="en">Google Maps</span><span class="ar">خرائط Google</span></button><button class="cbtn keep-ltr">01039310401</button><button class="cbtn"><span class="en">WhatsApp</span><span class="ar">واتساب</span></button><button class="cbtn solid" onclick="openBooking()"><span class="en">Book here</span><span class="ar">احجز هنا</span></button></div>
+  </div>
+  <div class="clinic">
+   <h3><span class="en">Mivida Clinic</span><span class="ar">عيادة ميفيدا</span></h3>
+   <div class="loc"><span class="en">Mivida, New Cairo, Egypt</span><span class="ar">ميفيدا، القاهرة الجديدة، مصر</span></div>
+   <div class="sched">📅 <span class="en">Wed · Thu</span><span class="ar">الأربعاء · الخميس</span> &nbsp;·&nbsp; 🕒 <span class="en keep-ltr">3:00 – 9:00 PM</span><span class="ar">3:00 – 9:00 م</span></div>
+   <div class="row"><button class="cbtn"><span class="en">Google Maps</span><span class="ar">خرائط Google</span></button><button class="cbtn keep-ltr">01039310403</button><button class="cbtn"><span class="en">WhatsApp</span><span class="ar">واتساب</span></button><button class="cbtn solid" onclick="openBooking()"><span class="en">Book here</span><span class="ar">احجز هنا</span></button></div>
+  </div>
+ </div>
+</section>
+
+<!-- TESTIMONIALS (real) -->
+<section style="padding-top:10px">
+ <div class="tests">
+  <div class="test"><span class="q">"</span><span class="en">After years of searching, Dr. Maged diagnosed my azoospermia correctly on the first visit and gave us a clear path forward with Micro-TESE. We finally had real answers.</span><span class="ar">بعد سنوات من البحث، شخّص د. ماجد حالة الأزوسبيرميا بدقة من أول زيارة وأعطانا مساراً واضحاً عبر Micro-TESE. وجدنا أخيراً إجابات حقيقية.</span><div class="who"><span class="en">Infertility patient — Cairo, 2025</span><span class="ar">مريض عقم — القاهرة، 2025</span></div></div>
+  <div class="test"><span class="q">"</span><span class="en">I traveled from Saudi Arabia specifically for Dr. Maged. He reviewed my reports before the appointment, explained everything clearly, and the treatment plan was exactly what I needed.</span><span class="ar">سافرت من السعودية خصيصاً لد. ماجد. راجع تقاريري قبل الموعد وشرح كل شيء بوضوح. كانت خطة العلاج بالضبط ما احتجته.</span><div class="who"><span class="en">International patient — Saudi Arabia, 2025</span><span class="ar">مريض دولي — المملكة العربية السعودية، 2025</span></div></div>
+  <div class="test"><span class="q">"</span><span class="en">The varicocele microsurgery went perfectly. Minimal recovery time and my semen analysis improved significantly three months later. Highly recommend.</span><span class="ar">تمّت جراحة الدوالي المجهرية باحترافية تامة. فترة تعافٍ قصيرة وتحسّنت نتائج التحليل بشكل ملحوظ بعد ثلاثة أشهر. أنصح بشدة.</span><div class="who"><span class="en">Varicocele surgery patient — Kafr El Sheikh, 2024</span><span class="ar">مريض جراحة دوالي — كفر الشيخ، 2024</span></div></div>
+ </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-top:10px">
+ <div class="cta">
+  <h2><span class="en">Take the First Step Toward Better Men's Health</span><span class="ar">اتخذ الخطوة الأولى نحو صحة أفضل للرجل</span></h2>
+  <div class="ctas" style="justify-content:center;margin-top:20px;margin-bottom:0">
+   <button class="c1" onclick="openBooking()"><span class="en">Book Appointment</span><span class="ar">احجز موعد</span></button>
+   <button class="c2" style="border-color:rgba(255,255,255,.3);color:#fff" onclick="openBooking('intl')"><span class="en">International Consultation</span><span class="ar">استشارة دولية</span></button>
+  </div>
+ </div>
+</section>
+
+<footer>
+ <div class="foot">
+  <div><b style="color:#fff"><span class="en">Dr. Maged Ragab</span><span class="ar">د. ماجد رجب</span></b><br><span class="en">World-class urology and men's health care led by academic excellence.</span><span class="ar">رعاية عالمية في المسالك وصحة الرجال بقيادة أكاديمية متميزة.</span></div>
+  <div><span class="en">© 2026 Dr. Maged Ragab. All rights reserved.</span><span class="ar">© 2026 د. ماجد رجب. جميع الحقوق محفوظة.</span><br><span class="en">Powered & Managed by</span><span class="ar">بتقنية وإدارة</span> <span class="mdx">MEDNIXIS</span></div>
+ </div>
+</footer>
+
+<!-- ============ BOOKING MODAL — mirrors the real flow ============ -->
+<div class="overlay" id="ov">
+ <div class="modal">
+  <button class="x" onclick="closeBooking()">×</button>
+  <div id="mbody"></div>
+ </div>
+</div>
+
+<script>
+/* language toggle */
+document.getElementById('langT').onclick=()=>{
+ document.body.classList.toggle('lang-ar');
+ document.documentElement.lang=document.body.classList.contains('lang-ar')?'ar':'en';
+};
+
+/* ===== Booking flow (real pathway rules) =====
+ Local: clinic -> date (only real clinic days) -> slot -> details -> confirm (pay at clinic, WhatsApp)
+ International: Zoom slot -> report upload optional -> 50% deposit + human approval notice
+*/
+const AR=()=>document.body.classList.contains('lang-ar');
+const CLINICS={
+ kes:{en:'Kafr El Sheikh Clinic',ar:'عيادة كفر الشيخ',days:[0,2,6]},   // Sun Tue Sat
+ miv:{en:'Mivida Clinic — New Cairo',ar:'عيادة ميفيدا — القاهرة الجديدة',days:[3,4]}, // Wed Thu
+};
+const SLOTS=['3:00 PM','3:30 PM','4:00 PM','4:30 PM','5:00 PM','5:30 PM','6:00 PM','6:30 PM','7:00 PM','7:30 PM','8:00 PM','8:30 PM'];
+const SLOTS_AR={'PM':'م'};
+let bk={type:null,clinic:null,date:null,slot:null,name:'',phone:''};
+const ov=document.getElementById('ov'),mb=document.getElementById('mbody');
+function openBooking(pre){bk={type:pre==='intl'?'intl':null,clinic:null,date:null,slot:null,name:'',phone:''};ov.classList.add('open');step(bk.type?'2i':1);}
+function closeBooking(){ov.classList.remove('open');}
+ov.addEventListener('click',e=>{if(e.target===ov)closeBooking();});
+
+function nextDates(clinicKey,count=6){
+ const out=[];const d=new Date(2026,6,17); // demo "today": Fri 17 Jul 2026
+ const days=CLINICS[clinicKey].days;
+ let cur=new Date(d);
+ while(out.length<count){cur.setDate(cur.getDate()+1);if(days.includes(cur.getDay()))out.push(new Date(cur));}
+ return out;
+}
+const DW_EN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],DW_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const MO_EN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],MO_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+function fmt(d){return AR()?`${d.getDate()} ${MO_AR[d.getMonth()]}`:`${d.getDate()} ${MO_EN[d.getMonth()]}`}
+function dow(d){return AR()?DW_AR[d.getDay()]:DW_EN[d.getDay()]}
+function t(en,ar){return AR()?ar:en}
+
+function step(n){
+ if(n===1){ // real /booking first screen
+  mb.innerHTML=`
+  <h3>${t('Book Your Appointment','احجز موعدك')}</h3>
+  <div class="msub">${t('Choose your clinic, date, and available slot.','اختر العيادة والتاريخ والموعد المتاح.')}</div>
+  <div class="mstep">${t('How would you like to consult?','كيف تريد الاستشارة؟')}</div>
+  <div class="opt2">
+   <button class="optc" onclick="bk.type='local';step(2)"><div class="oi">🏥</div><div class="ot">${t('Local Patient','مريض محلي')}</div><div class="od">${t('Book a clinic appointment in Egypt','احجز موعداً في إحدى العيادات')}</div></button>
+   <button class="optc" onclick="bk.type='intl';step('2i')"><div class="oi">🌍</div><div class="ot">${t('International Patient','مريض دولي')}</div><div class="od">${t('Online Zoom consultation from anywhere','استشارة عبر Zoom من أي مكان')}</div></button>
+  </div>`;
+ }
+ if(n===2){ // local: choose clinic
+  mb.innerHTML=`
+  <h3>${t('Choose Clinic Location','اختيار العيادة')}</h3>
+  <div class="msub">${t('Step 1 of 4 — Local patient pathway','الخطوة 1 من 4 — مسار المريض المحلي')}</div>
+  <div class="opt2">
+   <button class="optc" onclick="bk.clinic='kes';step(3)"><div class="oi">🏥</div><div class="ot">${t('Kafr El Sheikh Clinic','عيادة كفر الشيخ')}</div><div class="od">${t('Sun · Tue · Sat · 3:00–9:00 PM','الأحد · الثلاثاء · السبت · 3:00–9:00 م')}</div></button>
+   <button class="optc" onclick="bk.clinic='miv';step(3)"><div class="oi">🏙️</div><div class="ot">${t('Mivida Clinic — New Cairo','عيادة ميفيدا — القاهرة الجديدة')}</div><div class="od">${t('Wed · Thu · 3:00–9:00 PM','الأربعاء · الخميس · 3:00–9:00 م')}</div></button>
+  </div>
+  <div class="mnav"><button class="back" onclick="step(1)">${t('← Back','→ رجوع')}</button><span></span></div>`;
+ }
+ if(n===3){ // choose date — only real clinic days appear
+  const dates=nextDates(bk.clinic);
+  mb.innerHTML=`
+  <h3>${t('Choose Available Date','اختيار اليوم المتاح')}</h3>
+  <div class="msub">${t('Step 2 of 4 — Only real clinic days are offered','الخطوة 2 من 4 — تظهر أيام العيادة الفعلية فقط')} · <b>${AR()?CLINICS[bk.clinic].ar:CLINICS[bk.clinic].en}</b></div>
+  <div class="daterow">${dates.map((d,i)=>`<button class="dchip" data-i="${i}"><div class="dw">${dow(d)}</div><div>${fmt(d)}</div></button>`).join('')}</div>
+  <div class="mnav"><button class="back" onclick="step(2)">${t('← Back','→ رجوع')}</button><button class="next" id="toSlots" disabled>${t('Choose Slot →','اختيار الموعد ←')}</button></div>`;
+  const chips=[...mb.querySelectorAll('.dchip')];
+  chips.forEach(c=>c.onclick=()=>{chips.forEach(x=>x.classList.remove('sel'));c.classList.add('sel');bk.date=dates[+c.dataset.i];mb.querySelector('#toSlots').disabled=false;});
+  mb.querySelector('#toSlots').onclick=()=>step(4);
+ }
+ if(n===4){ // choose slot
+  const taken=[1,4,7,10]; // demo: some booked
+  mb.innerHTML=`
+  <h3>${t('Choose Appointment Slot','اختيار الموعد')}</h3>
+  <div class="msub">${t('Step 3 of 4','الخطوة 3 من 4')} · ${dow(bk.date)} ${fmt(bk.date)} · ${t('3:00–9:00 PM','3:00–9:00 م')}</div>
+  <div class="slotgrid">${SLOTS.map((s,i)=>`<button class="slot ${taken.includes(i)?'dis':''}" data-s="${s}">${AR()?s.replace('PM','م'):s}</button>`).join('')}</div>
+  <div class="mnav"><button class="back" onclick="step(3)">${t('← Back','→ رجوع')}</button><button class="next" id="toDet" disabled>${t('Your Details →','بياناتك ←')}</button></div>`;
+  const slots=[...mb.querySelectorAll('.slot:not(.dis)')];
+  slots.forEach(s=>s.onclick=()=>{slots.forEach(x=>x.classList.remove('sel'));s.classList.add('sel');bk.slot=s.dataset.s;mb.querySelector('#toDet').disabled=false;});
+  mb.querySelector('#toDet').onclick=()=>step(5);
+ }
+ if(n===5){ // details
+  mb.innerHTML=`
+  <h3>${t('Your Details','بياناتك')}</h3>
+  <div class="msub">${t('Step 4 of 4','الخطوة 4 من 4')}</div>
+  <input class="field" id="fn" placeholder="${t('Full name','الاسم بالكامل')}">
+  <input class="field" id="fp" placeholder="${t('Mobile number (WhatsApp)','رقم الموبايل (واتساب)')}">
+  <div class="mnote">💳 ${t('Payment at clinic only — no online payment is required for local patients.','الدفع داخل العيادة فقط — لا يُطلب دفع أونلاين للمرضى المحليين.')}</div>
+  <div class="mnav"><button class="back" onclick="step(4)">${t('← Back','→ رجوع')}</button><button class="next" onclick="confirmLocal()">${t('Confirm Booking','تأكيد الحجز')}</button></div>`;
+ }
+ if(n==='2i'){ // international: zoom slots
+  mb.innerHTML=`
+  <h3>${t('International Patient — Zoom Consultation','مريض دولي — استشارة Zoom')}</h3>
+  <div class="msub">${t('Dedicated Zoom slots with time-zone guidance','مواعيد Zoom مخصصة مع إرشاد فروق التوقيت')}</div>
+  <div class="mstep">${t('Choose a dedicated Zoom slot (Cairo time)','اختر موعد Zoom (بتوقيت القاهرة)')}</div>
+  <div class="slotgrid">${['Sun 19 Jul · 9:00 PM','Mon 20 Jul · 9:30 PM','Wed 22 Jul · 9:00 PM','Thu 23 Jul · 9:30 PM'].map(s=>`<button class="slot" style="grid-column:span 2" data-s="${s}">${s}</button>`).join('')}</div>
+  <input class="field" id="fn" style="margin-top:16px" placeholder="${t('Full name','الاسم بالكامل')}">
+  <input class="field" id="fp" placeholder="${t('WhatsApp number (with country code)','رقم الواتساب (مع كود الدولة)')}">
+  <button class="optc" style="text-align:start;padding:14px 18px" onclick="this.classList.toggle('sel')">📎 ${t('Upload medical reports (optional)','رفع التقارير الطبية (اختياري)')}</button>
+  <div class="mnote">${t('🌍 A 50% deposit is required to reserve international slots, and every request is reviewed by the clinic team — <b>human approval before confirmation</b>. You will receive your Zoom link and confirmation on WhatsApp.','🌍 مطلوب إيداع 50% لحجز المواعيد الدولية، وتتم مراجعة كل طلب من فريق العيادة — <b>مراجعة بشرية قبل التأكيد</b>. ستصلك رسالة التأكيد ورابط Zoom عبر واتساب.')}</div>
+  <div class="mnav"><button class="back" onclick="step(1)">${t('← Back','→ رجوع')}</button><button class="next" id="intlGo" disabled>${t('Submit Request','إرسال الطلب')}</button></div>`;
+  const slots=[...mb.querySelectorAll('.slot')];
+  slots.forEach(s=>s.onclick=()=>{slots.forEach(x=>x.classList.remove('sel'));s.classList.add('sel');bk.slot=s.dataset.s;mb.querySelector('#intlGo').disabled=false;});
+  mb.querySelector('#intlGo').onclick=confirmIntl;
+ }
+}
+function confirmLocal(){
+ const name=mb.querySelector('#fn').value||t('Demo Patient','مريض تجريبي');
+ mb.innerHTML=`
+ <div class="confirmbox">
+  <div class="ok">✓</div>
+  <h3>${t('Booking Received','تم استلام الحجز')}</h3>
+  <div class="msub">${t('This is a demo — no real booking was made.','هذا عرض تجريبي — لم يتم إنشاء حجز حقيقي.')}</div>
+  <div class="sumline"><span>${t('Patient','المريض')}</span><b>${name}</b></div>
+  <div class="sumline"><span>${t('Clinic','العيادة')}</span><b>${AR()?CLINICS[bk.clinic].ar:CLINICS[bk.clinic].en}</b></div>
+  <div class="sumline"><span>${t('Date','التاريخ')}</span><b>${dow(bk.date)} ${fmt(bk.date)}</b></div>
+  <div class="sumline"><span>${t('Slot','الموعد')}</span><b>${AR()?bk.slot.replace('PM','م'):bk.slot}</b></div>
+  <div class="sumline"><span>${t('Payment','الدفع')}</span><b>${t('At clinic only','داخل العيادة فقط')}</b></div>
+  <div class="wa-note">💬 <b>${t('WhatsApp confirmation','تأكيد واتساب')}</b> — ${t('In the live system, the patient instantly receives an official WhatsApp confirmation, and this booking appears in the clinic backend for the secretary in real time.','في النظام الفعلي، يستلم المريض تأكيداً رسمياً عبر واتساب فوراً، ويظهر الحجز مباشرةً في نظام إدارة العيادة أمام السكرتارية.')}</div>
+  <div class="mnav" style="justify-content:center"><button class="next" onclick="closeBooking()">${t('Done','تم')}</button></div>
+ </div>`;
+}
+function confirmIntl(){
+ const name=mb.querySelector('#fn').value||t('Demo Patient','مريض تجريبي');
+ mb.innerHTML=`
+ <div class="confirmbox">
+  <div class="ok">✓</div>
+  <h3>${t('Request Submitted for Review','تم إرسال الطلب للمراجعة')}</h3>
+  <div class="msub">${t('This is a demo — no real request was made.','هذا عرض تجريبي — لم يتم إرسال طلب حقيقي.')}</div>
+  <div class="sumline"><span>${t('Patient','المريض')}</span><b>${name}</b></div>
+  <div class="sumline"><span>${t('Zoom slot','موعد Zoom')}</span><b class="keep-ltr">${bk.slot}</b></div>
+  <div class="sumline"><span>${t('Deposit','الإيداع')}</span><b>${t('50% required','مطلوب 50%')}</b></div>
+  <div class="sumline"><span>${t('Status','الحالة')}</span><b>${t('Pending human approval','بانتظار المراجعة البشرية')}</b></div>
+  <div class="wa-note">💬 ${t('In the live system, this request lands in the backend as <b>Pending Approval</b>. Once the team approves it, the patient receives the WhatsApp confirmation with the Zoom link.','في النظام الفعلي، يصل هذا الطلب إلى النظام بحالة <b>بانتظار الموافقة</b>. وبعد موافقة الفريق يستلم المريض تأكيد الواتساب مع رابط Zoom.')}</div>
+  <div class="mnav" style="justify-content:center"><button class="next" onclick="closeBooking()">${t('Done','تم')}</button></div>
+ </div>`;
+}
+</script>
+</body>
+</html>

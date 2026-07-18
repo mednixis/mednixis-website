@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Demo — The Mednixis Clinic System</title>
+<meta name="description" content="A live, clickable demonstration of the Mednixis Clinic System with sample data. No real patient information.">
+<meta name="robots" content="noindex">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+ --navy:#141D2C;--navy2:#1B2434;--copper:#B0793F;--copper2:#C9955C;
+ --bg:#F3F4F7;--card:#fff;--line:#E7E9EF;--ink:#232B3A;--mut:#8A94A6;
+ --green:#2F9E63;--greenbg:#E6F5EC;--greentx:#237A4B;
+ --amberbg:#FCF3DF;--ambertx:#A8751F;--bluebg:#E8F0FC;--bluetx:#2B5FB8;
+ --redbg:#FBE9E7;--redtx:#B44A3E;--graybg:#EFF1F5;--graytx:#5C6675;
+}
+body{font-family:'Segoe UI',-apple-system,'DejaVu Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;border:none;background:none;cursor:pointer;font-size:inherit;color:inherit}
+input{font-family:inherit;font-size:13px}
+
+/* demo banner */
+.banner{background:linear-gradient(90deg,#1B2434,#2A3650);color:#fff;padding:10px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.banner .b-pill{background:var(--copper);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;padding:5px 12px;border-radius:999px}
+.banner .b-t{font-size:13px;opacity:.9}
+.banner a{margin-left:auto;color:var(--copper2);font-size:13px;font-weight:600;text-decoration:none}
+.banner a:hover{text-decoration:underline}
+
+.app{display:flex;min-height:calc(100vh - 42px)}
+/* sidebar */
+.side{width:232px;background:var(--navy);color:#A9B4C6;display:flex;flex-direction:column;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:12px;padding:20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.mono{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#C9955C,#B0793F);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0}
+.brand .t1{color:#fff;font-weight:600;font-size:14.5px}
+.brand .t2{font-size:10.5px;color:#8A96A9;letter-spacing:.08em;text-transform:uppercase}
+.menu{padding:12px;flex:1}
+.mi{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:9px;margin-bottom:3px;font-size:13.5px;color:#A9B4C6;width:100%;text-align:left;transition:background .15s}
+.mi:hover{background:rgba(255,255,255,.05);color:#fff}
+.mi svg{width:17px;height:17px;stroke:#7E8BA0;fill:none;stroke-width:1.8;flex-shrink:0}
+.mi.on{background:rgba(201,149,92,.14);color:#fff;position:relative}
+.mi.on::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--copper2)}
+.mi.on svg{stroke:var(--copper2)}
+.mi.hidden{display:none}
+.side-foot{padding:14px 20px;border-top:1px solid rgba(255,255,255,.07);font-size:11px;color:#68758B;line-height:1.7}
+.side-foot b{color:var(--copper2)}
+
+/* main */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.top{height:62px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 22px;flex-shrink:0}
+.crumb{font-size:15px;font-weight:600;color:var(--navy2);white-space:nowrap}
+.crumb span{color:#98A1B2;font-weight:400}
+.rolebox{margin-left:auto;display:flex;align-items:center;gap:9px;background:#F3F4F7;border:1px solid var(--line);border-radius:999px;padding:5px 6px 5px 14px}
+.rolebox .lb{font-size:11.5px;color:var(--mut);font-weight:600;letter-spacing:.04em;white-space:nowrap}
+.rb{padding:7px 13px;border-radius:999px;font-size:12px;font-weight:600;color:#5C6675;white-space:nowrap}
+.rb.on{background:var(--navy2);color:#fff}
+.avatar{display:flex;align-items:center;gap:10px}
+.av{width:34px;height:34px;border-radius:50%;background:var(--navy2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600}
+.who{line-height:1.2}
+.who .n{font-size:13px;font-weight:600;white-space:nowrap}
+.who .r{font-size:11px;color:var(--mut)}
+.content{padding:24px;flex:1;overflow-x:auto}
+
+/* generic */
+.h-row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.h1{font-size:19px;font-weight:700;color:var(--navy2)}
+.sub{font-size:13px;color:#7A8496;margin-top:2px}
+.btnp{background:var(--copper);color:#fff;border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;transition:background .15s}
+.btnp:hover{background:var(--copper2)}
+.btns{background:#fff;border:1px solid #E0E3EA;color:#3A4353;border-radius:9px;padding:9px 15px;font-size:13px;font-weight:500}
+.btns:hover{border-color:var(--copper);color:var(--copper)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.pad{padding:18px 20px}
+.grid{display:grid;gap:16px}
+.pill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.p-green{background:var(--greenbg);color:var(--greentx)}
+.p-amber{background:var(--amberbg);color:var(--ambertx)}
+.p-blue{background:var(--bluebg);color:var(--bluetx)}
+.p-red{background:var(--redbg);color:var(--redtx)}
+.p-gray{background:var(--graybg);color:var(--graytx)}
+.p-navy{background:#E3E7EF;color:var(--navy2)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600;padding:11px 15px;border-bottom:1px solid var(--line);background:#FAFBFC;white-space:nowrap}
+td{padding:12px 15px;border-bottom:1px solid #F0F2F5;color:#2B3446;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.tick{color:var(--green);font-weight:700}
+.mut{color:var(--mut)}
+.kpi{padding:16px 18px}
+.kpi .lb{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.kpi .v{font-size:25px;font-weight:700;color:var(--navy2);margin-top:6px}
+.kpi .d{font-size:12px;margin-top:4px;color:var(--mut)}
+.up{color:var(--green);font-weight:600}
+.sec-t{font-size:14px;font-weight:700;color:var(--navy2)}
+.tabbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.tabb{padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12.5px;font-weight:500;color:var(--navy2)}
+.tabb.on{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.searchin{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 14px;background:#fff;color:var(--ink);outline:none}
+.searchin:focus{border-color:var(--copper)}
+.bar-wrap{height:9px;background:var(--graybg);border-radius:9px;overflow:hidden}
+.bar{height:9px;border-radius:9px}
+/* switch */
+.sw{width:38px;height:22px;border-radius:999px;background:#D7DBE3;position:relative;transition:background .18s;flex-shrink:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .18s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.sw.on{background:var(--green)}
+.sw.on::after{left:19px}
+/* toast */
+.toasts{position:fixed;bottom:22px;right:22px;z-index:200;display:flex;flex-direction:column;gap:10px}
+.toast{background:var(--navy2);color:#fff;border-radius:11px;padding:13px 18px;font-size:13px;box-shadow:0 14px 40px rgba(19,26,39,.35);display:flex;gap:10px;align-items:center;animation:tin .25s ease;max-width:340px}
+.toast .tk{color:#7ED9A4;font-weight:700}
+@keyframes tin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.fade{animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* wa preview */
+.wa-shell{background:#E8E2D9;border-radius:13px;overflow:hidden;border:1px solid var(--line)}
+.wa-head{background:#0F5C4E;color:#fff;padding:13px 17px;display:flex;align-items:center;gap:12px}
+.wa-av{width:33px;height:33px;border-radius:50%;background:var(--copper2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.wa-body{padding:20px 16px}
+.wa-msg{background:#fff;border-radius:12px;border-top-left-radius:3px;padding:13px 15px;font-size:13px;line-height:1.75;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.wa-time{text-align:right;font-size:11px;color:var(--mut);margin-top:6px}
+/* steps */
+.stepbar{display:flex;gap:6px;margin:14px 0 18px;flex-wrap:wrap}
+.step{padding:7px 13px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--graybg);color:var(--graytx)}
+.step.done{background:var(--greenbg);color:var(--greentx)}
+.step.on{background:var(--copper);color:#fff}
+.fieldbox{border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+.fieldbox .fl{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin-bottom:6px;font-weight:600}
+.notebox{border:1px dashed #DCC8AE;background:#FDF9F2}
+.rowclick{cursor:pointer}
+.rowclick:hover td{background:#FAFBFD}
+.rowsel td{background:#FDF9F2!important}
+.lockmsg{padding:60px 30px;text-align:center;color:var(--mut)}
+.lockmsg .li{font-size:36px;margin-bottom:12px}
+.lockmsg b{color:var(--navy2)}
+@media(max-width:980px){
+ .side{width:64px}
+ .brand .t1,.brand .t2,.mi span,.side-foot{display:none}
+ .brand{justify-content:center;padding:16px 8px}
+ .mi{justify-content:center;padding:12px}
+ .who{display:none}
+ .rolebox .lb{display:none}
+ .content{padding:14px}
+ .g4{grid-template-columns:1fr 1fr!important}
+ .g2,.g21,.g12{grid-template-columns:1fr!important}
+}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1976979802943674');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1976979802943674&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<div class="banner">
+ <span class="b-pill">INTERACTIVE DEMO</span>
+ <span class="b-t">You're exploring the Mednixis Clinic System with sample data — click anything. No real patient information is used.</span>
+ <a href="contact.html">Request your own system →</a>
+</div>
+
+<div class="app">
+ <aside class="side">
+  <div class="brand"><div class="mono">MR</div><div><div class="t1">Dr. Maged Ragab</div><div class="t2">Clinic System</div></div></div>
+  <nav class="menu" id="menu"></nav>
+  <div class="side-foot">Powered by <b>MEDNIXIS</b><br>v2.4 · Demo Environment</div>
+ </aside>
+ <div class="main">
+  <div class="top">
+   <div class="crumb" id="crumb">Dashboard</div>
+   <div class="rolebox">
+    <span class="lb">VIEW AS</span>
+    <button class="rb on" data-role="owner">Owner</button>
+    <button class="rb" data-role="doctor">Doctor</button>
+    <button class="rb" data-role="secretary">Secretary</button>
+    <button class="rb" data-role="editor">Editor</button>
+   </div>
+   <div class="avatar"><div class="av" id="avI">MO</div><div class="who"><div class="n" id="avN">Moustafa Ragab</div><div class="r" id="avR">Owner</div></div></div>
+  </div>
+  <div class="content" id="content"></div>
+ </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ============ ICONS ============ */
+const IC={
+grid:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+cal:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+users:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><circle cx="17.5" cy="9" r="2.6"/><path d="M16.5 14.6c2.9.3 5 2 5 4.9"/></svg>',
+scal:'<svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>',
+card:'<svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M6 15h5"/></svg>',
+chart:'<svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>',
+chat:'<svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H4l2-3.2A8 8 0 1 1 21 12z"/></svg>',
+doc:'<svg viewBox="0 0 24 24"><path d="M6 2.5h8l4 4V21.5H6z"/><path d="M14 2.5v4h4M9 12h6M9 16h6"/></svg>',
+gear:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1"/></svg>'};
+
+/* ============ STATE & DATA ============ */
+const MODULES=[
+ {id:'dashboard',icon:'grid',label:'Dashboard'},
+ {id:'bookings',icon:'cal',label:'Bookings'},
+ {id:'patients',icon:'users',label:'Patients'},
+ {id:'surgeries',icon:'scal',label:'Surgeries'},
+ {id:'payments',icon:'card',label:'Payments'},
+ {id:'reports',icon:'chart',label:'Reports'},
+ {id:'whatsapp',icon:'chat',label:'WhatsApp'},
+ {id:'cms',icon:'doc',label:'Website CMS'},
+ {id:'roles',icon:'gear',label:'Users & Roles'},
+];
+const PERM={
+ owner:  ['dashboard','bookings','patients','surgeries','payments','reports','whatsapp','cms','roles'],
+ doctor: ['dashboard','bookings','patients','surgeries','reports'],
+ secretary:['dashboard','bookings','patients','surgeries','payments','whatsapp'],
+ editor: ['cms'],
+};
+const ROLE_INFO={
+ owner:{n:'Moustafa Ragab',i:'MO',r:'Owner'},
+ doctor:{n:'Prof. Maged Ragab',i:'MR',r:'Doctor'},
+ secretary:{n:'Mona Adel',i:'MA',r:'Secretary'},
+ editor:{n:'Nour Hany',i:'NH',r:'Content Editor'},
+};
+let state={role:'owner',mod:'dashboard',clinicFilter:'all',surgFilter:'all',patSearch:'',selPatient:2417,patStep:3,reportPeriod:'jul'};
+
+let BOOKINGS=[
+ {t:'3:00 PM',n:'Ahmed Mahmoud Hassan',p:'0100 000 0417',c:'Mivida',ty:'Follow-up',st:'Attended',wa:true},
+ {t:'3:30 PM',n:'Karim Fathy El-Sayed',p:'0101 000 0231',c:'Mivida',ty:'New Visit',st:'Attended',wa:true},
+ {t:'4:00 PM',n:'Mostafa Adel Ibrahim',p:'0102 000 0388',c:'Mivida',ty:'Follow-up',st:'Confirmed',wa:true},
+ {t:'4:30 PM',n:'Omar Khaled Tawfik',p:'+966 50 000 0114',c:'Mivida',ty:'International · Zoom',st:'Pending',wa:false},
+ {t:'5:00 PM',n:'Mahmoud Reda Aly',p:'0106 000 0522',c:'Mivida',ty:'New Visit',st:'Confirmed',wa:true},
+ {t:'5:30 PM',n:'Youssef Hisham Kamal',p:'0109 000 0673',c:'Mivida',ty:'Follow-up',st:'Confirmed',wa:true},
+ {t:'6:00 PM',n:'Amr Salah Mansour',p:'0100 000 0791',c:'Mivida',ty:'New Visit',st:'Pending',wa:false},
+ {t:'6:30 PM',n:'Hassan Ashraf Zaki',p:'0111 000 0845',c:'Mivida',ty:'Follow-up · Post-op',st:'Confirmed',wa:true},
+ {t:'7:00 PM',n:'Waleed Magdy Fouad',p:'0122 000 0918',c:'Mivida',ty:'New Visit',st:'Pending',wa:false},
+];
+const PATIENTS=[
+ {f:2417,n:'Ahmed Mahmoud Hassan',age:34,c:'Infertility',last:'14 Jul 2026',
+  detail:{sa:['Count <b>4.2 M/mL</b>','Motility (progressive) <b>18%</b>','Morphology <b>3%</b>'],saDate:'12 Jul 2026',
+  h:['FSH <b>6.8 mIU/mL</b>','LH <b>4.1 mIU/mL</b>','Total Testosterone <b>412 ng/dL</b>'],
+  dop:'Left grade II varicocele, reflux on Valsalva. Testicular volume within normal range.',
+  note:'Candidate for microsurgical varicocelectomy. Discuss timeline with couple next visit.',visits:6}},
+ {f:2405,n:'Karim Fathy El-Sayed',age:41,c:'Normal',last:'17 Jul 2026',
+  detail:{sa:null,h:['PSA <b>1.1 ng/mL</b>','Creatinine <b>0.9 mg/dL</b>'],dop:'Renal ultrasound: 6 mm lower-pole stone, left kidney. No hydronephrosis.',
+  note:'Conservative management. Hydration counselling given. Review with CT in 4 weeks.',visits:2}},
+ {f:2398,n:'Mostafa Adel Ibrahim',age:52,c:'ED',last:'10 Jul 2026',
+  detail:{sa:null,h:['Total Testosterone <b>318 ng/dL</b>','HbA1c <b>7.2%</b>','Lipid profile — borderline'],
+  dop:'Penile Doppler: adequate arterial inflow, mild venous leak pattern.',
+  note:'Start PDE5i trial + metabolic optimization with internist. Review in 6 weeks; discuss prosthesis only if refractory.',visits:4}},
+ {f:2361,n:'Hany Samir Abdallah',age:29,c:'Infertility',last:'06 Jul 2026',
+  detail:{sa:['Azoospermia — confirmed on two samples'],saDate:'28 Jun 2026',
+  h:['FSH <b>18.4 mIU/mL</b>','Testosterone <b>390 ng/dL</b>'],dop:'Small testicular volume bilaterally. No obstruction pattern.',
+  note:'Non-obstructive azoospermia. Micro-TESE scheduled Sun 19 Jul with IVF lab coordination.',visits:5}},
+ {f:2344,n:'Tarek Nabil Hussein',age:33,c:'Infertility',last:'02 Jul 2026',
+  detail:{sa:['Count <b>9.8 M/mL</b>','Motility <b>24%</b>'],saDate:'30 Jun 2026',h:['Hormonal profile within normal limits'],
+  dop:'Left grade III varicocele.',note:'Microsurgical varicocelectomy scheduled Mon 20 Jul.',visits:3}},
+ {f:2312,n:'Sherif Gamal Radwan',age:58,c:'ED',last:'28 Jun 2026',
+  detail:{sa:null,h:['Testosterone <b>402 ng/dL</b>'],dop:'Severe veno-occlusive dysfunction. Refractory to medical therapy.',
+  note:'Counselled for malleable penile prosthesis — surgery Wed 22 Jul. Consent signed.',visits:7}},
+ {f:2287,n:'Mahmoud Reda Aly',age:45,c:'Normal',last:'25 Jun 2026',
+  detail:{sa:null,h:['PSA <b>2.4 ng/mL</b>'],dop:'Prostate volume 46 mL. Moderate LUTS.',
+  note:'Discussed Rezum as minimally-invasive option. Patient considering.',visits:2}},
+];
+const SURG=[
+ {n:'Hany Samir Abdallah',pr:'Micro-TESE',h:'Tanta — Private Hospital',d:'Sun 19 Jul 2026',st:'Scheduled',f:'Pre-op sent ✓'},
+ {n:'Tarek Nabil Hussein',pr:'Microsurgical Varicocelectomy',h:'Kafr El Sheikh',d:'Mon 20 Jul 2026',st:'Scheduled',f:'Pre-op sent ✓'},
+ {n:'Sherif Gamal Radwan',pr:'Penile Prosthesis (Malleable)',h:'New Cairo',d:'Wed 22 Jul 2026',st:'Scheduled',f:'Deposit received'},
+ {n:'Hassan Ashraf Zaki',pr:'URS + Laser Lithotripsy',h:'Tanta — Private Hospital',d:'09 Jul 2026',st:'Completed',f:'Follow-up D+7 ✓'},
+ {n:'Waleed Magdy Fouad',pr:'Microsurgical Varicocelectomy',h:'Kafr El Sheikh',d:'02 Jul 2026',st:'Completed',f:'Follow-up D+14 due'},
+ {n:'Ibrahim Saad Younis',pr:'Micro-TESE',h:'Tanta — Private Hospital',d:'24 Jun 2026',st:'Completed',f:'Semen analysis M+3'},
+];
+let WA=[
+ {n:'Booking Confirmation',t:'booking_confirm_ar',tr:'On booking approved',on:true},
+ {n:'Appointment Reminder',t:'reminder_24h_ar',tr:'24h before slot',on:true},
+ {n:'Surgery Follow-up',t:'postop_check_ar',tr:'Day +3 after surgery',on:true},
+ {n:'Review Request',t:'review_request_ar',tr:'Day +7, attended visits',on:true},
+ {n:'International Deposit Link',t:'intl_deposit_en',tr:'On Zoom slot request',on:false},
+];
+let CMS=[
+ {t:'Micro-TESE: What Couples Should Know',c:'Article · AR/EN',pub:true},
+ {t:'Varicocele & Fertility — Patient Guide',c:'Article · AR/EN',pub:true},
+ {t:'International Patients: How Online Consultation Works',c:'Page · EN',pub:true},
+ {t:'Rezum for BPH — New Service Page',c:'Page · AR/EN',pub:false},
+];
+const PAYMENTS=[
+ {n:'Karim Fathy El-Sayed',it:'New visit',c:'Mivida',m:'Cash',a:'EGP 800'},
+ {n:'Ahmed Mahmoud Hassan',it:'Follow-up',c:'Mivida',m:'Cash',a:'EGP 500'},
+ {n:'Omar Khaled Tawfik',it:'Zoom deposit (50%)',c:'International',m:'Transfer · 50% deposit',a:'EGP 1,500'},
+ {n:'Hassan Ashraf Zaki',it:'Post-op review',c:'Mivida',m:'Cash at clinic',a:'EGP 500'},
+ {n:'Youssef Hisham Kamal',it:'Follow-up',c:'Mivida',m:'Cash at clinic',a:'EGP 500'},
+ {n:'Mahmoud Reda Aly',it:'New visit',c:'Mivida',m:'Cash at clinic',a:'EGP 800'},
+];
+const CRUMBS={dashboard:'Dashboard <span>/ Overview — Thursday, 16 July 2026</span>',bookings:'Bookings <span>/ Thursday, 16 July 2026</span>',
+patients:'Patients <span>/ Medical Records</span>',surgeries:'Surgeries <span>/ Pipeline</span>',payments:'Payments <span>/ Today</span>',
+reports:'Reports <span>/ Revenue</span>',whatsapp:'WhatsApp <span>/ Automation — Meta Cloud API</span>',cms:'Website CMS <span>/ Content</span>',roles:'Settings <span>/ Users & Roles</span>'};
+
+/* ============ HELPERS ============ */
+const $=s=>document.querySelector(s);
+function toast(msg){const t=document.createElement('div');t.className='toast';t.innerHTML='<span class="tk">✓</span><span>'+msg+'</span>';
+ $('#toasts').appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),320)},3400);}
+function pillFor(st){return st==='Attended'?'p-green':st==='Confirmed'?'p-blue':st==='Pending'?'p-amber':st==='Scheduled'?'p-blue':st==='Completed'?'p-green':'p-gray'}
+function casePill(c){return c==='Infertility'?'p-amber':c==='ED'?'p-blue':'p-gray'}
+
+/* ============ RENDER ============ */
+function renderMenu(){
+ const allowed=PERM[state.role];
+ $('#menu').innerHTML=MODULES.map(m=>{
+  const ok=allowed.includes(m.id);
+  return `<button class="mi ${state.mod===m.id?'on':''} ${ok?'':'hidden'}" data-mod="${m.id}">${IC[m.icon]}<span>${m.label}</span></button>`;
+ }).join('');
+ document.querySelectorAll('[data-mod]').forEach(b=>b.onclick=()=>{state.mod=b.dataset.mod;render();});
+}
+function render(){
+ const allowed=PERM[state.role];
+ if(!allowed.includes(state.mod)) state.mod=allowed[0];
+ renderMenu();
+ $('#crumb').innerHTML=CRUMBS[state.mod];
+ const u=ROLE_INFO[state.role];$('#avI').textContent=u.i;$('#avN').textContent=u.n;$('#avR').textContent=u.r;
+ $('#content').innerHTML='<div class="fade">'+VIEW[state.mod]()+'</div>';
+ wire();
+}
+
+const VIEW={
+/* ---- DASHBOARD ---- */
+dashboard(){
+ const bars=[['Sat',62],['Sun',88],['Mon',74],['Tue',95],['Wed',81],['Thu',100],['Fri',28]];
+ const svg=bars.map((b,i)=>`<g><rect x="${40+i*88}" y="${200-b[1]*1.6}" width="42" height="${b[1]*1.6}" rx="6" fill="${b[0]==='Thu'?'#B0793F':'#DCC8AE'}"><title>${b[0]}</title></rect><text x="${61+i*88}" y="222" text-anchor="middle" font-size="11" fill="#8A94A6">${b[0]}</text></g>`).join('');
+ return `
+ <div class="grid g4" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
+  <div class="card kpi"><div class="lb">Today's Bookings</div><div class="v">${BOOKINGS.length+13}</div><div class="d"><span class="up">▲ 4</span> vs last Thursday</div></div>
+  <div class="card kpi"><div class="lb">Revenue — Today</div><div class="v">EGP 18,400</div><div class="d"><span class="up">▲ 12%</span> vs last Thursday</div></div>
+  <div class="card kpi"><div class="lb">New Patients — Week</div><div class="v">31</div><div class="d"><span class="up">▲ 6</span> vs last week</div></div>
+  <div class="card kpi"><div class="lb">Surgeries — This Week</div><div class="v">6</div><div class="d">2 follow-ups due</div></div>
+ </div>
+ <div class="grid g21" style="grid-template-columns:1.5fr 1fr;margin-bottom:16px">
+  <div class="card pad">
+   <div class="h-row" style="margin-bottom:2px"><span class="sec-t">Bookings — This Week</span><span class="pill p-gray">All clinics</span></div>
+   <svg width="100%" height="230" viewBox="0 0 660 230">${svg}</svg>
+  </div>
+  <div class="card pad">
+   <div class="sec-t" style="margin-bottom:14px">Clinic Performance — July</div>
+   <div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><b>Kafr El Sheikh Clinic</b><span class="mut">246 visits · 61%</span></div><div class="bar-wrap"><div class="bar" style="width:61%;background:var(--copper)"></div></div></div>
+   <div style="margin-bottom:20px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><b>Mivida Clinic — New Cairo</b><span class="mut">158 visits · 39%</span></div><div class="bar-wrap"><div class="bar" style="width:39%;background:var(--navy2)"></div></div></div>
+   <div class="sec-t" style="margin-bottom:10px">International Consultations</div>
+   <div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid #F0F2F5"><span>Zoom consultations — July</span><b>14</b></div>
+   <div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 0"><span>Deposits received</span><b>EGP 21,000</b></div>
+  </div>
+ </div>
+ <div class="grid g21" style="grid-template-columns:1.5fr 1fr">
+  <div class="card"><div class="pad" style="padding-bottom:8px"><span class="sec-t">Today's Schedule — Mivida Clinic</span></div>
+  <table><tr><th>Time</th><th>Patient</th><th>Type</th><th>Status</th></tr>
+  ${BOOKINGS.filter(b=>b.c==='Mivida').slice(0,4).map(b=>`<tr><td>${b.t}</td><td><b>${b.n}</b></td><td>${b.ty}</td><td><span class="pill ${pillFor(b.st)}">${b.st}</span></td></tr>`).join('')}</table></div>
+  <div class="card"><div class="pad" style="padding-bottom:8px"><span class="sec-t">Upcoming Surgeries</span></div>
+  <table><tr><th>Patient</th><th>Procedure</th><th>Date</th></tr>
+  ${SURG.filter(s=>s.st==='Scheduled').map(s=>`<tr><td><b>${s.n.split(' ').slice(0,2).join(' ')}</b></td><td>${s.pr.replace('Microsurgical ','')}</td><td>${s.d.replace(' 2026','')}</td></tr>`).join('')}</table></div>
+ </div>`;
+},
+/* ---- BOOKINGS ---- */
+bookings(){
+ const list=BOOKINGS.filter(b=>state.clinicFilter==='all'||b.c===state.clinicFilter);
+ const canAct=state.role!=='doctor';
+ const pend=BOOKINGS.filter(b=>b.st==='Pending').length;
+ if(state.clinicFilter==='Kafr El Sheikh'){
+  return `
+  <div class="h-row"><div><div class="h1">Appointment Schedule</div><div class="sub">Online bookings from the website appear here automatically</div></div>
+  <div style="display:flex;gap:10px"><button class="btns">‹ &nbsp;Thu 16 Jul 2026&nbsp; ›</button><button class="btnp" id="newBk">+ New Booking</button></div></div>
+  <div class="tabbar">
+   <button class="tabb" data-cf="all">All Clinics</button>
+   <button class="tabb on" data-cf="Kafr El Sheikh">Kafr El Sheikh — Sun · Tue · Sat</button>
+   <button class="tabb" data-cf="Mivida">Mivida — Wed · Thu</button>
+  </div>
+  <div class="card lockmsg"><div class="li">📅</div><b>Kafr El Sheikh Clinic is closed on Thursdays.</b><br>
+  It operates Sun · Tue · Sat, 3:00 – 9:00 PM — the system only opens booking slots on real clinic days, exactly as patients see on drmagedragab.com.<br>
+  Next session: <b>Saturday 18 July 2026</b>.</div>`;
+ }
+ return `
+ <div class="h-row"><div><div class="h1">Appointment Schedule</div><div class="sub">Online bookings from the website appear here automatically — try confirming a pending one</div></div>
+ <div style="display:flex;gap:10px"><button class="btns">‹ &nbsp;Thu 16 Jul 2026&nbsp; ›</button><button class="btnp" id="newBk">+ New Booking</button></div></div>
+ <div class="tabbar">
+  <button class="tabb ${state.clinicFilter==='all'?'on':''}" data-cf="all">All Clinics</button>
+  <button class="tabb ${state.clinicFilter==='Kafr El Sheikh'?'on':''}" data-cf="Kafr El Sheikh">Kafr El Sheikh — Sun · Tue · Sat</button>
+  <button class="tabb ${state.clinicFilter==='Mivida'?'on':''}" data-cf="Mivida">Mivida — Wed · Thu</button>
+  <span style="margin-left:auto" class="mut">${BOOKINGS.length+13} bookings · ${pend} pending</span>
+ </div>
+ <div class="card"><table>
+ <tr><th>Time</th><th>Patient</th><th>Phone</th><th>Clinic</th><th>Visit Type</th><th>Status</th><th style="text-align:center">WhatsApp</th>${canAct?'<th></th>':''}</tr>
+ ${list.map((b,i)=>`<tr><td>${b.t}</td><td><b>${b.n}</b></td><td class="mut">${b.p}</td><td>${b.c}</td><td>${b.ty}</td>
+  <td><span class="pill ${pillFor(b.st)}">${b.st==='Pending'&&b.ty.includes('International')?'Pending Approval':b.st}</span></td>
+  <td style="text-align:center" class="${b.wa?'tick':'mut'}">${b.wa?'✓':'—'}</td>
+  ${canAct?`<td>${b.st==='Pending'?`<button class="btnp" style="padding:7px 14px;font-size:12px" data-confirm="${BOOKINGS.indexOf(b)}">Confirm</button>`:''}</td>`:''}</tr>`).join('')}
+ </table></div>`;
+},
+/* ---- PATIENTS ---- */
+patients(){
+ if(state.role==='secretary'){
+  return VIEW._patientList(true);
+ }
+ return `<div class="grid g12" style="grid-template-columns:1fr 1.2fr">${VIEW._patientList(false)}${VIEW._patientDetail()}</div>`;
+},
+_patientList(limited){
+ const q=state.patSearch.toLowerCase();
+ const list=PATIENTS.filter(p=>p.n.toLowerCase().includes(q)||String(p.f).includes(q));
+ return `<div>
+ <div class="h-row"><div><div class="h1">Patient Records</div><div class="sub">1,847 patients · progressive loading${limited?' · <span class="pill p-amber">Limited view — contact info only</span>':''}</div></div>
+ <button class="btnp">+ New Patient</button></div>
+ <div style="margin-bottom:12px"><input class="searchin" id="patQ" placeholder="Search by name or file number… (try typing)" value="${state.patSearch}"></div>
+ <div class="card"><table><tr><th>File</th><th>Name</th><th>Case Type</th><th>Last Visit</th></tr>
+ ${list.map(p=>`<tr class="rowclick ${(!limited&&p.f===state.selPatient)?'rowsel':''}" data-pat="${p.f}"><td class="mut">#${p.f}</td><td><b>${p.n}</b></td><td><span class="pill ${casePill(p.c)}">${p.c}</span></td><td class="mut">${p.last}</td></tr>`).join('')||'<tr><td colspan="4" class="mut">No patients match your search.</td></tr>'}
+ </table><div style="padding:11px 15px;font-size:12px;color:var(--mut);border-top:1px solid #F0F2F5">Loading more as you scroll…</div></div>
+ ${limited?'<div class="card lockmsg" style="margin-top:14px"><div class="li">🔒</div><b>Medical records are clinical-only.</b><br>The Secretary role sees the patient list for scheduling, but detailed medical records are visible only to the Doctor and Owner. Switch the "View as" role above to see the difference.</div>':''}
+ </div>`;
+},
+_patientDetail(){
+ const p=PATIENTS.find(x=>x.f===state.selPatient)||PATIENTS[0];
+ const d=p.detail;const steps=['History','Examination','Investigations','Plan'];
+ return `<div class="card pad" style="border-left:3px solid var(--copper);align-self:start">
+ <div class="h-row" style="margin-bottom:2px"><div><div class="h1">${p.n} <span class="mut" style="font-size:13px;font-weight:400">· File #${p.f} · ${p.age} yrs</span></div>
+ <div class="sub">${p.c==='Infertility'?"Male Infertility Sheet — mirrors the clinic's paper protocol":p.c==='ED'?'ED Case Sheet — structured assessment':'General Urology Record'}</div></div>
+ <span class="pill ${casePill(p.c)}">${p.c}</span></div>
+ <div class="stepbar">${steps.map((s,i)=>`<button class="step ${i+1<state.patStep?'done':i+1===state.patStep?'on':''}" data-step="${i+1}">${i+1} · ${s}${i+1<state.patStep?' ✓':''}</button>`).join('')}</div>
+ <div class="grid g2" style="grid-template-columns:1fr 1fr;gap:12px">
+  ${d.sa?`<div class="fieldbox"><div class="fl">Semen Analysis — ${d.saDate||''}</div><div style="font-size:13px;line-height:2">${d.sa.join('<br>')}</div></div>`:''}
+  <div class="fieldbox"><div class="fl">${p.c==='Normal'?'Laboratory':'Hormonal Profile'}</div><div style="font-size:13px;line-height:2">${d.h.join('<br>')}</div></div>
+  <div class="fieldbox"><div class="fl">Imaging / Doppler</div><div style="font-size:13px;line-height:1.7">${d.dop}</div></div>
+  <div class="fieldbox notebox"><div class="fl">Doctor's Note</div><div style="font-size:13px;line-height:1.7">${d.note}</div></div>
+ </div>
+ <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><button class="btnp" id="saveRec">Save Record</button><button class="btns" id="printRec">Print Sheet</button><button class="btns">Visit History (${d.visits})</button></div>
+ </div>`;
+},
+/* ---- SURGERIES ---- */
+surgeries(){
+ const list=SURG.filter(s=>state.surgFilter==='all'||s.st===state.surgFilter);
+ return `
+ <div class="h-row"><div><div class="h1">Surgical Pipeline</div><div class="sub">Every case linked to its full medical record — follow-ups fire automatically on WhatsApp</div></div><button class="btnp">+ Schedule Surgery</button></div>
+ <div class="grid g4" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
+  <div class="card kpi"><div class="lb">Scheduled</div><div class="v">3</div><div class="d">next: Sun 19 Jul</div></div>
+  <div class="card kpi"><div class="lb">Completed — July</div><div class="v">7</div><div class="d up">100% follow-up coverage</div></div>
+  <div class="card kpi"><div class="lb">Follow-ups Due</div><div class="v">2</div><div class="d">auto-reminders active</div></div>
+  <div class="card kpi"><div class="lb">Micro-TESE — 2026</div><div class="v">21</div><div class="d">most frequent procedure</div></div>
+ </div>
+ <div class="tabbar">
+  <button class="tabb ${state.surgFilter==='all'?'on':''}" data-sf="all">All</button>
+  <button class="tabb ${state.surgFilter==='Scheduled'?'on':''}" data-sf="Scheduled">Scheduled</button>
+  <button class="tabb ${state.surgFilter==='Completed'?'on':''}" data-sf="Completed">Completed</button>
+ </div>
+ <div class="card"><table><tr><th>Patient</th><th>Procedure</th><th>Hospital</th><th>Date</th><th>Status</th><th>Follow-up</th></tr>
+ ${list.map(s=>`<tr><td><b>${s.n}</b></td><td>${s.pr}</td><td class="mut">${s.h}</td><td>${s.d}</td><td><span class="pill ${pillFor(s.st)}">${s.st}</span></td><td class="mut">${s.f}</td></tr>`).join('')}</table></div>`;
+},
+/* ---- PAYMENTS ---- */
+payments(){
+ return `
+ <div class="h-row"><div><div class="h1">Payments — Today</div><div class="sub">Local patients pay at the clinic only · international patients reserve with a 50% deposit</div></div><button class="btnp" id="recPay">+ Record Payment</button></div>
+ <div class="grid g4" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
+  <div class="card kpi"><div class="lb">Collected Today</div><div class="v">EGP 18,400</div><div class="d">23 payments</div></div>
+  <div class="card kpi"><div class="lb">Cash at Clinic</div><div class="v">EGP 16,900</div><div class="d">local patients</div></div>
+  <div class="card kpi"><div class="lb">International Deposits</div><div class="v">EGP 1,500</div><div class="d">50% Zoom deposits</div></div>
+  <div class="card kpi"><div class="lb">Awaiting Approval</div><div class="v">1</div><div class="d">international request</div></div>
+ </div>
+ <div class="card"><table><tr><th>Patient</th><th>Item</th><th>Clinic</th><th>Method</th><th>Amount</th></tr>
+ ${PAYMENTS.map(p=>`<tr><td><b>${p.n}</b></td><td class="mut">${p.it}</td><td>${p.c}</td><td><span class="pill p-gray">${p.m}</span></td><td><b>${p.a}</b></td></tr>`).join('')}</table></div>`;
+},
+/* ---- REPORTS ---- */
+reports(){
+ const data=state.reportPeriod==='jul'
+  ?{label:'July 2026',total:'EGP 412,300',pct:'▲ 9.4% vs June',visits:404,avg:'1,020',surg:'EGP 168,000',sn:7,intl:'EGP 21,000',zn:14,
+    mon:[['Feb',180,110],['Mar',210,128],['Apr',236,140],['May',228,171],['Jun',262,180],['Jul',246,166]]}
+  :{label:'Q2 2026',total:'EGP 1,127,900',pct:'▲ 14.1% vs Q1',visits:1182,avg:'954',surg:'EGP 447,000',sn:19,intl:'EGP 54,000',zn:37,
+    mon:[['Jan',168,96],['Feb',180,110],['Mar',210,128],['Apr',236,140],['May',228,171],['Jun',262,180]]};
+ const g=data.mon.map((m,i)=>`<g><rect x="${50+i*100}" y="${210-m[1]*0.62}" width="26" height="${m[1]*0.62}" rx="5" fill="#B0793F"/><rect x="${80+i*100}" y="${210-m[2]*0.62}" width="26" height="${m[2]*0.62}" rx="5" fill="#1B2434"/><text x="${78+i*100}" y="230" text-anchor="middle" font-size="11" fill="#8A94A6">${m[0]}</text></g>`).join('');
+ return `
+ <div class="h-row"><div><div class="h1">Financial Reports</div><div class="sub">Payments recorded at the visit · reports generated automatically</div></div>
+ <div style="display:flex;gap:10px">
+  <button class="btns ${state.reportPeriod==='jul'?'':''}" id="perBtn">${data.label} ▾</button>
+  <button class="btns">All Clinics ▾</button><button class="btnp" id="csvBtn">Export CSV</button></div></div>
+ <div class="grid g4" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
+  <div class="card kpi"><div class="lb">Total Revenue — ${data.label}</div><div class="v">${data.total}</div><div class="d up">${data.pct}</div></div>
+  <div class="card kpi"><div class="lb">Visits</div><div class="v">${data.visits}</div><div class="d">avg EGP ${data.avg} / visit</div></div>
+  <div class="card kpi"><div class="lb">Surgical Revenue</div><div class="v">${data.surg}</div><div class="d">${data.sn} procedures</div></div>
+  <div class="card kpi"><div class="lb">International Deposits</div><div class="v">${data.intl}</div><div class="d">${data.zn} Zoom consultations</div></div>
+ </div>
+ <div class="grid g21" style="grid-template-columns:1.6fr 1fr">
+  <div class="card pad"><div class="h-row" style="margin-bottom:2px"><span class="sec-t">Revenue by Clinic — EGP (thousands)</span>
+  <span style="display:flex;gap:14px;font-size:12px"><span><span style="display:inline-block;width:10px;height:10px;background:#B0793F;border-radius:3px"></span> Kafr El Sheikh</span><span><span style="display:inline-block;width:10px;height:10px;background:#1B2434;border-radius:3px"></span> Mivida</span></span></div>
+  <svg width="100%" height="240" viewBox="0 0 660 240">${g}</svg>
+  <div class="mut" style="font-size:12px">Tip: click "${data.label} ▾" to switch the reporting period.</div></div>
+  <div class="card"><div class="pad" style="padding-bottom:6px"><span class="sec-t">Recent Payments</span></div>
+  <table><tr><th>Patient</th><th>Item</th><th>Amount</th></tr>
+  ${PAYMENTS.slice(0,5).map(p=>`<tr><td><b>${p.n.split(' ')[0][0]}. ${p.n.split(' ').slice(-1)}</b></td><td class="mut">${p.it}</td><td><b>${p.a}</b></td></tr>`).join('')}</table></div>
+ </div>`;
+},
+/* ---- WHATSAPP ---- */
+whatsapp(){
+ return `
+ <div class="h-row"><div><div class="h1">Patient Journey Automation</div><div class="sub">Official Meta Cloud API · approved message templates — try the toggles</div></div>
+ <span class="pill p-green" style="padding:8px 15px">● Connected — Business Account Verified</span></div>
+ <div class="grid g12" style="grid-template-columns:1.15fr 1fr">
+  <div>
+   <div class="card" style="margin-bottom:14px"><table><tr><th>Automation Flow</th><th>Trigger</th><th style="text-align:right">Status</th></tr>
+   ${WA.map((w,i)=>`<tr><td><b>${w.n}</b><div class="mut" style="font-size:12px">Template: ${w.t}</div></td><td class="mut">${w.tr}</td>
+   <td style="text-align:right"><span style="display:inline-flex;align-items:center;gap:10px"><span class="pill ${w.on?'p-green':'p-gray'}">${w.on?'Active':'Paused'}</span><button class="sw ${w.on?'on':''}" data-wa="${i}" aria-label="toggle"></button></span></td></tr>`).join('')}
+   </table></div>
+   <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="card kpi"><div class="lb">Sent — July</div><div class="v">1,284</div></div>
+    <div class="card kpi"><div class="lb">Delivered</div><div class="v">98.2%</div></div>
+    <div class="card kpi"><div class="lb">Read</div><div class="v">91.4%</div></div>
+   </div>
+  </div>
+  <div class="wa-shell">
+   <div class="wa-head"><div class="wa-av">MR</div><div><div style="font-weight:600;font-size:14px">Dr. Maged Ragab Clinic</div><div style="font-size:11px;opacity:.8">Official Business Account ✓</div></div></div>
+   <div class="wa-body">
+    <div class="wa-msg">Dear <b>Ahmed Hassan</b>, your appointment is confirmed ✅<br><br>
+    🏥 <b>Mivida Clinic — New Cairo</b><br>📅 Thursday, 16 July 2026<br>🕓 4:00 PM<br><br>
+    📍 Location: maps.app.goo.gl/…<br>To reschedule, reply to this message.<br><br>
+    <span class="mut">— Dr. Maged Ragab Clinic Team</span>
+    <div class="wa-time">4:01 PM ✓✓</div></div>
+    <div style="margin-top:12px;text-align:center;font-size:12px;color:#6B7280">Template preview · sample data</div>
+   </div>
+  </div>
+ </div>`;
+},
+/* ---- CMS ---- */
+cms(){
+ return `
+ <div class="h-row"><div><div class="h1">Website Content</div><div class="sub">The Content Editor role manages articles and pages on drmagedragab.com — without touching bookings or records</div></div><button class="btnp">+ New Content</button></div>
+ <div class="card"><table><tr><th>Title</th><th>Type</th><th style="text-align:right">Published</th></tr>
+ ${CMS.map((c,i)=>`<tr><td><b>${c.t}</b></td><td class="mut">${c.c}</td><td style="text-align:right"><span style="display:inline-flex;align-items:center;gap:10px"><span class="pill ${c.pub?'p-green':'p-gray'}">${c.pub?'Live':'Draft'}</span><button class="sw ${c.pub?'on':''}" data-cms="${i}"></button></span></td></tr>`).join('')}</table></div>
+ <div class="card pad" style="margin-top:14px;font-size:13px;color:var(--mut)">Every medical article passes through the clinic's medical-accuracy safeguards before publishing. Content is bilingual (Arabic / English) and SEO-structured.</div>`;
+},
+/* ---- ROLES ---- */
+roles(){
+ const mods=[['Dashboard','✓','✓','✓','—'],['Bookings','✓','✓','✓','—'],['Patients & Records','✓','✓','Limited','—'],['Surgeries','✓','✓','✓','—'],
+ ['Payments','✓','—','✓','—'],['Reports','✓','✓','—','—'],['WhatsApp','✓','—','✓','—'],['Website CMS','✓','—','—','✓'],['Users & Roles','✓','—','—','—']];
+ const cell=v=>v==='✓'?'<td style="text-align:center" class="tick">✓</td>':v==='—'?'<td style="text-align:center" class="mut">—</td>':`<td style="text-align:center"><span class="pill p-amber">${v}</span></td>`;
+ return `
+ <div class="h-row"><div><div class="h1">Team & Access Control</div><div class="sub">Each role sees exactly what it needs — try the "View as" switcher in the top bar and watch the sidebar change</div></div><button class="btnp">+ Invite User</button></div>
+ <div class="grid g12" style="grid-template-columns:1fr 1.25fr">
+  <div class="card"><div class="pad" style="padding-bottom:6px"><span class="sec-t">Users</span></div>
+  <table><tr><th>Name</th><th>Role</th><th>Last Active</th></tr>
+  <tr><td><b>Moustafa Ragab</b></td><td><span class="pill p-navy">Owner</span></td><td class="mut">Now</td></tr>
+  <tr><td><b>Prof. Maged Ragab</b></td><td><span class="pill p-blue">Doctor</span></td><td class="mut">2h ago</td></tr>
+  <tr><td><b>Mona Adel</b></td><td><span class="pill p-green">Secretary</span></td><td class="mut">Now</td></tr>
+  <tr><td><b>Sara Mostafa</b></td><td><span class="pill p-green">Secretary</span></td><td class="mut">Yesterday</td></tr>
+  <tr><td><b>Nour Hany</b></td><td><span class="pill p-amber">Content Editor</span></td><td class="mut">3d ago</td></tr></table></div>
+  <div class="card"><div class="pad" style="padding-bottom:6px"><span class="sec-t">Permission Matrix</span></div>
+  <table><tr><th>Module</th><th style="text-align:center">Owner</th><th style="text-align:center">Doctor</th><th style="text-align:center">Secretary</th><th style="text-align:center">Editor</th></tr>
+  ${mods.map(m=>`<tr><td><b>${m[0]}</b></td>${cell(m[1])}${cell(m[2])}${cell(m[3])}${cell(m[4])}</tr>`).join('')}</table></div>
+ </div>`;
+}
+};
+
+/* ============ WIRING ============ */
+function wire(){
+ document.querySelectorAll('[data-cf]').forEach(b=>b.onclick=()=>{state.clinicFilter=b.dataset.cf;render();});
+ document.querySelectorAll('[data-sf]').forEach(b=>b.onclick=()=>{state.surgFilter=b.dataset.sf;render();});
+ document.querySelectorAll('[data-confirm]').forEach(b=>b.onclick=()=>{
+  const bk=BOOKINGS[+b.dataset.confirm];bk.st='Confirmed';bk.wa=true;render();
+  toast(`WhatsApp confirmation sent to <b>${bk.n.split(' ').slice(0,2).join(' ')}</b> — template booking_confirm_ar`);});
+ document.querySelectorAll('[data-pat]').forEach(r=>r.onclick=()=>{if(state.role==='secretary')return;state.selPatient=+r.dataset.pat;state.patStep=3;render();});
+ document.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>{state.patStep=+b.dataset.step;render();});
+ document.querySelectorAll('[data-wa]').forEach(b=>b.onclick=()=>{const w=WA[+b.dataset.wa];w.on=!w.on;render();
+  toast(`${w.n} flow ${w.on?'activated':'paused'}`);});
+ document.querySelectorAll('[data-cms]').forEach(b=>b.onclick=()=>{const c=CMS[+b.dataset.cms];c.pub=!c.pub;render();
+  toast(`"${c.t}" ${c.pub?'published to drmagedragab.com':'moved to drafts'}`);});
+ const q=$('#patQ');if(q){q.oninput=e=>{state.patSearch=e.target.value;
+  const pos=e.target.selectionStart;render();const nq=$('#patQ');nq.focus();nq.setSelectionRange(pos,pos);};}
+ const sv=$('#saveRec');if(sv)sv.onclick=()=>toast('Record saved — visit history updated');
+ const pr=$('#printRec');if(pr)pr.onclick=()=>toast('Printable sheet generated (demo)');
+ const nb=$('#newBk');if(nb)nb.onclick=()=>toast('In the live system this opens the booking form — with slot validation per clinic');
+ const rp=$('#recPay');if(rp)rp.onclick=()=>toast('In the live system this records a payment against a visit');
+ const pb=$('#perBtn');if(pb)pb.onclick=()=>{state.reportPeriod=state.reportPeriod==='jul'?'q2':'jul';render();toast('Reporting period switched');};
+ const cb=$('#csvBtn');if(cb)cb.onclick=()=>toast('CSV export ready for accounting (demo)');
+}
+document.querySelectorAll('[data-role]').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('[data-role]').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+ state.role=b.dataset.role;render();
+ const msgs={owner:'Viewing as <b>Owner</b> — full access to every module',
+ doctor:'Viewing as <b>Doctor</b> — clinical modules only, payments hidden',
+ secretary:'Viewing as <b>Secretary</b> — scheduling & payments, limited medical records',
+ editor:'Viewing as <b>Content Editor</b> — website content only'};
+ toast(msgs[state.role]);
+});
+render();
+</script>
+</body>
+</html>
