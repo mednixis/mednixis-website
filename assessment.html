@@ -203,13 +203,35 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
           <div class="az-tier" id="azTier"></div>
           <p class="az-diag" id="azDiag"></p>
           <div id="azBars"></div>
-          <h2 class="az-rx-head">Recommended Direction</h2>
-          <div class="az-rx-sub">Where Mednixis can help — matched to your practice</div>
-          <div id="azRx"></div>
-          <div class="az-cta">
-            <a class="btn btn-primary" id="azBook" href="contact.html">Book a Consultation <span class="arrow">&rarr;</span></a>
-            <a class="btn btn-copper" href="clinic-system.html">See the Clinic System</a>
+
+          <!-- gate teaser -->
+          <div id="azTease" style="text-align:center;margin-top:26px;padding-top:26px;border-top:1px solid var(--line)">
+            <h2 style="margin-bottom:8px">Your personalized recommendations are ready.</h2>
+            <p style="color:var(--graphite);max-width:520px;margin:0 auto 22px">Enter your details to unlock the full report — the specific services and next steps matched to your practice — and we'll send you a copy.</p>
+            <button class="btn btn-primary" id="azGetReport">Unlock My Full Report <span class="arrow">&rarr;</span></button>
           </div>
+
+          <!-- contact gate form -->
+          <div id="azGate" style="display:none;max-width:460px;margin:26px auto 0">
+            <div class="az-field"><label>Your Name</label><input id="azGName" type="text" placeholder="Full name"></div>
+            <div class="az-field"><label>Phone / WhatsApp</label><input id="azGPhone" type="tel" placeholder="+20 ..."></div>
+            <div class="az-field"><label>Email</label><input id="azGEmail" type="email" placeholder="you@example.com"></div>
+            <div id="azGErr" style="color:#B4593E;font-size:14px;margin-bottom:10px;min-height:18px"></div>
+            <button class="btn btn-primary" id="azSend" style="width:100%">Send my report</button>
+            <p style="text-align:center;font-size:12.5px;color:var(--platinum);margin-top:12px">We'll only use this to send your report and follow up about your practice.</p>
+          </div>
+
+          <!-- full report (revealed after capture) -->
+          <div id="azFull" style="display:none">
+            <h2 class="az-rx-head">Recommended Direction</h2>
+            <div class="az-rx-sub">Where Mednixis can help — matched to your practice</div>
+            <div id="azRx"></div>
+            <div class="az-cta">
+              <a class="btn btn-primary" id="azBook" href="contact.html">Book a Consultation <span class="arrow">&rarr;</span></a>
+              <a class="btn btn-copper" href="clinic-system.html">See the Clinic System</a>
+            </div>
+          </div>
+
           <button class="az-restart" id="azRestart">Retake the assessment</button>
         </div>
       </div>
@@ -283,11 +305,12 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
   var sectionOrder=[];(function(){var seen={};for(var i=0;i<Q.length;i++){var s=Q[i].section;if(SECT[s]&&!seen[s]){seen[s]=1;sectionOrder.push({at:i,sec:s});}}})();
   function sectionAt(i){for(var k=0;k<sectionOrder.length;k++)if(sectionOrder[k].at===i)return sectionOrder[k].sec;return null;}
 
-  $("azStart").onclick=function(){meta.doc=$("azDoc").value.trim();meta.clinic=$("azClinic").value.trim();$("azIntro").style.display="none";cur=0;maybeSection();scrollTop();};
-  $("azSectGo").onclick=function(){$("azSect").style.display="none";$("azQuiz").style.display="block";render();scrollTop();};
-  $("azBack").onclick=function(){if(cur>0){cur--;render();scrollTop();}};
-  $("azRestart").onclick=function(){answers=new Array(Q.length).fill(null);cur=0;$("azResult").style.display="none";$("azIntro").style.display="block";$("azBar").style.width="0";scrollTop();};
-  function scrollTop(){var el=document.querySelector(".az");if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+  $("azStart").onclick=function(){meta.doc=$("azDoc").value.trim();meta.clinic=$("azClinic").value.trim();$("azIntro").style.display="none";cur=0;maybeSection();scrollUp();};
+  $("azSectGo").onclick=function(){$("azSect").style.display="none";$("azQuiz").style.display="block";render();scrollUp();};
+  $("azBack").onclick=function(){if(cur>0){cur--;if(sectionAt(cur)){cur++;}render();}};
+  $("azRestart").onclick=function(){answers=new Array(Q.length).fill(null);cur=0;$("azResult").style.display="none";$("azGate").style.display="none";$("azFull").style.display="none";$("azIntro").style.display="block";$("azBar").style.width="0";scrollUp();};
+  // Only scroll on section transitions / result — never on per-answer advance (that caused the jump)
+  function scrollUp(){var el=document.querySelector(".az");if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-96;window.scrollTo({top:y<0?0:y,behavior:"smooth"});}
 
   function maybeSection(){var sec=sectionAt(cur);if(sec){var i=SECT[sec];$("azSectK").textContent=i[0];$("azSectH").textContent=i[1];$("azSectP").textContent=i[2];$("azQuiz").style.display="none";$("azSect").style.display="block";}else{$("azQuiz").style.display="block";render();}}
 
@@ -297,7 +320,7 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
     it.opts.forEach(function(opt,i){
       var d=document.createElement("div");d.className="az-opt"+(answers[cur]===i?" sel":"");
       d.innerHTML='<span class="az-radio"></span><span>'+opt[0]+'</span>';
-      d.onclick=function(){answers[cur]=i;if(cur<Q.length-1){setTimeout(function(){cur++;if(sectionAt(cur))maybeSection();else render();scrollTop();},170);}else setTimeout(finish,170);};
+      d.onclick=function(){answers[cur]=i;if(cur<Q.length-1){setTimeout(function(){cur++;if(sectionAt(cur)){maybeSection();scrollUp();}else render();},170);}else setTimeout(finish,170);};
       o.appendChild(d);
     });
     $("azBar").style.width=(cur/Q.length*100)+"%";$("azCount").textContent=(cur+1)+" / "+Q.length;$("azBack").disabled=cur===0;
@@ -324,17 +347,70 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
       row.innerHTML='<div class="az-bar-top"><b>'+p+'</b><span>'+label+' · '+v+'%</span></div><div class="az-bar-track"><div class="az-bar-fill" style="background:'+color+'"></div></div>';
       barsEl.appendChild(row);(function(f,t){setTimeout(function(){f.style.width=t+"%";},250);})(row.querySelector(".az-bar-fill"),v);});
     var rxEl=$("azRx");rxEl.innerHTML="";var weak=[];PILLARS.forEach(function(p){if(pct[p]<60)weak.push(p);});
-    if(weak.length===0){var c=document.createElement("div");c.className="az-rx";c.innerHTML='<div class="area ok">Strong across all pillars</div><div style="font-size:14.5px;color:var(--graphite)">Your practice is performing well everywhere we looked. Mednixis can help protect and scale that lead — a strategic partnership to compound growth and prepare for expansion.</div>';rxEl.appendChild(c);
-      $("azBook").innerHTML='Book a Strategic Consultation <span class="arrow">&rarr;</span>';}
+    if(weak.length===0){var c=document.createElement("div");c.className="az-rx";c.innerHTML='<div class="area ok">Strong across all pillars</div><div style="font-size:14.5px;color:var(--graphite)">Your practice is performing well everywhere we looked. Mednixis can help protect and scale that lead — a strategic partnership to compound growth and prepare for expansion.</div>';rxEl.appendChild(c);}
     else{weak.forEach(function(p){var rx=RX[p]||[],combo=rx.length>1;var c=document.createElement("div");c.className="az-rx";
       var html='<div class="area">Opportunity · '+p+' ('+pct[p]+'%)</div>';if(combo)html+='<div class="combo">This is best solved with a combination of services:</div>';
       rx.forEach(function(b){html+='<div class="svc">'+b.service+'</div><ul>';b.items.forEach(function(it){html+='<li>'+it+'</li>';});html+='</ul>';});
-      c.innerHTML=html;rxEl.appendChild(c);});
-      $("azBook").innerHTML='Book a Consultation to Close '+weak[0]+' <span class="arrow">&rarr;</span>';}
+      c.innerHTML=html;rxEl.appendChild(c);});}
+    // set personalized book CTA text
+    $("azBook").innerHTML = weak.length? ('Book a Consultation to Close '+weak[0]+' <span class="arrow">&rarr;</span>') : ('Book a Strategic Consultation <span class="arrow">&rarr;</span>');
+    // stash results for the email/booking payload
+    RESULT={score:score,tier:tier,pct:pct,weak:weak,answers:buildAnswerSummary()};
     // Meta Lead on completion
     try{if(typeof fbq==="function")fbq("track","Lead",{content_name:"Clinic Growth Assessment",value:score});}catch(e){}
-    scrollTop();
+    scrollUp();
   }
+
+  // Build a readable Q/A + pillar summary string for the email
+  function buildAnswerSummary(){
+    var lines=[];
+    Q.forEach(function(it,idx){var a=it.opts[answers[idx]];lines.push((idx+1)+". "+it.q+"  ->  "+(a?a[0]:"(skipped)"));});
+    return lines.join("\n");
+  }
+
+  // ---- contact gate + submission ----
+  var RESULT=null;
+  $("azGetReport").onclick=function(){ $("azTease").style.display="none"; $("azGate").style.display="block"; $("azGate").scrollIntoView({behavior:"smooth",block:"center"}); };
+  $("azBook").onclick=function(){
+    // carry the assessment into the booking form via sessionStorage, then go to contact
+    if(RESULT){try{sessionStorage.setItem("mdx_assessment", assessmentText());}catch(e){}}
+  };
+  function assessmentText(){
+    if(!RESULT)return "";
+    var s="MEDNIXIS CLINIC GROWTH ASSESSMENT\n";
+    s+="Doctor: "+(meta.doc||"(not given)")+"\nClinic: "+(meta.clinic||"(not given)")+"\n";
+    s+="Score: "+RESULT.score+"/100  ("+RESULT.tier+")\n\nPILLARS:\n";
+    PILLARS.forEach(function(p){s+=" - "+p+": "+RESULT.pct[p]+"%\n";});
+    s+="\nWEAK AREAS: "+(RESULT.weak.length?RESULT.weak.join(", "):"none")+"\n\nANSWERS:\n"+RESULT.answers;
+    return s;
+  }
+
+  // submit the emailed report via FormSubmit AJAX (no page redirect)
+  $("azSend").onclick=function(){
+    var nm=$("azGName").value.trim(), ph=$("azGPhone").value.trim(), em=$("azGEmail").value.trim();
+    if(!nm||!ph||!em){ $("azGErr").textContent="Please fill name, phone and email."; return; }
+    if(!/^[^@]+@[^@]+\.[^@]+$/.test(em)){ $("azGErr").textContent="Please enter a valid email."; return; }
+    $("azGErr").textContent=""; $("azSend").disabled=true; $("azSend").textContent="Sending...";
+    var payload={
+      _subject:"New Clinic Assessment — "+(meta.doc||nm)+" ("+RESULT.score+"/100)",
+      _template:"box",
+      "Doctor Name":meta.doc||nm, "Clinic":meta.clinic||"", "Contact Name":nm,
+      "Phone":ph, "Email":em, "Score":RESULT.score+"/100 ("+RESULT.tier+")",
+      "Weak Areas":RESULT.weak.length?RESULT.weak.join(", "):"none",
+      "Full Assessment":assessmentText()
+    };
+    fetch("https://formsubmit.co/ajax/contact@mednixis.com",{
+      method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
+      body:JSON.stringify(payload)
+    }).then(function(r){return r.json();}).then(function(){
+      $("azGate").style.display="none";
+      $("azFull").style.display="block";
+      $("azFull").scrollIntoView({behavior:"smooth",block:"start"});
+    }).catch(function(){
+      $("azSend").disabled=false; $("azSend").textContent="Send my report";
+      $("azGErr").textContent="Something went wrong — please try again or book a consultation directly.";
+    });
+  };
 })();
 </script>
 </body>

@@ -101,6 +101,7 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_next" value="https://mednixis.com/contact.html?sent=1">
         <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" id="assessmentField" name="Attached Assessment" value="">
         <div class="form-field">
           <label for="name">Full Name</label>
           <input id="name" name="Full Name" type="text" required autocomplete="name">
@@ -295,6 +296,25 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
       sessionStorage.setItem("mdx_lead_fired", "1");
     }
   } catch (e) {}
+})();
+</script>
+<script>
+/* If the visitor came from the assessment, attach their results to this booking */
+(function(){
+  try{
+    var a=sessionStorage.getItem("mdx_assessment");
+    if(a){
+      var f=document.getElementById("assessmentField");
+      if(f) f.value=a;
+      var form=document.querySelector("form.form-grid")||document.querySelector("form");
+      if(form){
+        var b=document.createElement("div");
+        b.style.cssText="grid-column:1/-1;background:rgba(176,121,63,.08);border:1px solid var(--line);border-left:3px solid var(--copper);border-radius:var(--radius);padding:14px 18px;font-size:14px;color:var(--graphite);margin-bottom:8px";
+        b.innerHTML="&#9989; Your Clinic Growth Assessment is attached to this request — we'll review it before we call.";
+        form.insertBefore(b, form.firstChild);
+      }
+    }
+  }catch(e){}
 })();
 </script>
 </body>
