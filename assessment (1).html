@@ -98,7 +98,7 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
 .az-cta .btn{text-align:center}
 @media(max-width:640px){
   .az-cta{flex-direction:column}
-  .az-cta .btn{width:100%;justify-content:center}
+  .az-cta .btn{width:100%;justify-content:center;white-space:normal;line-height:1.3;padding-left:18px;padding-right:18px;height:auto;min-height:54px}
 }
 .az-restart{display:block;margin:16px auto 0;background:none;border:none;font-size:14px;font-weight:600;color:var(--platinum);cursor:pointer}
 .az-restart:hover{color:var(--navy)}
@@ -231,6 +231,7 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
             <h2 class="az-rx-head">Recommended Direction</h2>
             <div class="az-rx-sub">Where Mednixis can help — matched to your practice</div>
             <div id="azRx"></div>
+            <p id="azCtaLine" style="text-align:center;font-size:15px;color:var(--navy);max-width:520px;margin:24px auto 0"></p>
             <div class="az-cta">
               <a class="btn btn-primary" id="azBook" href="contact.html">Book a Consultation <span class="arrow">&rarr;</span></a>
               <button class="btn btn-navy" id="azPdf" type="button">Download PDF &darr;</button>
@@ -385,7 +386,8 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
     }
     RECTEXT=recText;
     // set personalized book CTA text
-    $("azBook").innerHTML = weak.length? ('Book a Consultation to Close '+weak[0]+' <span class="arrow">&rarr;</span>') : ('Book a Strategic Consultation <span class="arrow">&rarr;</span>');
+    $("azBook").innerHTML = 'Book a Consultation <span class="arrow">&rarr;</span>';
+    $("azCtaLine").textContent = weak.length ? ("Your biggest opportunity is "+weak[0]+". Book a consultation to close it.") : "You're performing strongly. Book a consultation to plan your next phase of growth.";
     // stash results for the email/booking payload
     RESULT={score:score,tier:tier,pct:pct,weak:weak,answers:buildAnswerSummary()};
     DIAGTEXT=diag;
