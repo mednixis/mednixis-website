@@ -95,6 +95,11 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
 .az-rx li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:1.5px;background:var(--copper)}
 .az-rx .combo{font-size:13px;color:var(--platinum);font-style:italic;margin-bottom:10px}
 .az-cta{margin-top:30px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.az-cta .btn{text-align:center}
+@media(max-width:640px){
+  .az-cta{flex-direction:column}
+  .az-cta .btn{width:100%;justify-content:center}
+}
 .az-restart{display:block;margin:16px auto 0;background:none;border:none;font-size:14px;font-weight:600;color:var(--platinum);cursor:pointer}
 .az-restart:hover{color:var(--navy)}
 </style>
