@@ -128,6 +128,10 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
             <option>Other</option>
           </select>
         </div>
+        <div class="form-field" id="typeOtherWrap" style="display:none">
+          <label for="typeOther">Please specify</label>
+          <input id="typeOther" name="Business Type (Other)" type="text" placeholder="Tell us your type of business">
+        </div>
         <div class="form-field">
           <label for="location">Location</label>
           <input id="location" name="Location" type="text" required placeholder="City, Country">
@@ -257,6 +261,28 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script>
+/* Show a "please specify" box when Business Type is Other; require it only when visible */
+(function () {
+  var typeSelect = document.getElementById("type");
+  var otherWrap = document.getElementById("typeOtherWrap");
+  var otherInput = document.getElementById("typeOther");
+  if (typeSelect && otherWrap && otherInput) {
+    function sync() {
+      var isOther = typeSelect.value === "Other";
+      otherWrap.style.display = isOther ? "" : "none";
+      if (isOther) {
+        otherInput.setAttribute("required", "required");
+      } else {
+        otherInput.removeAttribute("required");
+        otherInput.value = "";
+      }
+    }
+    typeSelect.addEventListener("change", sync);
+    sync();
+  }
+})();
+</script>
 <script>
 /* Fire Meta Lead event once per confirmed form submission (?sent=1) */
 (function () {
