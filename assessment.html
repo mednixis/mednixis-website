@@ -5,316 +5,314 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Mednixis Clinic Growth Assessment</title>
 <meta name="description" content="A confidential diagnostic of the structures behind your clinic — patient acquisition, digital presence, operations and growth readiness.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://mednixis.com/assessment.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="canonical" href="https://mednixis.com/assessment.html">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1302566011665592');fbq('track','PageView');
+fbq('init','1302566011665592');fbq('track','PageView');
 </script>
 <style>
-:root{
-  --ivory:#F6F3EC;--white:#fff;--navy:#141D2C;--navy2:#1B2434;
-  --copper:#B0793F;--copper-soft:#C9955C;--graphite:#3A4351;--platinum:#8A94A6;
-  --line:rgba(20,29,44,.13);--radius:16px;--ease:cubic-bezier(.22,.61,.36,1);
-  --sans:'Manrope',-apple-system,'Segoe UI',sans-serif;--disp:'Cormorant Garamond',Georgia,serif;
-  --green:#2F7A4E;--amber:#B5852F;--red:#B4593E;
-}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--ivory);color:var(--graphite);line-height:1.6}
-.container{max-width:1200px;margin:0 auto;padding:0 24px}
-h1,h2,h3{font-family:var(--disp);color:var(--navy);font-weight:700;line-height:1.15}
-a{color:inherit;text-decoration:none}
-/* header */
-.site-header{position:sticky;top:0;z-index:100;background:rgba(246,243,236,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.header-inner{display:flex;align-items:center;gap:20px;height:76px;max-width:1440px;margin:0 auto;padding:0 40px;width:100%;box-sizing:border-box}
-.logo{display:flex;align-items:center;gap:12px}
-.logo-mark{width:34px;height:30px;color:var(--copper)}
-.logo-word{font-family:var(--disp);font-size:24px;font-weight:600;letter-spacing:.22em;color:var(--navy)}
-.nav-links{display:flex;gap:18px;margin-left:auto}
-.nav-item{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--graphite);text-transform:uppercase;white-space:nowrap;transition:color .18s}
-.nav-item:hover,.nav-item.active{color:var(--copper)}
-.header-cta{font-size:12px;padding:14px 22px;background:var(--navy);color:var(--ivory);border-radius:99px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;margin-left:20px;flex-shrink:0}
-.header-cta:hover{background:var(--navy2)}
-.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer}
-.nav-toggle span{width:24px;height:2px;background:var(--navy);border-radius:2px}
-@media(max-width:1400px){
-  .nav-links{position:fixed;inset:76px 0 auto 0;background:var(--ivory);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--line);transform:translateY(-120%);transition:transform .3s var(--ease);margin-left:0}
-  .nav-links.open{transform:translateY(0)}
-  .header-cta{display:none!important}
-  .nav-toggle{display:flex;margin-left:auto}
-}
-/* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--sans);font-size:15px;font-weight:700;padding:15px 28px;border-radius:99px;border:none;cursor:pointer;transition:transform .15s var(--ease),background .2s}
-.btn:active{transform:scale(.98)}
-.btn-primary{background:var(--copper);color:#fff}
-.btn-primary:hover{background:var(--copper-soft)}
-.btn-navy{background:var(--navy);color:var(--ivory)}
-.btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--navy)}
-.arrow{transition:transform .2s}
-.btn:hover .arrow{transform:translateX(3px)}
-/* layout */
-.az{max-width:760px;margin:0 auto;padding:40px 0 80px}
-.az-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(26px,4vw,46px);animation:azin .4s var(--ease)}
+/* Assessment-specific — uses real design tokens from style.css */
+.az{max-width:760px;margin:0 auto;padding:clamp(30px,6vw,60px) 0}
+.az-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(26px,4vw,48px);animation:azin .4s var(--ease)}
 @keyframes azin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--copper);font-weight:700;margin-bottom:18px}
-.eyebrow::before{content:"";width:26px;height:1px;background:var(--copper)}
-.az h1{font-size:clamp(30px,5vw,44px);margin-bottom:14px}
-.az .sub{font-size:17px;color:var(--graphite);margin-bottom:20px}
-.deliver{list-style:none;margin:20px 0 28px;border-top:1px solid var(--line);padding-top:20px}
-.deliver li{position:relative;padding:8px 0 8px 26px;font-size:15.5px;color:var(--navy)}
-.deliver li::before{content:"";position:absolute;left:0;top:16px;width:12px;height:2px;background:var(--copper)}
-.privacy-note{font-size:12.5px;color:var(--platinum);margin-top:18px;line-height:1.5}
-/* fields */
+.az h1{font-family:var(--font-display);font-size:clamp(34px,5vw,52px);font-weight:600;color:var(--navy);line-height:1.08;margin-bottom:16px;letter-spacing:-.01em}
+.az .sub{font-size:19px;color:var(--navy);font-family:var(--font-display);font-style:italic;margin-bottom:20px}
+.az .lead-p{color:var(--graphite);margin-bottom:8px}
+.deliver{list-style:none;margin:20px 0 28px;border-top:1px solid var(--line);padding-top:22px}
+.deliver li{position:relative;padding:9px 0 9px 28px;font-size:15.5px;color:var(--navy)}
+.deliver li::before{content:"";position:absolute;left:0;top:17px;width:14px;height:1px;background:var(--copper)}
+.privacy-note{font-size:12.5px;color:var(--platinum);margin-top:18px;line-height:1.6}
 .az-field{margin-bottom:16px}
-.az-field label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--platinum);margin-bottom:8px}
-.az-field input{width:100%;font-family:var(--sans);font-size:16px;padding:14px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--ivory);color:var(--navy)}
+.az-field label{display:block;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--platinum);margin-bottom:8px}
+.az-field input{width:100%;font-family:var(--font-sans);font-size:16px;padding:15px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--ivory);color:var(--navy)}
 .az-field input:focus{outline:none;border-color:var(--copper)}
-/* progress */
-.az-prog{position:sticky;top:76px;z-index:20;background:var(--ivory);padding:16px 0 12px}
-.az-prog-track{height:5px;background:var(--line);border-radius:999px;overflow:hidden}
+.az-prog{position:sticky;top:0;z-index:20;background:var(--ivory);padding:16px 0 12px}
+.az-prog-track{height:3px;background:var(--line);overflow:hidden}
 .az-prog-track>span{display:block;height:100%;width:0;background:var(--copper);transition:width .4s var(--ease)}
-/* questions */
-.az-sec{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);margin-bottom:14px}
-.az-q{font-family:var(--disp);font-size:clamp(23px,3vw,31px);color:var(--navy);line-height:1.24;margin-bottom:26px}
+.az-sec{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--copper);margin-bottom:16px}
+.az-q{font-family:var(--font-display);font-size:clamp(24px,3.2vw,34px);font-weight:600;color:var(--navy);line-height:1.22;margin-bottom:28px}
 .az-opts{display:flex;flex-direction:column;gap:12px}
 .az-opt{display:flex;align-items:center;gap:14px;padding:17px 20px;border:1px solid var(--line);border-radius:var(--radius);cursor:pointer;font-size:15.5px;color:var(--graphite);transition:border-color .18s,background .18s,transform .12s;background:var(--white)}
-.az-opt:hover{border-color:var(--copper);transform:translateX(3px)}
-.az-opt.sel{border-color:var(--copper);background:rgba(176,121,63,.06);color:var(--navy)}
-.az-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;position:relative}
+.az-opt:hover{border-color:var(--copper);transform:translateX(4px)}
+.az-opt.sel{border-color:var(--copper);background:var(--copper-pale);color:var(--navy)}
+.az-radio{width:19px;height:19px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;position:relative}
 .az-opt.sel .az-radio{border-color:var(--copper)}
 .az-opt.sel .az-radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--copper)}
-.az-nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px}
-.az-back{font-size:14px;font-weight:600;color:var(--platinum);background:none;border:none;cursor:pointer}
+.az-nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px}
+.az-back{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--platinum);background:none;border:none;cursor:pointer}
 .az-back:hover{color:var(--navy)}.az-back[disabled]{opacity:0;pointer-events:none}
-.az-count{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--platinum)}
-/* section intro */
+.az-count{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--platinum);font-weight:700}
 .az-sect-intro{text-align:center}
-.az-sect-intro .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--copper);margin-bottom:12px}
-.az-sect-intro h2{font-size:clamp(26px,4vw,36px);margin-bottom:12px}
-.az-sect-intro p{color:var(--graphite);max-width:460px;margin:0 auto 24px}
+.az-sect-intro .k{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--copper);margin-bottom:14px}
+.az-sect-intro h2{font-family:var(--font-display);font-size:clamp(28px,4vw,40px);font-weight:600;color:var(--navy);margin-bottom:14px}
+.az-sect-intro p{color:var(--graphite);max-width:460px;margin:0 auto 26px}
 /* result */
-.az-forname{text-align:center;color:var(--platinum);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
-.az-forname b{color:var(--navy);display:block;font-size:16px;letter-spacing:0;text-transform:none;font-weight:700;margin-top:4px}
-.az-scorewrap{text-align:center;margin:10px 0 6px}
-.az-score{font-family:var(--disp);font-size:84px;color:var(--navy);line-height:1;font-weight:700}
-.az-score span{font-size:24px;color:var(--platinum)}
-.az-class{font-family:var(--disp);font-size:clamp(24px,3.4vw,32px);text-align:center;margin:4px 0 20px}
+.az-forname{text-align:center;color:var(--platinum);font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px}
+.az-forname b{color:var(--navy);display:block;font-size:17px;letter-spacing:0;text-transform:none;font-weight:700;margin-top:5px;font-family:var(--font-sans)}
+.az-scorewrap{text-align:center;margin:8px 0 4px}
+.az-score{font-family:var(--font-display);font-size:92px;color:var(--navy);line-height:1;font-weight:600}
+.az-score span{font-size:26px;color:var(--platinum)}
+.az-class{font-family:var(--font-display);font-size:clamp(26px,3.6vw,34px);font-weight:600;text-align:center;margin:2px 0 22px}
 .c-foundation{color:#B4593E}.c-constrained{color:#B5852F}.c-capable{color:var(--copper)}.c-scale{color:#2F7A4E}.c-institution{color:#2F7A4E}
-.az-shortdiag{text-align:center;font-size:16px;color:var(--graphite);max-width:560px;margin:0 auto 28px}
-/* pillar cards */
-.az-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 28px}
+.az-shortdiag{text-align:center;font-size:17px;color:var(--graphite);max-width:580px;margin:0 auto 30px}
+.az-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 30px}
 @media(max-width:640px){.az-pillars{grid-template-columns:1fr 1fr}}
-.az-pcard{border:1px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center;position:relative;background:var(--white)}
-.az-pcard.lowest{border-color:var(--red);background:rgba(180,89,62,.05)}
-.az-pcard .pv{font-family:var(--disp);font-size:30px;font-weight:700;color:var(--navy);line-height:1}
-.az-pcard.lowest .pv{color:var(--red)}
-.az-pcard .pl{font-size:11.5px;color:var(--graphite);margin-top:6px;font-weight:600;line-height:1.3}
-.az-pcard .tag{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:9px;font-weight:700;letter-spacing:.06em;padding:2px 8px;border-radius:99px;text-transform:uppercase;white-space:nowrap}
-/* constraint + blindspot blocks */
-.az-block{border:1px solid var(--line);border-left:3px solid var(--copper);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;background:var(--ivory)}
-.az-block .lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--copper);margin-bottom:8px}
-.az-block .val{font-family:var(--disp);font-size:20px;color:var(--navy);font-weight:700;margin-bottom:6px}
-.az-block p{font-size:14.5px;color:var(--graphite);margin:0}
-.az-block.blind{border-left-color:var(--red)}
-.az-block.blind .lbl{color:var(--red)}
-.az-emailconf{text-align:center;font-size:14.5px;color:var(--graphite);background:rgba(47,122,78,.08);border:1px solid rgba(47,122,78,.2);border-radius:var(--radius);padding:16px 20px;margin:8px 0 24px}
-/* gate */
+.az-pcard{border:1px solid var(--line);border-radius:var(--radius);padding:18px 14px;text-align:center;position:relative;background:var(--white)}
+.az-pcard.lowest{border-color:#B4593E;background:rgba(180,89,62,.05)}
+.az-pcard .pv{font-family:var(--font-display);font-size:32px;font-weight:600;color:var(--navy);line-height:1}
+.az-pcard.lowest .pv{color:#B4593E}
+.az-pcard .pl{font-size:11px;color:var(--graphite);margin-top:7px;font-weight:700;line-height:1.3;letter-spacing:.02em}
+.az-pcard .tag{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:#B4593E;color:#fff;font-size:8.5px;font-weight:800;letter-spacing:.1em;padding:3px 9px;text-transform:uppercase;white-space:nowrap}
+.az-block{border:1px solid var(--line);border-left:2px solid var(--copper);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;background:var(--ivory)}
+.az-block .lbl{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--copper);margin-bottom:9px}
+.az-block .val{font-family:var(--font-display);font-size:21px;color:var(--navy);font-weight:600;margin-bottom:7px}
+.az-block p{font-size:14.5px;color:var(--graphite);margin:0;line-height:1.7}
+.az-block.blind{border-left-color:#B4593E}
+.az-block.blind .lbl{color:#B4593E}
+.az-teasewrap{text-align:center;margin-top:26px;padding-top:26px;border-top:1px solid var(--line)}
+.az-teasewrap h2{font-family:var(--font-display);font-size:26px;font-weight:600;color:var(--navy);margin-bottom:10px}
+.az-teasewrap p{color:var(--graphite);max-width:520px;margin:0 auto 22px}
 .az-gate{max-width:460px;margin:26px auto 0}
-.az-gate h2{font-size:24px;text-align:center;margin-bottom:6px}
-.az-gate .g-sub{text-align:center;color:var(--graphite);font-size:14.5px;margin-bottom:20px}
-/* full diagnosis */
-.dsec{margin-bottom:24px}
-.dsec .dh{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--copper);margin-bottom:8px;border-bottom:1px solid var(--line);padding-bottom:6px}
-.dsec .dt{font-family:var(--disp);font-size:22px;color:var(--navy);font-weight:700;margin-bottom:8px}
-.dsec p{font-size:15px;color:var(--graphite);margin:0}
-.pri{display:flex;gap:16px;margin-bottom:16px}
-.pri .n{font-family:var(--disp);font-size:26px;color:var(--copper);font-weight:700;line-height:1;min-width:44px}
-.pri .pt{font-weight:700;color:var(--navy);margin-bottom:2px}
-.pri .pd{font-size:14px;color:var(--graphite)}
-.pathway-box{background:var(--navy);color:var(--ivory);border-radius:var(--radius);padding:24px 26px;margin:24px 0}
-.pathway-box .pw-l{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--copper-soft);margin-bottom:8px}
-.pathway-box .pw-t{font-family:var(--disp);font-size:24px;color:#fff;font-weight:700;margin-bottom:8px}
-.pathway-box p{font-size:14.5px;color:rgba(246,243,236,.85);margin:0}
+.az-gate h2{font-family:var(--font-display);font-size:26px;font-weight:600;text-align:center;color:var(--navy);margin-bottom:6px}
+.az-gate .g-sub{text-align:center;color:var(--graphite);font-size:15px;margin-bottom:22px}
+.dsec{margin-bottom:26px}
+.dsec .dh{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--copper);margin-bottom:9px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.dsec .dt{font-family:var(--font-display);font-size:23px;color:var(--navy);font-weight:600;margin-bottom:8px}
+.dsec p{font-size:15px;color:var(--graphite);margin:0;line-height:1.7}
+.pri{display:flex;gap:18px;margin-bottom:18px}
+.pri .n{font-family:var(--font-display);font-size:28px;color:var(--copper);font-weight:600;line-height:1;min-width:46px}
+.pri .pt{font-weight:700;color:var(--navy);margin-bottom:3px}
+.pri .pd{font-size:14px;color:var(--graphite);line-height:1.6}
+.pathway-box{background:var(--navy);border-radius:var(--radius);padding:26px 28px;margin:26px 0}
+.pathway-box .pw-l{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-soft);margin-bottom:9px}
+.pathway-box .pw-t{font-family:var(--font-display);font-size:25px;color:var(--white);font-weight:600;margin-bottom:9px}
+.pathway-box p{font-size:14.5px;color:rgba(247,245,241,.82);margin:0;line-height:1.7}
+.az-emailconf{text-align:center;font-size:14.5px;color:var(--graphite);background:rgba(47,122,78,.08);border:1px solid rgba(47,122,78,.2);border-radius:var(--radius);padding:16px 20px;margin:8px 0 26px}
 .az-cta{margin-top:28px;display:flex;flex-direction:column;gap:14px}
-.az-cta .btn{width:100%}
-.interp-note{text-align:center;font-size:13px;color:var(--platinum);margin-top:14px;line-height:1.5}
-.az-restart{display:block;margin:18px auto 0;background:none;border:none;font-size:14px;font-weight:600;color:var(--platinum);cursor:pointer}
+.az-cta .btn{width:100%;justify-content:center}
+.interp-note{text-align:center;font-size:13px;color:var(--platinum);margin-top:16px;line-height:1.6}
+.az-restart{display:block;margin:20px auto 0;background:none;border:none;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--platinum);cursor:pointer}
 .az-restart:hover{color:var(--navy)}
-.site-footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px}
 .gerr{color:#B4593E;font-size:14px;margin:8px 0;min-height:18px;text-align:center}
 </style>
 </head>
 <body>
-<header class="site-header" id="siteHeader">
-  <div class="header-inner">
-    <a href="index.html" class="logo" aria-label="Mednixis home">
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a class="logo" href="index.html" aria-label="Mednixis home">
       <svg class="logo-mark" viewBox="0 0 60 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M4 48 L4 6 L30 36 L56 6 L56 48" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M6 8 Q30 52 54 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7"/>
-      </svg>
-      <span class="logo-word">MEDNIXIS</span>
+  <!-- serif M strokes -->
+  <path d="M4 48 L4 6 L30 36 L56 6 L56 48" stroke="#0F1720" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- copper sweep overlay -->
+  <path class="sweep-path" d="M6 8 Q30 52 54 8" stroke="#B48E76" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>
+      <span class="logo-word">Mednixis</span>
     </a>
-    <nav class="nav-links" id="navLinks">
-      <a class="nav-item" href="index.html">Home</a>
-      <a class="nav-item" href="about.html">About</a>
-      <a class="nav-item" href="services.html">Services</a>
-      <a class="nav-item" href="clinic-system.html">Clinic System</a>
-      <a class="nav-item active" href="assessment.html">Assessment</a>
-      <a class="nav-item" href="packages.html">Packages</a>
-      <a class="nav-item" href="strategic-projects.html">Strategic Projects</a>
-      <a class="nav-item" href="insights.html">Insights</a>
-      <a class="nav-item" href="contact.html">Contact</a>
-    </nav>
-    <a href="contact.html" class="btn header-cta">Book a Consultation</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a class="nav-item" href="index.html">Home</a></li>
+      <li><a class="nav-item" href="about.html">About</a></li>
+      <li class="has-dropdown">
+        <a class="nav-item" href="services.html">Services</a>
+        <ul class="dropdown">
+          <li><a href="healthcare-management.html">Healthcare Management</a></li>
+          <li><a href="branding-marketing.html">Branding &amp; Marketing</a></li>
+          <li><a href="research-strategy.html">Research &amp; Strategy</a></li>
+          <li><a href="growth-digital-systems.html">Growth &amp; Digital Systems</a></li>
+          <li><a href="medical-events.html">Medical Events</a></li>
+        </ul>
+      </li>
+      <li><a class="nav-item" href="clinic-system.html">Clinic System</a></li>
+      <li><a class="nav-item active" href="assessment.html">Assessment</a></li>
+      <li><a class="nav-item" href="packages.html">Packages</a></li>
+      <li><a class="nav-item" href="strategic-projects.html">Strategic Projects</a></li>
+      <li><a class="nav-item" href="insights.html">Insights</a></li>
+      <li><a class="nav-item" href="contact.html">Contact</a></li>
+      <li class="mobile-cta"><a class="btn btn-primary" href="contact.html">Book a Consultation</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="contact.html">Book a Consultation</a>
+    </div>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 </header>
-<main>
-<section class="container">
-  <div class="az">
+<main id="main">
+<section class="section">
+  <div class="container">
+    <div class="az">
 
-    <!-- INTRO -->
-    <div id="azIntro" class="az-card">
-      <span class="eyebrow">Private Clinic Diagnostic</span>
-      <h1>The Mednixis Clinic Growth Assessment</h1>
-      <p class="sub">Your clinic is producing results. But is it built to grow?</p>
-      <p style="color:var(--graphite);margin-bottom:8px">Complete a confidential assessment of the structures behind your clinic &mdash; patient acquisition, digital presence, operations and growth readiness.</p>
-      <p style="color:var(--navy);font-weight:600;margin-top:18px">In approximately four minutes, you will receive:</p>
-      <ul class="deliver">
-        <li>Your Clinic Growth Score</li>
-        <li>Your organizational maturity stage</li>
-        <li>Your strongest growth asset</li>
-        <li>Your primary constraint</li>
-        <li>Your strategic blind spot</li>
-        <li>A recommended direction for your clinic</li>
-      </ul>
-      <div class="az-field"><label>Doctor Name *</label><input id="azDoc" type="text" placeholder="Dr. ..."></div>
-      <div class="az-field"><label>Clinic / Practice Name *</label><input id="azClinic" type="text" placeholder="Clinic name"></div>
-      <div class="gerr" id="azIntroErr"></div>
-      <button class="btn btn-primary" id="azStart" style="margin-top:4px">Begin the Assessment <span class="arrow">&rarr;</span></button>
-      <p class="privacy-note">Your answers are processed privately. Contact information is only submitted if you choose to receive your complete diagnosis or request a strategic review.</p>
-    </div>
+      <!-- INTRO -->
+      <div id="azIntro" class="az-card">
+        <span class="eyebrow">Private Clinic Diagnostic</span>
+        <h1>The Mednixis Clinic Growth Assessment</h1>
+        <p class="sub">Your clinic is producing results. But is it built to grow?</p>
+        <p class="lead-p">Complete a confidential assessment of the structures behind your clinic &mdash; patient acquisition, digital presence, operations and growth readiness.</p>
+        <p style="color:var(--navy);font-weight:700;margin-top:18px">In approximately four minutes, you will receive:</p>
+        <ul class="deliver">
+          <li>Your Clinic Growth Score</li>
+          <li>Your organizational maturity stage</li>
+          <li>Your strongest growth asset</li>
+          <li>Your primary constraint</li>
+          <li>Your strategic blind spot</li>
+          <li>A recommended direction for your clinic</li>
+        </ul>
+        <div class="az-field"><label>Doctor Name *</label><input id="azDoc" type="text" placeholder="Dr. ..."></div>
+        <div class="az-field"><label>Clinic / Practice Name *</label><input id="azClinic" type="text" placeholder="Clinic name"></div>
+        <div class="gerr" id="azIntroErr"></div>
+        <button class="btn btn-primary" id="azStart">Begin the Assessment</button>
+        <p class="privacy-note">Your answers are processed privately. Contact information is only submitted if you choose to receive your complete diagnosis or request a strategic review.</p>
+      </div>
 
-    <!-- SECTION INTRO -->
-    <div id="azSect" class="az-card az-sect-intro" style="display:none">
-      <div class="k" id="azSectK"></div>
-      <h2 id="azSectH"></h2>
-      <p id="azSectP"></p>
-      <button class="btn btn-primary" id="azSectGo">Continue <span class="arrow">&rarr;</span></button>
-    </div>
+      <!-- SECTION INTRO -->
+      <div id="azSect" class="az-card az-sect-intro" style="display:none">
+        <div class="k" id="azSectK"></div>
+        <h2 id="azSectH"></h2>
+        <p id="azSectP"></p>
+        <button class="btn btn-primary" id="azSectGo">Continue</button>
+      </div>
 
-    <!-- QUIZ -->
-    <div id="azQuiz" style="display:none">
-      <div class="az-prog"><div class="az-prog-track"><span id="azBar"></span></div></div>
-      <div class="az-card">
-        <div class="az-sec" id="azSecTag"></div>
-        <div class="az-q" id="azQ"></div>
-        <div class="az-opts" id="azOpts"></div>
-        <div class="az-nav">
-          <button class="az-back" id="azBack" disabled>&larr; Back</button>
-          <span class="az-count" id="azCount">1 / 19</span>
+      <!-- QUIZ -->
+      <div id="azQuiz" style="display:none">
+        <div class="az-prog"><div class="az-prog-track"><span id="azBar"></span></div></div>
+        <div class="az-card">
+          <div class="az-sec" id="azSecTag"></div>
+          <div class="az-q" id="azQ"></div>
+          <div class="az-opts" id="azOpts"></div>
+          <div class="az-nav">
+            <button class="az-back" id="azBack" disabled>&larr; Back</button>
+            <span class="az-count" id="azCount">1 / 19</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- RESULT (score-first) -->
-    <div id="azResult" style="display:none">
-      <div class="az-card">
-        <div class="az-forname" id="azForName" style="display:none">Prepared for<b></b></div>
-        <div class="az-scorewrap"><div class="az-score" id="azScore">0<span>/100</span></div></div>
-        <div class="az-class" id="azClass"></div>
-        <p class="az-shortdiag" id="azShortDiag"></p>
-        <div class="az-pillars" id="azPillars"></div>
-        <div class="az-block" id="azConstraintBlock">
-          <div class="lbl">Primary Constraint</div>
-          <div class="val" id="azConstraintVal"></div>
-          <p id="azConstraintText"></p>
-        </div>
-        <div class="az-block blind">
-          <div class="lbl">Strategic Blind Spot</div>
-          <p id="azBlindspot"></p>
-        </div>
+      <!-- RESULT -->
+      <div id="azResult" style="display:none">
+        <div class="az-card">
+          <div class="az-forname" id="azForName" style="display:none">Prepared for<b></b></div>
+          <div class="az-scorewrap"><div class="az-score" id="azScore">0<span>/100</span></div></div>
+          <div class="az-class" id="azClass"></div>
+          <p class="az-shortdiag" id="azShortDiag"></p>
+          <div class="az-pillars" id="azPillars"></div>
+          <div class="az-block" id="azConstraintBlock">
+            <div class="lbl">Primary Constraint</div>
+            <div class="val" id="azConstraintVal"></div>
+            <p id="azConstraintText"></p>
+          </div>
+          <div class="az-block blind">
+            <div class="lbl">Strategic Blind Spot</div>
+            <p id="azBlindspot"></p>
+          </div>
 
-        <!-- gate teaser -->
-        <div id="azTease" style="text-align:center;margin-top:24px;padding-top:24px;border-top:1px solid var(--line)">
-          <h2 style="font-size:24px;margin-bottom:8px">Your complete private diagnosis is ready.</h2>
-          <p style="color:var(--graphite);max-width:520px;margin:0 auto 20px">Your strongest asset, three recommended priorities and recommended Mednixis direction &mdash; delivered privately to your inbox.</p>
-          <button class="btn btn-primary" id="azReveal">Reveal My Strategic Diagnosis <span class="arrow">&rarr;</span></button>
-        </div>
+          <div id="azTease" class="az-teasewrap">
+            <h2>Your complete private diagnosis is ready.</h2>
+            <p>Your strongest asset, three recommended priorities and recommended Mednixis direction &mdash; delivered privately to your inbox.</p>
+            <button class="btn btn-primary" id="azReveal">Reveal My Strategic Diagnosis</button>
+          </div>
 
-        <!-- gate form -->
-        <div id="azGate" class="az-gate" style="display:none">
-          <h2>Your score is ready.</h2>
-          <p class="g-sub">Where should we send your private diagnosis?</p>
-          <div class="az-field"><label>Full Name</label><input id="azGName" type="text" placeholder="Full name"></div>
-          <div class="az-field"><label>Email</label><input id="azGEmail" type="email" placeholder="you@example.com"></div>
-          <div class="az-field"><label>WhatsApp &mdash; optional</label><input id="azGPhone" type="tel" placeholder="+20 ..."></div>
-          <div class="gerr" id="azGErr"></div>
-          <button class="btn btn-primary" id="azSend" style="width:100%">Reveal My Strategic Diagnosis <span class="arrow">&rarr;</span></button>
-          <p class="privacy-note" style="text-align:center">Your information will only be used to deliver your report and communicate about this assessment. Your results will not be published or shared.</p>
-        </div>
+          <div id="azGate" class="az-gate" style="display:none">
+            <h2>Your score is ready.</h2>
+            <p class="g-sub">Where should we send your private diagnosis?</p>
+            <div class="az-field"><label>Full Name</label><input id="azGName" type="text" placeholder="Full name"></div>
+            <div class="az-field"><label>Email</label><input id="azGEmail" type="email" placeholder="you@example.com"></div>
+            <div class="az-field"><label>WhatsApp &mdash; optional</label><input id="azGPhone" type="tel" placeholder="+20 ..."></div>
+            <div class="gerr" id="azGErr"></div>
+            <button class="btn btn-primary" id="azSend" style="width:100%;justify-content:center">Reveal My Strategic Diagnosis</button>
+            <p class="privacy-note" style="text-align:center">Your information will only be used to deliver your report and communicate about this assessment. Your results will not be published or shared.</p>
+          </div>
 
-        <!-- full diagnosis (revealed after capture) -->
-        <div id="azFull" style="display:none">
-          <div class="az-emailconf" id="azEmailConf"></div>
-          <h2 style="font-size:26px;text-align:center;margin-bottom:6px">Your Strategic Diagnosis</h2>
-          <div class="dsec" style="text-align:center;margin-bottom:28px">
-            <div class="dt" id="azDiagTitle"></div>
-            <p id="azDiagPara"></p>
+          <div id="azFull" style="display:none">
+            <div class="az-emailconf" id="azEmailConf"></div>
+            <h2 style="font-family:var(--font-display);font-size:28px;font-weight:600;text-align:center;color:var(--navy);margin-bottom:6px">Your Strategic Diagnosis</h2>
+            <div class="dsec" style="text-align:center;margin-bottom:30px">
+              <div class="dt" id="azDiagTitle"></div>
+              <p id="azDiagPara"></p>
+            </div>
+            <div class="dsec"><div class="dh">Strongest Growth Asset</div><div class="dt" id="azAssetTitle"></div><p id="azAssetText"></p></div>
+            <div class="dsec"><div class="dh">Primary Constraint</div><div class="dt" id="azConstraintTitle2"></div><p id="azConstraintText2"></p></div>
+            <div class="dsec"><div class="dh">Strategic Blind Spot</div><p id="azBlindspot2"></p></div>
+            <div class="dsec"><div class="dh">Recommended Priorities</div><div id="azPriorities"></div></div>
+            <div class="pathway-box">
+              <div class="pw-l">Recommended Mednixis Direction</div>
+              <div class="pw-t" id="azPathwayTitle"></div>
+              <p id="azPathwayText"></p>
+            </div>
+            <div class="az-cta">
+              <a class="btn btn-primary" id="azInterp" href="contact.html">Request a Private Interpretation</a>
+            </div>
+            <p class="interp-note">Your automated assessment identifies signals. A private interpretation examines what these signals mean within the specific context of your practice. A limited number of strategic interpretations are reviewed each month.</p>
           </div>
-          <div class="dsec">
-            <div class="dh">Strongest Growth Asset</div>
-            <div class="dt" id="azAssetTitle"></div>
-            <p id="azAssetText"></p>
-          </div>
-          <div class="dsec">
-            <div class="dh">Primary Constraint</div>
-            <div class="dt" id="azConstraintTitle2"></div>
-            <p id="azConstraintText2"></p>
-          </div>
-          <div class="dsec">
-            <div class="dh">Strategic Blind Spot</div>
-            <p id="azBlindspot2"></p>
-          </div>
-          <div class="dsec">
-            <div class="dh">Recommended Priorities</div>
-            <div id="azPriorities"></div>
-          </div>
-          <div class="pathway-box">
-            <div class="pw-l">Recommended Mednixis Direction</div>
-            <div class="pw-t" id="azPathwayTitle"></div>
-            <p id="azPathwayText"></p>
-          </div>
-          <div class="az-cta">
-            <a class="btn btn-primary" id="azInterp" href="contact.html">Request a Private Interpretation <span class="arrow">&rarr;</span></a>
-          </div>
-          <p class="interp-note">Your automated assessment identifies signals. A private interpretation examines what these signals mean within the specific context of your practice. A limited number of strategic interpretations are reviewed each month.</p>
-        </div>
 
-        <button class="az-restart" id="azRestart">Retake the assessment</button>
+          <button class="az-restart" id="azRestart">Retake the assessment</button>
+        </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </section>
 </main>
 <footer class="site-footer">
   <div class="container">
-    <p style="text-align:center;color:var(--platinum);font-size:14px">&copy; 2026 Mednixis &mdash; Healthcare Management &amp; Growth &middot; contact@mednixis.com</p>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="index.html" aria-label="Mednixis home">
+          <svg class="logo-mark" viewBox="0 0 60 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <!-- serif M strokes -->
+  <path d="M4 48 L4 6 L30 36 L56 6 L56 48" stroke="#0F1720" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- copper sweep overlay -->
+  <path class="sweep-path" d="M6 8 Q30 52 54 8" stroke="#B48E76" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>
+          <span class="logo-word">Mednixis</span>
+        </a>
+        <p>A premium healthcare management and growth firm based in Egypt, helping healthcare organizations build stronger brands, better systems, and scalable growth strategies.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="strategic-projects.html">Strategic Projects</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="healthcare-management.html">Healthcare Management</a></li>
+          <li><a href="branding-marketing.html">Branding &amp; Marketing</a></li>
+          <li><a href="research-strategy.html">Research &amp; Strategy</a></li>
+          <li><a href="growth-digital-systems.html">Growth &amp; Digital Systems</a></li>
+          <li><a href="medical-events.html">Medical Events</a></li>
+          <li><a href="clinic-system.html">Clinic System</a></li>
+          <li><a href="assessment.html">Assessment</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p><a href="mailto:contact@mednixis.com">contact@mednixis.com</a></p>
+        <p><a href="tel:+201119995307">+20 111 999 5307</a></p>
+        <p><a href="https://instagram.com/mednixis" target="_blank" rel="noopener">@mednixis</a></p>
+        <a class="btn btn-copper" href="contact.html" style="margin-top:20px">Book a Consultation</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Mednixis. All rights reserved.</span>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
   </div>
 </footer>
+<script src="js/main.js"></script>
 <script>
-// nav toggle
-(function(){var t=document.getElementById('navToggle'),n=document.getElementById('navLinks');if(t)t.onclick=function(){n.classList.toggle('open')};})();
-
 var EMAILJS_PUBLIC="MTiJMK0VcaKK1mJZC", EMAILJS_SERVICE="service_841zv8k", EMAILJS_TEMPLATE="template_f9fzk5u";
 try{ emailjs.init({publicKey:EMAILJS_PUBLIC}); }catch(e){}
-
 // ============================================================
 // MEDNIXIS DIAGNOSIS ENGINE  (shared by website + rep tool)
 // Pure function: takes answers[] (indices) + pct{} + score, returns full diagnosis object.
@@ -533,7 +531,6 @@ var DIAG = (function(){
 
   return {build:build, classify:classify};
 })();
-
 (function(){
   var Q=[{"section": "Practice Profile", "pillar": null, "q": "What type of practice is this?", "opts": [["Single-doctor private clinic", null], ["Multi-doctor clinic / polyclinic", null], ["Specialty medical center", null], ["Hospital / large facility", null]]}, {"section": "Practice Profile", "pillar": null, "q": "How long has the practice been operating?", "opts": [["Pre-launch / just opened", null], ["Under 2 years", null], ["2–5 years", null], ["More than 5 years", null]]}, {"section": "Practice Profile", "pillar": null, "q": "Roughly how many patients does it see per month?", "opts": [["Under 100", null], ["100–300", null], ["300–800", null], ["800+", null]]}, {"section": "Practice Profile", "pillar": "Growth Readiness", "q": "What must this practice achieve within the next 12 months?", "opts": [["Get more new patients", 1], ["Run the clinic more smoothly", 1], ["Build the brand / reputation", 1], ["Expand — new branch or services", 2]]}, {"section": "Practice Profile", "pillar": "Growth Readiness", "q": "Which constraint is creating the greatest pressure on the practice?", "opts": [["Not enough new patients", 1], ["Disorganized operations", 1], ["Weak online presence", 1], ["No clear plan to grow", 0]]}, {"section": "Digital Presence", "pillar": "Digital Presence", "q": "How would you describe the clinic's website?", "opts": [["Modern site with online booking", 4], ["Basic informational site", 2], ["Only a social media page", 1], ["No website at all", 0]]}, {"section": "Digital Presence", "pillar": "Digital Presence", "q": "When patients search the specialty in this city, does the clinic show up?", "opts": [["Yes, near the top", 4], ["Somewhere on page one", 3], ["Rarely / hard to find", 1], ["Never checked", 0]]}, {"section": "Patient Acquisition", "pillar": "Patient Acquisition", "q": "Where do most new patients come from?", "opts": [["A managed mix of referrals, search and ads", 4], ["Mostly word of mouth", 2], ["Mostly one doctor's reputation", 1], ["Unpredictable / not sure", 0]]}, {"section": "Patient Acquisition", "pillar": "Patient Acquisition", "q": "Does the clinic run and measure marketing campaigns?", "opts": [["Yes, planned and tracked", 4], ["Yes, but not measured", 2], ["Tried once or twice", 1], ["Never", 0]]}, {"section": "Operations & Systems", "pillar": "Operations & Systems", "q": "How are patient records and bookings managed?", "opts": [["A proper digital system the team shares", 4], ["Mix of digital and paper", 2], ["Mostly paper / notebook", 1], ["No clear system", 0]]}, {"section": "Operations & Systems", "pillar": "Operations & Systems", "q": "Do patients get automatic reminders and follow-ups?", "opts": [["Yes, automated (e.g. WhatsApp)", 4], ["Manually, sometimes", 2], ["Rarely", 1], ["Never", 0]]}, {"section": "Growth Readiness", "pillar": "Growth Readiness", "q": "Is there a written growth plan with clear targets?", "opts": [["Yes, documented with targets", 4], ["A general direction only", 2], ["Just in the doctor's head", 1], ["No plan", 0]]}, {"section": "Growth Readiness", "pillar": "Growth Readiness", "q": "How consistent is the brand across everything patients see?", "opts": [["Fully consistent identity", 4], ["Mostly consistent", 3], ["Inconsistent", 1], ["No real brand", 0]]}, {"section": "Deeper Analysis", "pillar": "Digital Presence", "q": "How active is the clinic on social media?", "opts": [["Consistent, planned content", 4], ["Posts occasionally", 2], ["Rarely posts", 1], ["No presence", 0]]}, {"section": "Deeper Analysis", "pillar": "Patient Acquisition", "q": "Are patient reviews actively collected and managed?", "opts": [["Yes, actively requested and managed", 4], ["Some reviews, unmanaged", 2], ["Very few", 1], ["None", 0]]}, {"section": "Deeper Analysis", "pillar": "Patient Acquisition", "q": "Is the cost to acquire a new patient known and tracked?", "opts": [["Yes, tracked", 4], ["Rough idea", 2], ["Not really", 1], ["No concept of it", 0]]}, {"section": "Deeper Analysis", "pillar": "Operations & Systems", "q": "Are there clear, trustworthy numbers on revenue and performance?", "opts": [["Yes, reliable reports", 4], ["Can estimate", 2], ["Only a rough sense", 1], ["No visibility", 0]]}, {"section": "Deeper Analysis", "pillar": "Growth Readiness", "q": "How dependent is the practice on one person for daily decisions and continuity?", "opts": [["No — systems run it", 4], ["Somewhat", 2], ["Heavily", 1], ["Entirely one person", 0]]}, {"section": "Deeper Analysis", "pillar": "Growth Readiness", "q": "Has the practice previously worked with an external growth or management partner?", "opts": [["Yes, with good structure", 4], ["Yes, but it didn't stick", 2], ["Considered it", 2], ["Never", 1]]}], PILLARS=["Digital Presence", "Patient Acquisition", "Operations & Systems", "Growth Readiness"], PMAX={"Growth Readiness": 19, "Digital Presence": 12, "Patient Acquisition": 16, "Operations & Systems": 12};
   var answers=new Array(Q.length).fill(null), cur=0, meta={doc:"",clinic:""};
@@ -546,17 +543,11 @@ var DIAG = (function(){
   var sectionOrder=[];(function(){var seen={};for(var i=0;i<Q.length;i++){var s=Q[i].section;if(SECT[s]&&!seen[s]){seen[s]=1;sectionOrder.push({at:i,sec:s});}}})();
   function sectionAt(i){for(var k=0;k<sectionOrder.length;k++)if(sectionOrder[k].at===i)return sectionOrder[k].sec;return null;}
 
-  $("azStart").onclick=function(){
-    var d=$("azDoc").value.trim(), c=$("azClinic").value.trim();
-    if(!d||!c){$("azIntroErr").textContent="Please enter the doctor name and clinic name to continue.";return;}
-    $("azIntroErr").textContent="";
-    meta.doc=d;meta.clinic=c;$("azIntro").style.display="none";cur=0;maybeSection();scrollUp();
-  };
+  $("azStart").onclick=function(){var d=$("azDoc").value.trim(),c=$("azClinic").value.trim();if(!d||!c){$("azIntroErr").textContent="Please enter the doctor name and clinic name to continue.";return;}$("azIntroErr").textContent="";meta.doc=d;meta.clinic=c;$("azIntro").style.display="none";cur=0;maybeSection();scrollUp();};
   $("azSectGo").onclick=function(){$("azSect").style.display="none";$("azQuiz").style.display="block";render();scrollUp();};
   $("azBack").onclick=function(){if(cur>0){cur--;if(sectionAt(cur)){cur++;}render();}};
   $("azRestart").onclick=function(){answers=new Array(Q.length).fill(null);cur=0;["azResult","azGate","azFull","azSect","azQuiz"].forEach(function(id){$(id).style.display="none";});$("azTease").style.display="block";$("azIntro").style.display="block";$("azBar").style.width="0";scrollUp();};
-  function scrollUp(){var el=document.querySelector(".az");if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-90;window.scrollTo({top:y<0?0:y,behavior:"smooth"});}
-
+  function scrollUp(){var el=document.querySelector(".az");if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-20;window.scrollTo({top:y<0?0:y,behavior:"smooth"});}
   function maybeSection(){var sec=sectionAt(cur);if(sec){var i=SECT[sec];$("azSectK").textContent=i[0];$("azSectH").textContent=i[1];$("azSectP").textContent=i[2];$("azQuiz").style.display="none";$("azSect").style.display="block";}else{$("azQuiz").style.display="block";render();}}
 
   function render(){
@@ -579,97 +570,47 @@ var DIAG = (function(){
     var score=Math.round(tp/tm*100);
     var dg=DIAG.build(answers,pct,score);
     RESULT={score:score,pct:pct,dg:dg};
-
     $("azQuiz").style.display="none";$("azSect").style.display="none";$("azResult").style.display="block";
     if(meta.doc||meta.clinic){$("azForName").style.display="block";$("azForName").querySelector("b").textContent=(meta.doc||"")+(meta.clinic?(meta.doc?" · ":"")+meta.clinic:"");}
-    // animate score count
     var target=score,cnt=0,step=Math.max(1,Math.round(target/40));
     var iv=setInterval(function(){cnt+=step;if(cnt>=target){cnt=target;clearInterval(iv);}$("azScore").innerHTML=cnt+'<span>/100</span>';},18);
     var cmap={"Foundation Stage":"c-foundation","Growth Constrained":"c-constrained","Growth Capable":"c-capable","Scale Ready":"c-scale","Institution Grade":"c-institution"};
     $("azClass").textContent=dg.classification;$("azClass").className="az-class "+(cmap[dg.classification]||"c-capable");
     $("azShortDiag").textContent=dg.shortDiagnosis;
-
-    // pillar cards (lowest highlighted)
     var lowest=dg.constraint.pillar;
     var pc=$("azPillars");pc.innerHTML="";
-    PILLARS.forEach(function(p){
-      var isLow=(p===lowest);
-      var d=document.createElement("div");d.className="az-pcard"+(isLow?" lowest":"");
-      d.innerHTML=(isLow?'<span class="tag">Primary Constraint</span>':'')+'<div class="pv">'+pct[p]+'%</div><div class="pl">'+p+'</div>';
-      pc.appendChild(d);
-    });
-    // constraint + blindspot on-page
-    if(dg.isStrong){
-      $("azConstraintBlock").style.display="none";
-    } else {
-      $("azConstraintBlock").style.display="block";
-      $("azConstraintVal").textContent=dg.constraint.pillar+" — "+dg.constraint.pct+"%";
-      $("azConstraintText").textContent=dg.constraint.text;
-    }
+    PILLARS.forEach(function(p){var isLow=(p===lowest);var d=document.createElement("div");d.className="az-pcard"+(isLow?" lowest":"");d.innerHTML=(isLow?'<span class="tag">Primary Constraint</span>':'')+'<div class="pv">'+pct[p]+'%</div><div class="pl">'+p+'</div>';pc.appendChild(d);});
+    if(dg.isStrong){$("azConstraintBlock").style.display="none";}else{$("azConstraintBlock").style.display="block";$("azConstraintVal").textContent=dg.constraint.pillar+" — "+dg.constraint.pct+"%";$("azConstraintText").textContent=dg.constraint.text;}
     $("azBlindspot").textContent=dg.blindspot;
-
     try{if(typeof fbq==="function")fbq("track","Lead",{content_name:"Clinic Growth Assessment",value:score});}catch(e){}
     scrollUp();
   }
 
-  // reveal gate
   $("azReveal").onclick=function(){$("azTease").style.display="none";$("azGate").style.display="block";$("azGate").scrollIntoView({behavior:"smooth",block:"center"});};
 
-  // send
   $("azSend").onclick=function(){
     var nm=$("azGName").value.trim(), em=$("azGEmail").value.trim(), ph=$("azGPhone").value.trim();
     if(!nm||!em){$("azGErr").textContent="Please enter your name and email.";return;}
     if(!/^[^@]+@[^@]+\.[^@]+$/.test(em)){$("azGErr").textContent="Please enter a valid email.";return;}
     $("azGErr").textContent="";
     var dg=RESULT.dg;
-    // build priorities as text + html
-    var prTextLines=[]; dg.priorities.forEach(function(p,i){prTextLines.push((i+1)+". "+p.t+" — "+p.d);});
+    var prTextLines=[];dg.priorities.forEach(function(p,i){prTextLines.push((i+1)+". "+p.t+" — "+p.d);});
     var priText=prTextLines.join("\n");
-    var priHtml=""; dg.priorities.forEach(function(p,i){priHtml+='<div class="pri"><div class="n">0'+(i+1)+'</div><div><div class="pt">'+p.t+'</div><div class="pd">'+p.d+'</div></div></div>';});
-
-    // reveal full diagnosis IMMEDIATELY (email is fire-and-forget)
-    $("azGate").style.display="none";
-    $("azFull").style.display="block";
+    var priHtml="";dg.priorities.forEach(function(p,i){priHtml+='<div class="pri"><div class="n">0'+(i+1)+'</div><div><div class="pt">'+p.t+'</div><div class="pd">'+p.d+'</div></div></div>';});
+    $("azGate").style.display="none";$("azFull").style.display="block";
     $("azEmailConf").innerHTML="&#9989; A private copy of your complete diagnosis has been sent to <b>"+em+"</b>.";
-    $("azDiagTitle").textContent=dg.diagnosisTitle;
-    $("azDiagPara").textContent=dg.diagnosis;
+    $("azDiagTitle").textContent=dg.diagnosisTitle;$("azDiagPara").textContent=dg.diagnosis;
     $("azAssetTitle").textContent=dg.asset.title;$("azAssetText").textContent=dg.asset.text;
     $("azConstraintTitle2").textContent=dg.constraint.title;$("azConstraintText2").textContent=dg.constraint.text;
-    $("azBlindspot2").textContent=dg.blindspot;
-    $("azPriorities").innerHTML=priHtml;
+    $("azBlindspot2").textContent=dg.blindspot;$("azPriorities").innerHTML=priHtml;
     $("azPathwayTitle").textContent=dg.pathway.title;$("azPathwayText").textContent=dg.pathway.text;
-    $("azInterp").innerHTML="Request a Private Interpretation <span class='arrow'>&rarr;</span>";
-    // carry to booking
     try{sessionStorage.setItem("mdx_assessment", assessmentText(nm,em,ph,priText));}catch(e){}
     $("azFull").scrollIntoView({behavior:"smooth",block:"start"});
-
-    // fire EmailJS to doctor (branded) - fire and forget
-    var params={
-      to_email:em, doctor_name:(meta.doc||nm), score:String(RESULT.score),
-      classification:dg.classification, diagnosis:dg.diagnosis,
-      asset_title:dg.asset.title, asset_text:dg.asset.text,
-      constraint_title:dg.constraint.title, constraint_text:dg.constraint.text,
-      blindspot:dg.blindspot, priorities:priText,
-      pathway_title:dg.pathway.title, pathway_text:dg.pathway.text
-    };
-    try{
-      emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, params).catch(function(){});
-    }catch(e){}
+    var params={to_email:em,doctor_name:(meta.doc||nm),score:String(RESULT.score),classification:dg.classification,diagnosis:dg.diagnosis,asset_title:dg.asset.title,asset_text:dg.asset.text,constraint_title:dg.constraint.title,constraint_text:dg.constraint.text,blindspot:dg.blindspot,priorities:priText,pathway_title:dg.pathway.title,pathway_text:dg.pathway.text};
+    try{emailjs.send(EMAILJS_SERVICE,EMAILJS_TEMPLATE,params).catch(function(){});}catch(e){}
   };
-
-  function assessmentText(nm,em,ph,priText){
-    var dg=RESULT.dg, NL="\n";
-    var s="MEDNIXIS CLINIC GROWTH ASSESSMENT"+NL;
-    s+="Doctor: "+(meta.doc||nm)+NL+"Clinic: "+(meta.clinic||"")+NL+"Contact: "+nm+" | "+em+(ph?" | "+ph:"")+NL+NL;
-    s+="Score: "+RESULT.score+"/100 ("+dg.classification+")"+NL+NL;
-    s+="PILLARS:"+NL;PILLARS.forEach(function(p){s+=" - "+p+": "+RESULT.pct[p]+"%"+NL;});
-    s+=NL+"DIAGNOSIS: "+dg.diagnosisTitle+NL+dg.diagnosis+NL;
-    s+=NL+"STRONGEST ASSET: "+dg.asset.title+NL+dg.asset.text+NL;
-    s+=NL+"PRIMARY CONSTRAINT: "+dg.constraint.title+NL+dg.constraint.text+NL;
-    s+=NL+"BLIND SPOT: "+dg.blindspot+NL;
-    s+=NL+"PRIORITIES:"+NL+priText+NL;
-    s+=NL+"RECOMMENDED DIRECTION: "+dg.pathway.title+NL+dg.pathway.text;
-    return s;
-  }
+  function assessmentText(nm,em,ph,priText){var dg=RESULT.dg,NL="\n";var s="MEDNIXIS CLINIC GROWTH ASSESSMENT"+NL;s+="Doctor: "+(meta.doc||nm)+NL+"Clinic: "+(meta.clinic||"")+NL+"Contact: "+nm+" | "+em+(ph?" | "+ph:"")+NL+NL;s+="Score: "+RESULT.score+"/100 ("+dg.classification+")"+NL+NL+"PILLARS:"+NL;PILLARS.forEach(function(p){s+=" - "+p+": "+RESULT.pct[p]+"%"+NL;});s+=NL+"DIAGNOSIS: "+dg.diagnosisTitle+NL+dg.diagnosis+NL+NL+"STRONGEST ASSET: "+dg.asset.title+NL+dg.asset.text+NL+NL+"PRIMARY CONSTRAINT: "+dg.constraint.title+NL+dg.constraint.text+NL+NL+"BLIND SPOT: "+dg.blindspot+NL+NL+"PRIORITIES:"+NL+priText+NL+NL+"RECOMMENDED DIRECTION: "+dg.pathway.title+NL+dg.pathway.text;return s;}
 })();
 </script>
+</body>
+</html>
