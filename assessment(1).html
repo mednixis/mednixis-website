@@ -103,6 +103,11 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
 .az-restart{display:block;margin:16px auto 0;background:none;border:none;font-size:14px;font-weight:600;color:var(--platinum);cursor:pointer}
 .az-restart:hover{color:var(--navy)}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+var MDX_SB=null;
+try{ MDX_SB=window.supabase.createClient("https://lblmaumusgovxciuyzbm.supabase.co","sb_publishable_aRP6R1XUsIv7AgUun4EsCA_hd8xmLz8"); }catch(e){}
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -391,6 +396,25 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
     // stash results for the email/booking payload
     RESULT={score:score,tier:tier,pct:pct,weak:weak,answers:buildAnswerSummary()};
     DIAGTEXT=diag;
+    // ---- Save lead to Mednixis Command Center (flag no-contact) ----
+    RESULT.savedId=null;
+    (function(){
+      if(!MDX_SB)return;
+      var constraint=weak.length?weak[0]:PILLARS.slice().sort(function(a,bb){return pct[a]-pct[bb];})[0];
+      var row={
+        doctor_name:meta.doc||null, clinic_name:meta.clinic||null,
+        score:score, tier:tier, primary_constraint:constraint,
+        pillar_digital:pct["Digital Presence"], pillar_acquisition:pct["Patient Acquisition"],
+        pillar_operations:pct["Operations & Systems"], pillar_growth:pct["Growth Readiness"],
+        diagnosis:diag, recommended_pathway:null, source:"website", stage:"new",
+        answers:{summary:RESULT.answers, recommendations:RECTEXT},
+        is_partial:false, notes:"(no contact yet — completed assessment)"
+      };
+      MDX_SB.from("leads").insert(row).select().single().then(function(r){
+        if(r&&r.data){ RESULT.savedId=r.data.id; }
+      }).catch(function(){});
+    })();
+
     // Meta Lead on completion
     try{if(typeof fbq==="function")fbq("track","Lead",{content_name:"Clinic Growth Assessment",value:score});}catch(e){}
     scrollUp();
@@ -437,6 +461,22 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
       "Recommended Direction":RECTEXT||"(none)",
       "Full Assessment":assessmentText()
     };
+
+    // ---- Update the saved lead with contact info in Command Center ----
+    (function(){
+      if(!MDX_SB)return;
+      var patch={email:em, phone:ph, notes:"Contact captured via website assessment"};
+      if(!meta.doc && nm) patch.doctor_name=nm;
+      if(RESULT.savedId){ MDX_SB.from("leads").update(patch).eq("id",RESULT.savedId).then(function(){}).catch(function(){}); }
+      else { // if the initial save hadn't returned yet, insert a fresh complete row
+        MDX_SB.from("leads").insert({doctor_name:meta.doc||nm, clinic_name:meta.clinic||null, email:em, phone:ph,
+          score:RESULT.score, tier:RESULT.tier, primary_constraint:(RESULT.weak[0]||null),
+          pillar_digital:RESULT.pct["Digital Presence"], pillar_acquisition:RESULT.pct["Patient Acquisition"],
+          pillar_operations:RESULT.pct["Operations & Systems"], pillar_growth:RESULT.pct["Growth Readiness"],
+          diagnosis:DIAGTEXT, source:"website", stage:"new", answers:{summary:RESULT.answers, recommendations:RECTEXT}
+        }).then(function(){}).catch(function(){});
+      }
+    })();
     // Reveal the report immediately — the doctor gave their info, they get the report no matter what.
     $("azGate").style.display="none";
     $("azFull").style.display="block";
