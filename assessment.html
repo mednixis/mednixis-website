@@ -95,9 +95,19 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
 .az-rx li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:1.5px;background:var(--copper)}
 .az-rx .combo{font-size:13px;color:var(--platinum);font-style:italic;margin-bottom:10px}
 .az-cta{margin-top:30px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.az-cta .btn{text-align:center}
+@media(max-width:640px){
+  .az-cta{flex-direction:column}
+  .az-cta .btn{width:100%;justify-content:center;white-space:normal;line-height:1.3;padding-left:18px;padding-right:18px;height:auto;min-height:54px}
+}
 .az-restart{display:block;margin:16px auto 0;background:none;border:none;font-size:14px;font-weight:600;color:var(--platinum);cursor:pointer}
 .az-restart:hover{color:var(--navy)}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+var MDX_SB=null;
+try{ MDX_SB=window.supabase.createClient("https://lblmaumusgovxciuyzbm.supabase.co","sb_publishable_aRP6R1XUsIv7AgUun4EsCA_hd8xmLz8"); }catch(e){}
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -226,8 +236,10 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
             <h2 class="az-rx-head">Recommended Direction</h2>
             <div class="az-rx-sub">Where Mednixis can help — matched to your practice</div>
             <div id="azRx"></div>
+            <p id="azCtaLine" style="text-align:center;font-size:15px;color:var(--navy);max-width:520px;margin:24px auto 0"></p>
             <div class="az-cta">
               <a class="btn btn-primary" id="azBook" href="contact.html">Book a Consultation <span class="arrow">&rarr;</span></a>
+              <button class="btn btn-navy" id="azPdf" type="button">Download PDF &darr;</button>
               <a class="btn btn-copper" href="clinic-system.html">See the Clinic System</a>
             </div>
           </div>
@@ -346,16 +358,63 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
       var row=document.createElement("div");row.className="az-bar";
       row.innerHTML='<div class="az-bar-top"><b>'+p+'</b><span>'+label+' · '+v+'%</span></div><div class="az-bar-track"><div class="az-bar-fill" style="background:'+color+'"></div></div>';
       barsEl.appendChild(row);(function(f,t){setTimeout(function(){f.style.width=t+"%";},250);})(row.querySelector(".az-bar-fill"),v);});
-    var rxEl=$("azRx");rxEl.innerHTML="";var weak=[];PILLARS.forEach(function(p){if(pct[p]<60)weak.push(p);});
-    if(weak.length===0){var c=document.createElement("div");c.className="az-rx";c.innerHTML='<div class="area ok">Strong across all pillars</div><div style="font-size:14.5px;color:var(--graphite)">Your practice is performing well everywhere we looked. Mednixis can help protect and scale that lead — a strategic partnership to compound growth and prepare for expansion.</div>';rxEl.appendChild(c);}
-    else{weak.forEach(function(p){var rx=RX[p]||[],combo=rx.length>1;var c=document.createElement("div");c.className="az-rx";
-      var html='<div class="area">Opportunity · '+p+' ('+pct[p]+'%)</div>';if(combo)html+='<div class="combo">This is best solved with a combination of services:</div>';
-      rx.forEach(function(b){html+='<div class="svc">'+b.service+'</div><ul>';b.items.forEach(function(it){html+='<li>'+it+'</li>';});html+='</ul>';});
-      c.innerHTML=html;rxEl.appendChild(c);});}
+    var rxEl=$("azRx");rxEl.innerHTML="";
+    // Weakness = any pillar below 60% (still worth flagging individually)
+    var weak=[];PILLARS.forEach(function(p){if(pct[p]<60)weak.push(p);});
+    // recommendation logic keyed on overall score: 85+ = congrats, below = always recommend
+    var recText="";
+    if(score>=85){
+      var c=document.createElement("div");c.className="az-rx";
+      c.innerHTML='<div class="area ok">Excellent — a top-performing practice</div><div style="font-size:14.5px;color:var(--graphite)">Congratulations. Your practice scores in the top tier across the board. There are no critical gaps holding you back — the opportunity now is to protect and compound this lead. Mednixis can partner with you to scale further, enter new markets, and stay ahead as you grow.</div>';
+      rxEl.appendChild(c);
+      recText="EXCELLENT — TOP-PERFORMING PRACTICE\nNo critical gaps. Recommended: a strategic growth partnership to protect the lead, scale, and expand.";
+    } else {
+      // below 85: recommend. If specific weak pillars exist, prescribe those; otherwise recommend broad refinement.
+      var targets = weak.length ? weak : PILLARS.slice().sort(function(a,bb){return pct[a]-pct[bb];}).slice(0,2);
+      var recLines=[];
+      targets.forEach(function(p){
+        var rx=RX[p]||[],combo=rx.length>1;
+        var c=document.createElement("div");c.className="az-rx";
+        var flagged = pct[p]<60;
+        var html='<div class="area">'+(flagged?'Opportunity':'Room to strengthen')+' · '+p+' ('+pct[p]+'%)</div>';
+        if(combo)html+='<div class="combo">This is best solved with a combination of services:</div>';
+        recLines.push((flagged?"OPPORTUNITY":"STRENGTHEN")+" — "+p+" ("+pct[p]+"%)");
+        rx.forEach(function(b){
+          html+='<div class="svc">'+b.service+'</div><ul>';
+          recLines.push("  "+b.service+":");
+          b.items.forEach(function(it){html+='<li>'+it+'</li>';recLines.push("    - "+it);});
+          html+='</ul>';
+        });
+        c.innerHTML=html;rxEl.appendChild(c);
+      });
+      recText=recLines.join("\n");
+    }
+    RECTEXT=recText;
     // set personalized book CTA text
-    $("azBook").innerHTML = weak.length? ('Book a Consultation to Close '+weak[0]+' <span class="arrow">&rarr;</span>') : ('Book a Strategic Consultation <span class="arrow">&rarr;</span>');
+    $("azBook").innerHTML = 'Book a Consultation <span class="arrow">&rarr;</span>';
+    $("azCtaLine").textContent = weak.length ? ("Your biggest opportunity is "+weak[0]+". Book a consultation to close it.") : "You're performing strongly. Book a consultation to plan your next phase of growth.";
     // stash results for the email/booking payload
     RESULT={score:score,tier:tier,pct:pct,weak:weak,answers:buildAnswerSummary()};
+    DIAGTEXT=diag;
+    // ---- Save lead to Mednixis Command Center (flag no-contact) ----
+    RESULT.savedId=null;
+    (function(){
+      if(!MDX_SB)return;
+      var constraint=weak.length?weak[0]:PILLARS.slice().sort(function(a,bb){return pct[a]-pct[bb];})[0];
+      var row={
+        doctor_name:meta.doc||null, clinic_name:meta.clinic||null,
+        score:score, tier:tier, primary_constraint:constraint,
+        pillar_digital:pct["Digital Presence"], pillar_acquisition:pct["Patient Acquisition"],
+        pillar_operations:pct["Operations & Systems"], pillar_growth:pct["Growth Readiness"],
+        diagnosis:diag, recommended_pathway:null, source:"website", stage:"new",
+        answers:{summary:RESULT.answers, recommendations:RECTEXT},
+        is_partial:false, notes:"(no contact yet — completed assessment)"
+      };
+      MDX_SB.from("leads").insert(row).select().single().then(function(r){
+        if(r&&r.data){ RESULT.savedId=r.data.id; }
+      }).catch(function(){});
+    })();
+
     // Meta Lead on completion
     try{if(typeof fbq==="function")fbq("track","Lead",{content_name:"Clinic Growth Assessment",value:score});}catch(e){}
     scrollUp();
@@ -369,7 +428,7 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
   }
 
   // ---- contact gate + submission ----
-  var RESULT=null;
+  var RESULT=null, RECTEXT="", DIAGTEXT="";
   $("azGetReport").onclick=function(){ $("azTease").style.display="none"; $("azGate").style.display="block"; $("azGate").scrollIntoView({behavior:"smooth",block:"center"}); };
   $("azBook").onclick=function(){
     // carry the assessment into the booking form via sessionStorage, then go to contact
@@ -381,7 +440,9 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
     s+="Doctor: "+(meta.doc||"(not given)")+"\nClinic: "+(meta.clinic||"(not given)")+"\n";
     s+="Score: "+RESULT.score+"/100  ("+RESULT.tier+")\n\nPILLARS:\n";
     PILLARS.forEach(function(p){s+=" - "+p+": "+RESULT.pct[p]+"%\n";});
-    s+="\nWEAK AREAS: "+(RESULT.weak.length?RESULT.weak.join(", "):"none")+"\n\nANSWERS:\n"+RESULT.answers;
+    s+="\nWEAK AREAS: "+(RESULT.weak.length?RESULT.weak.join(", "):"none")+"\n";
+    s+="\nRECOMMENDED DIRECTION:\n"+(RECTEXT||"(none)")+"\n";
+    s+="\nANSWERS:\n"+RESULT.answers;
     return s;
   }
 
@@ -390,27 +451,118 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
     var nm=$("azGName").value.trim(), ph=$("azGPhone").value.trim(), em=$("azGEmail").value.trim();
     if(!nm||!ph||!em){ $("azGErr").textContent="Please fill name, phone and email."; return; }
     if(!/^[^@]+@[^@]+\.[^@]+$/.test(em)){ $("azGErr").textContent="Please enter a valid email."; return; }
-    $("azGErr").textContent=""; $("azSend").disabled=true; $("azSend").textContent="Sending...";
+    $("azGErr").textContent="";
     var payload={
       _subject:"New Clinic Assessment — "+(meta.doc||nm)+" ("+RESULT.score+"/100)",
       _template:"box",
       "Doctor Name":meta.doc||nm, "Clinic":meta.clinic||"", "Contact Name":nm,
       "Phone":ph, "Email":em, "Score":RESULT.score+"/100 ("+RESULT.tier+")",
       "Weak Areas":RESULT.weak.length?RESULT.weak.join(", "):"none",
+      "Recommended Direction":RECTEXT||"(none)",
       "Full Assessment":assessmentText()
     };
-    fetch("https://formsubmit.co/ajax/contact@mednixis.com",{
-      method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
-      body:JSON.stringify(payload)
-    }).then(function(r){return r.json();}).then(function(){
-      $("azGate").style.display="none";
-      $("azFull").style.display="block";
-      $("azFull").scrollIntoView({behavior:"smooth",block:"start"});
-    }).catch(function(){
-      $("azSend").disabled=false; $("azSend").textContent="Send my report";
-      $("azGErr").textContent="Something went wrong — please try again or book a consultation directly.";
-    });
+
+    // ---- Update the saved lead with contact info in Command Center ----
+    (function(){
+      if(!MDX_SB)return;
+      var patch={email:em, phone:ph, notes:"Contact captured via website assessment"};
+      if(!meta.doc && nm) patch.doctor_name=nm;
+      if(RESULT.savedId){ MDX_SB.from("leads").update(patch).eq("id",RESULT.savedId).then(function(){}).catch(function(){}); }
+      else { // if the initial save hadn't returned yet, insert a fresh complete row
+        MDX_SB.from("leads").insert({doctor_name:meta.doc||nm, clinic_name:meta.clinic||null, email:em, phone:ph,
+          score:RESULT.score, tier:RESULT.tier, primary_constraint:(RESULT.weak[0]||null),
+          pillar_digital:RESULT.pct["Digital Presence"], pillar_acquisition:RESULT.pct["Patient Acquisition"],
+          pillar_operations:RESULT.pct["Operations & Systems"], pillar_growth:RESULT.pct["Growth Readiness"],
+          diagnosis:DIAGTEXT, source:"website", stage:"new", answers:{summary:RESULT.answers, recommendations:RECTEXT}
+        }).then(function(){}).catch(function(){});
+      }
+    })();
+    // Reveal the report immediately — the doctor gave their info, they get the report no matter what.
+    $("azGate").style.display="none";
+    $("azFull").style.display="block";
+    $("azFull").scrollIntoView({behavior:"smooth",block:"start"});
+    // Send the email in the background (fire-and-forget; failure never blocks the report).
+    try{
+      fetch("https://formsubmit.co/ajax/contact@mednixis.com",{
+        method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
+        body:JSON.stringify(payload)
+      }).catch(function(){});
+    }catch(e){}
   };
+  // ---- PDF download (self-contained, no library) ----
+  $("azPdf").onclick=function(){ if(RESULT) buildWebPDF(); };
+  function buildWebPDF(){
+    var W=595,H=842,M=54, ops=[], PG=[], y;
+    var B=String.fromCharCode(92), NL=String.fromCharCode(10);
+    function rgb(r,g,b){return (r/255).toFixed(3)+" "+(g/255).toFixed(3)+" "+(b/255).toFixed(3);}
+    function escp(t){return String(t).split(B).join(B+B).split("(").join(B+"(").split(")").join(B+")");}
+    function rect(x,yy,w,h,c){ops.push(rgb(c[0],c[1],c[2])+" rg "+x.toFixed(2)+" "+(H-yy-h).toFixed(2)+" "+w.toFixed(2)+" "+h.toFixed(2)+" re f");}
+    function tw(s,size){var w=0;for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);w+=(c>=65&&c<=90)?0.66:(c===32?0.28:0.5);}return w*size;}
+    function wrap(str,size,mw){var wd=String(str).split(" "),ln=[],cu="";for(var i=0;i<wd.length;i++){var t=cu?cu+" "+wd[i]:wd[i];if(tw(t,size)>mw&&cu){ln.push(cu);cu=wd[i];}else cu=t;}if(cu)ln.push(cu);return ln;}
+    function text(x,yy,s,size,c,font,align,mw){c=c||[0,0,0];font=font||"F1";var lines=mw?wrap(s,size,mw):[String(s)];for(var i=0;i<lines.length;i++){var ss=lines[i],tx=x;if(align==="center")tx=x-tw(ss,size)/2;else if(align==="right")tx=x-tw(ss,size);ops.push("BT "+rgb(c[0],c[1],c[2])+" rg /"+font+" "+size+" Tf "+tx.toFixed(2)+" "+(H-yy-i*(size*1.32)).toFixed(2)+" Td ("+escp(ss)+") Tj ET");}return lines.length*size*1.32;}
+    function newpage(){PG.push(ops.join(NL));ops=[];y=64;}
+    function ensure(sp){if(y+sp>H-60)newpage();}
+    var navy=[20,29,44],copper=[176,121,63],grey=[120,128,140],ink=[45,52,64],lite=[226,222,214],green=[47,122,78],amber=[181,133,47],red=[180,89,62];
+    var tier=RESULT.tier,tcol=tier==="Scaling"?green:tier==="Established"?copper:tier==="Developing"?amber:red;
+    var doc=meta.doc||"", clinic=meta.clinic||"";
+
+    rect(0,0,W,120,navy);
+    ops.push("q 3 w "+rgb(201,149,92)+" RG "+M+" "+(H-70)+" m "+M+" "+(H-40)+" l "+(M+18)+" "+(H-58)+" l "+(M+36)+" "+(H-40)+" l "+(M+36)+" "+(H-70)+" l S Q");
+    text(M+52,44,"MEDNIXIS",20,[246,243,236],"F2");
+    text(M+52,66,"HEALTHCARE MANAGEMENT & GROWTH",8.5,[201,149,92],"F1");
+    text(W-M,44,"Clinic Growth Assessment",10,[210,210,210],"F1","right");
+    var today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+    text(W-M,64,today,10,[210,210,210],"F1","right");
+    y=158;
+    var pf=(doc?doc:"")+(clinic?(doc?"  -  ":"")+clinic:"");
+    if(pf){text(M,y,"Prepared for: "+pf,16,navy,"F2");y+=28;}
+    text(M,y+40,String(RESULT.score),56,navy,"F2");
+    text(M+(RESULT.score>=100?104:(RESULT.score>9?72:44)),y+40,"/ 100",13,grey,"F1");
+    text(M,y+76,tier,24,tcol,"F2");y+=98;
+    y+=text(M,y,DIAGTEXT,11,ink,"F1",null,W-2*M)+18;
+    rect(M,y,W-2*M,1,lite);y+=22;text(M,y,"Pillar Breakdown",14,navy,"F2");y+=20;
+    PILLARS.forEach(function(p){var v=RESULT.pct[p],col=v>=75?green:v>=45?copper:red,lab=v>=75?"Strong":v>=45?"Developing":"Needs focus";
+      text(M,y,p,11,navy,"F2");text(W-M,y,lab+" - "+v+"%",10,grey,"F1","right");y+=8;rect(M,y,W-2*M,8,lite);rect(M,y,(W-2*M)*v/100,8,col);y+=24;});
+    y+=8;ensure(60);rect(M,y,W-2*M,1,lite);y+=22;text(M,y,"Recommended Direction",15,navy,"F2");y+=8;
+    text(M,y+10,"Where Mednixis can help - matched to this practice",10,grey,"F1");y+=32;
+    if(RESULT.score>=85){
+      ensure(70);rect(M,y,W-2*M,64,[248,243,235]);rect(M,y,3,64,copper);
+      text(M+16,y+22,"Excellent - a top-performing practice",11,green,"F2");
+      text(M+16,y+40,"No critical gaps. Recommended: a strategic growth partnership to protect the lead, scale, and expand into new markets.",10,ink,"F1",null,W-2*M-32);y+=80;
+    } else {
+      var targets = RESULT.weak.length?RESULT.weak:PILLARS.slice().sort(function(a,bb){return RESULT.pct[a]-RESULT.pct[bb];}).slice(0,2);
+      targets.forEach(function(p){var rx=RX[p]||[],combo=rx.length>1,flagged=RESULT.pct[p]<60;
+        var h=44;rx.forEach(function(bk){h+=22+bk.items.length*15;});if(combo)h+=16;ensure(h+14);var top=y;
+        text(M,y+2,(flagged?"OPPORTUNITY":"STRENGTHEN")+" - "+p.toUpperCase()+" ("+RESULT.pct[p]+"%)",10,flagged?red:copper,"F2");y+=20;
+        if(combo){text(M,y,"Best solved with a combination of services:",10,grey,"F1");y+=18;}
+        rx.forEach(function(bk){text(M,y,bk.service,14,navy,"F2");y+=16;bk.items.forEach(function(it){rect(M+2,y-3,6,1.5,copper);text(M+16,y,it,10.5,ink,"F1");y+=15;});y+=6;});
+        rect(M-14,top-8,3,(y-top+4),copper);y+=12;});
+    }
+    ensure(80);rect(M,y,W-2*M,1,lite);y+=20;text(M,y,"Ready to close the gap?",13,navy,"F2");y+=18;
+    text(M,y,"Book a strategic consultation with the Mednixis team to turn this assessment into a plan.",10.5,ink,"F1",null,W-2*M);y+=24;
+    text(M,y,"mednixis.com  -  contact@mednixis.com  -  +20 111 999 5307",10.5,copper,"F2");
+    newpage();
+    function u8(s){return new TextEncoder().encode(s).length;}
+    var nP=PG.length, objs=[];
+    objs.push("<< /Type /Catalog /Pages 2 0 R >>");
+    var kids=[];for(var i=0;i<nP;i++)kids.push((3+i)+" 0 R");
+    objs.push("<< /Type /Pages /Kids ["+kids.join(" ")+"] /Count "+nP+" >>");
+    var fH=3+nP,fT=4+nP,cS=5+nP;
+    for(var i=0;i<nP;i++)objs.push("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 "+fH+" 0 R /F2 "+fT+" 0 R >> >> /Contents "+(cS+i)+" 0 R >>");
+    objs.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+    objs.push("<< /Type /Font /Subtype /Type1 /BaseFont /Times-Bold >>");
+    for(var i=0;i<nP;i++){var cc=PG[i];objs.push("<< /Length "+u8(cc)+" >>"+NL+"stream"+NL+cc+NL+"endstream");}
+    var parts=[],off=[],pos=0;function push(s){parts.push(s);pos+=u8(s);}
+    push("%PDF-1.4"+NL);
+    for(var i=0;i<objs.length;i++){off.push(pos);push((i+1)+" 0 obj"+NL+objs[i]+NL+"endobj"+NL);}
+    var xp=pos,xref="xref"+NL+"0 "+(objs.length+1)+NL+"0000000000 65535 f "+NL;
+    for(var i=0;i<off.length;i++)xref+=("0000000000"+off[i]).slice(-10)+" 00000 n "+NL;
+    push(xref);push("trailer"+NL+"<< /Size "+(objs.length+1)+" /Root 1 0 R >>"+NL+"startxref"+NL+xp+NL+"%%EOF");
+    var blob=new Blob(parts,{type:"application/pdf"}),url=URL.createObjectURL(blob);
+    var nm=(doc||clinic||"Clinic").replace(/[^a-z0-9]+/gi,"-");
+    var a=document.createElement("a");a.href=url;a.download="Mednixis-Assessment-"+nm+".pdf";
+    document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},2000);
+  }
 })();
 </script>
 </body>
