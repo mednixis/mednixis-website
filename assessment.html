@@ -3,54 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clinic Growth Assessment — Mednixis</title>
-<meta name="description" content="Take the free Mednixis Clinic Growth Assessment. Score your practice across digital presence, patient acquisition, operations, and growth readiness — and get tailored recommendations.">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>The Mednixis Clinic Growth Assessment</title>
+<meta name="description" content="A confidential diagnostic of the structures behind your clinic — patient acquisition, digital presence, operations and growth readiness.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://mednixis.com/assessment.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="canonical" href="https://mednixis.com/assessment.html">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mednixis.com/assessment.html">
-<meta property="og:title" content="Clinic Growth Assessment — Mednixis">
-<meta property="og:description" content="Score your practice and get tailored recommendations across four growth pillars.">
-<meta property="og:site_name" content="Mednixis">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Clinic Growth Assessment — Mednixis">
-<meta name="twitter:description" content="Score your practice and get tailored recommendations across four growth pillars.">
-<!-- Meta Pixel Code -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1302566011665592');
-fbq('track', 'PageView');
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1302566011665592');fbq('track','PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 <style>
-.az{max-width:760px;margin:0 auto}
+:root{
+  --ivory:#F6F3EC;--white:#fff;--navy:#141D2C;--navy2:#1B2434;
+  --copper:#B0793F;--copper-soft:#C9955C;--graphite:#3A4351;--platinum:#8A94A6;
+  --line:rgba(20,29,44,.13);--radius:16px;--ease:cubic-bezier(.22,.61,.36,1);
+  --sans:'Manrope',-apple-system,'Segoe UI',sans-serif;--disp:'Cormorant Garamond',Georgia,serif;
+  --green:#2F7A4E;--amber:#B5852F;--red:#B4593E;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--ivory);color:var(--graphite);line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--disp);color:var(--navy);font-weight:700;line-height:1.15}
+a{color:inherit;text-decoration:none}
+/* header */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(246,243,236,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.header-inner{display:flex;align-items:center;gap:24px;height:76px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:34px;height:30px;color:var(--copper)}
+.logo-word{font-family:var(--disp);font-size:22px;font-weight:700;letter-spacing:.16em;color:var(--navy)}
+.nav-links{display:flex;gap:22px;margin-left:auto}
+.nav-item{font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--graphite);text-transform:uppercase;transition:color .18s}
+.nav-item:hover,.nav-item.active{color:var(--copper)}
+.header-cta{font-size:13px;padding:12px 22px}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer}
+.nav-toggle span{width:24px;height:2px;background:var(--navy);border-radius:2px}
+@media(max-width:1080px){
+  .nav-links{position:fixed;inset:76px 0 auto 0;background:var(--ivory);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--line);transform:translateY(-120%);transition:transform .3s var(--ease);margin-left:0}
+  .nav-links.open{transform:translateY(0)}
+  .header-cta{display:none}
+  .nav-toggle{display:flex;margin-left:auto}
+}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--sans);font-size:15px;font-weight:700;padding:15px 28px;border-radius:99px;border:none;cursor:pointer;transition:transform .15s var(--ease),background .2s}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--copper);color:#fff}
+.btn-primary:hover{background:var(--copper-soft)}
+.btn-navy{background:var(--navy);color:var(--ivory)}
+.btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--navy)}
+.arrow{transition:transform .2s}
+.btn:hover .arrow{transform:translateX(3px)}
+/* layout */
+.az{max-width:760px;margin:0 auto;padding:40px 0 80px}
+.az-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(26px,4vw,46px);animation:azin .4s var(--ease)}
+@keyframes azin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--copper);font-weight:700;margin-bottom:18px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--copper)}
+.az h1{font-size:clamp(30px,5vw,44px);margin-bottom:14px}
+.az .sub{font-size:17px;color:var(--graphite);margin-bottom:20px}
+.deliver{list-style:none;margin:20px 0 28px;border-top:1px solid var(--line);padding-top:20px}
+.deliver li{position:relative;padding:8px 0 8px 26px;font-size:15.5px;color:var(--navy)}
+.deliver li::before{content:"";position:absolute;left:0;top:16px;width:12px;height:2px;background:var(--copper)}
+.privacy-note{font-size:12.5px;color:var(--platinum);margin-top:18px;line-height:1.5}
+/* fields */
+.az-field{margin-bottom:16px}
+.az-field label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--platinum);margin-bottom:8px}
+.az-field input{width:100%;font-family:var(--sans);font-size:16px;padding:14px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--ivory);color:var(--navy)}
+.az-field input:focus{outline:none;border-color:var(--copper)}
+/* progress */
 .az-prog{position:sticky;top:76px;z-index:20;background:var(--ivory);padding:16px 0 12px}
 .az-prog-track{height:5px;background:var(--line);border-radius:999px;overflow:hidden}
 .az-prog-track>span{display:block;height:100%;width:0;background:var(--copper);transition:width .4s var(--ease)}
-.az-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(26px,4vw,44px);animation:azin .4s var(--ease)}
-@keyframes azin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.az-field{margin-bottom:16px}
-.az-field label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--platinum);margin-bottom:8px}
-.az-field input{width:100%;font-family:var(--font-sans);font-size:16px;padding:14px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--ivory);color:var(--navy)}
-.az-field input:focus{outline:none;border-color:var(--copper)}
+/* questions */
 .az-sec{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);margin-bottom:14px}
-.az-q{font-family:var(--font-display);font-size:clamp(23px,3vw,31px);color:var(--navy);line-height:1.24;margin-bottom:26px}
+.az-q{font-family:var(--disp);font-size:clamp(23px,3vw,31px);color:var(--navy);line-height:1.24;margin-bottom:26px}
 .az-opts{display:flex;flex-direction:column;gap:12px}
-.az-opt{display:flex;align-items:center;gap:14px;padding:17px 20px;border:1px solid var(--line);border-radius:var(--radius);cursor:pointer;font-size:15.5px;color:var(--graphite);transition:border-color .18s,background .18s,transform .12s}
+.az-opt{display:flex;align-items:center;gap:14px;padding:17px 20px;border:1px solid var(--line);border-radius:var(--radius);cursor:pointer;font-size:15.5px;color:var(--graphite);transition:border-color .18s,background .18s,transform .12s;background:var(--white)}
 .az-opt:hover{border-color:var(--copper);transform:translateX(3px)}
 .az-opt.sel{border-color:var(--copper);background:rgba(176,121,63,.06);color:var(--navy)}
 .az-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;position:relative}
@@ -60,259 +91,455 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
 .az-back{font-size:14px;font-weight:600;color:var(--platinum);background:none;border:none;cursor:pointer}
 .az-back:hover{color:var(--navy)}.az-back[disabled]{opacity:0;pointer-events:none}
 .az-count{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--platinum)}
+/* section intro */
 .az-sect-intro{text-align:center}
 .az-sect-intro .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--copper);margin-bottom:12px}
-.az-sect-intro h2{margin-bottom:12px}
+.az-sect-intro h2{font-size:clamp(26px,4vw,36px);margin-bottom:12px}
 .az-sect-intro p{color:var(--graphite);max-width:460px;margin:0 auto 24px}
-.az-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0}
+/* result */
+.az-forname{text-align:center;color:var(--platinum);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.az-forname b{color:var(--navy);display:block;font-size:16px;letter-spacing:0;text-transform:none;font-weight:700;margin-top:4px}
+.az-scorewrap{text-align:center;margin:10px 0 6px}
+.az-score{font-family:var(--disp);font-size:84px;color:var(--navy);line-height:1;font-weight:700}
+.az-score span{font-size:24px;color:var(--platinum)}
+.az-class{font-family:var(--disp);font-size:clamp(24px,3.4vw,32px);text-align:center;margin:4px 0 20px}
+.c-foundation{color:#B4593E}.c-constrained{color:#B5852F}.c-capable{color:var(--copper)}.c-scale{color:#2F7A4E}.c-institution{color:#2F7A4E}
+.az-shortdiag{text-align:center;font-size:16px;color:var(--graphite);max-width:560px;margin:0 auto 28px}
+/* pillar cards */
+.az-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 28px}
 @media(max-width:640px){.az-pillars{grid-template-columns:1fr 1fr}}
-.az-pill{border:1px solid var(--line);border-radius:var(--radius);padding:16px;text-align:center}
-.az-pill .n{font-family:var(--font-display);font-size:20px;color:var(--copper)}
-.az-pill .t{font-size:12.5px;color:var(--navy);margin-top:4px;font-weight:600}
-.az-ring{width:180px;height:180px;margin:0 auto 6px;position:relative}
-.az-ring svg{transform:rotate(-90deg)}
-.az-ring .v{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.az-ring .num{font-family:var(--font-display);font-size:52px;color:var(--navy);line-height:1}
-.az-ring .of{font-size:12px;letter-spacing:.1em;color:var(--platinum);margin-top:4px}
-.az-forname{text-align:center;color:var(--platinum);font-size:14px;margin-bottom:4px}
-.az-tier{font-family:var(--font-display);font-size:clamp(26px,3.4vw,34px);text-align:center;margin:8px 0 4px}
-.t-scaling{color:#2F7A4E}.t-established{color:var(--copper)}.t-developing{color:#B5852F}.t-foundational{color:#B4593E}
-.az-diag{text-align:center;font-size:15.5px;color:var(--graphite);max-width:560px;margin:0 auto 26px}
-.az-bar{margin-bottom:16px}
-.az-bar-top{display:flex;justify-content:space-between;font-size:14px;margin-bottom:7px}
-.az-bar-top b{color:var(--navy)}.az-bar-top span{color:var(--platinum)}
-.az-bar-track{height:9px;background:var(--line);border-radius:999px;overflow:hidden}
-.az-bar-fill{height:100%;border-radius:999px;width:0;transition:width .9s var(--ease)}
-.az-rx-head{text-align:center;margin:30px 0 4px}
-.az-rx-sub{text-align:center;color:var(--platinum);font-size:14px;margin-bottom:20px}
-.az-rx{border:1px solid var(--line);border-left:3px solid var(--copper);border-radius:var(--radius);padding:22px 24px;margin-bottom:14px;background:var(--ivory)}
-.az-rx .area{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#B4593E;margin-bottom:10px}
-.az-rx .area.ok{color:#2F7A4E}
-.az-rx .svc{font-family:var(--font-display);font-size:20px;color:var(--navy);margin:14px 0 8px}
-.az-rx .svc:first-of-type{margin-top:0}
-.az-rx ul{list-style:none}
-.az-rx li{position:relative;padding:5px 0 5px 20px;font-size:14.5px;color:var(--graphite)}
-.az-rx li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:1.5px;background:var(--copper)}
-.az-rx .combo{font-size:13px;color:var(--platinum);font-style:italic;margin-bottom:10px}
-.az-cta{margin-top:30px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.az-cta .btn{text-align:center}
-@media(max-width:640px){
-  .az-cta{flex-direction:column}
-  .az-cta .btn{width:100%;justify-content:center;white-space:normal;line-height:1.3;padding-left:18px;padding-right:18px;height:auto;min-height:54px}
-}
-.az-restart{display:block;margin:16px auto 0;background:none;border:none;font-size:14px;font-weight:600;color:var(--platinum);cursor:pointer}
+.az-pcard{border:1px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center;position:relative;background:var(--white)}
+.az-pcard.lowest{border-color:var(--red);background:rgba(180,89,62,.05)}
+.az-pcard .pv{font-family:var(--disp);font-size:30px;font-weight:700;color:var(--navy);line-height:1}
+.az-pcard.lowest .pv{color:var(--red)}
+.az-pcard .pl{font-size:11.5px;color:var(--graphite);margin-top:6px;font-weight:600;line-height:1.3}
+.az-pcard .tag{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:9px;font-weight:700;letter-spacing:.06em;padding:2px 8px;border-radius:99px;text-transform:uppercase;white-space:nowrap}
+/* constraint + blindspot blocks */
+.az-block{border:1px solid var(--line);border-left:3px solid var(--copper);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;background:var(--ivory)}
+.az-block .lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--copper);margin-bottom:8px}
+.az-block .val{font-family:var(--disp);font-size:20px;color:var(--navy);font-weight:700;margin-bottom:6px}
+.az-block p{font-size:14.5px;color:var(--graphite);margin:0}
+.az-block.blind{border-left-color:var(--red)}
+.az-block.blind .lbl{color:var(--red)}
+.az-emailconf{text-align:center;font-size:14.5px;color:var(--graphite);background:rgba(47,122,78,.08);border:1px solid rgba(47,122,78,.2);border-radius:var(--radius);padding:16px 20px;margin:8px 0 24px}
+/* gate */
+.az-gate{max-width:460px;margin:26px auto 0}
+.az-gate h2{font-size:24px;text-align:center;margin-bottom:6px}
+.az-gate .g-sub{text-align:center;color:var(--graphite);font-size:14.5px;margin-bottom:20px}
+/* full diagnosis */
+.dsec{margin-bottom:24px}
+.dsec .dh{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--copper);margin-bottom:8px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.dsec .dt{font-family:var(--disp);font-size:22px;color:var(--navy);font-weight:700;margin-bottom:8px}
+.dsec p{font-size:15px;color:var(--graphite);margin:0}
+.pri{display:flex;gap:16px;margin-bottom:16px}
+.pri .n{font-family:var(--disp);font-size:26px;color:var(--copper);font-weight:700;line-height:1;min-width:44px}
+.pri .pt{font-weight:700;color:var(--navy);margin-bottom:2px}
+.pri .pd{font-size:14px;color:var(--graphite)}
+.pathway-box{background:var(--navy);color:var(--ivory);border-radius:var(--radius);padding:24px 26px;margin:24px 0}
+.pathway-box .pw-l{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--copper-soft);margin-bottom:8px}
+.pathway-box .pw-t{font-family:var(--disp);font-size:24px;color:#fff;font-weight:700;margin-bottom:8px}
+.pathway-box p{font-size:14.5px;color:rgba(246,243,236,.85);margin:0}
+.az-cta{margin-top:28px;display:flex;flex-direction:column;gap:14px}
+.az-cta .btn{width:100%}
+.interp-note{text-align:center;font-size:13px;color:var(--platinum);margin-top:14px;line-height:1.5}
+.az-restart{display:block;margin:18px auto 0;background:none;border:none;font-size:14px;font-weight:600;color:var(--platinum);cursor:pointer}
 .az-restart:hover{color:var(--navy)}
+.site-footer{border-top:1px solid var(--line);padding:30px 0;margin-top:40px}
+.gerr{color:#B4593E;font-size:14px;margin:8px 0;min-height:18px;text-align:center}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-var MDX_SB=null;
-try{ MDX_SB=window.supabase.createClient("https://lblmaumusgovxciuyzbm.supabase.co","sb_publishable_aRP6R1XUsIv7AgUun4EsCA_hd8xmLz8"); }catch(e){}
-</script>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to main content</a>
-<header class="site-header">
-  <nav class="nav-inner" aria-label="Main navigation">
-    <a class="logo" href="index.html" aria-label="Mednixis home">
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="logo" aria-label="Mednixis home">
       <svg class="logo-mark" viewBox="0 0 60 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <!-- serif M strokes -->
-  <path d="M4 48 L4 6 L30 36 L56 6 L56 48" stroke="#0F1720" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <!-- copper sweep overlay -->
-  <path class="sweep-path" d="M6 8 Q30 52 54 8" stroke="#B48E76" stroke-width="3" stroke-linecap="round" fill="none"/>
-</svg>
-      <span class="logo-word">Mednixis</span>
+        <path d="M4 48 L4 6 L30 36 L56 6 L56 48" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M6 8 Q30 52 54 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7"/>
+      </svg>
+      <span class="logo-word">MEDNIXIS</span>
     </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a class="nav-item" href="index.html">Home</a></li>
-      <li><a class="nav-item" href="about.html">About</a></li>
-      <li class="has-dropdown">
-        <a class="nav-item" href="services.html">Services</a>
-        <ul class="dropdown">
-          <li><a href="healthcare-management.html">Healthcare Management</a></li>
-          <li><a href="branding-marketing.html">Branding &amp; Marketing</a></li>
-          <li><a href="research-strategy.html">Research &amp; Strategy</a></li>
-          <li><a href="growth-digital-systems.html">Growth &amp; Digital Systems</a></li>
-          <li><a href="medical-events.html">Medical Events</a></li>
-        </ul>
-      </li>
-      <li><a class="nav-item" href="clinic-system.html">Clinic System</a></li>
-      <li><a class="nav-item" href="packages.html">Packages</a></li>
-      <li><a class="nav-item" href="strategic-projects.html">Strategic Projects</a></li>
-      <li><a class="nav-item" href="insights.html">Insights</a></li>
-      <li><a class="nav-item" href="contact.html">Contact</a></li>
-      <li class="mobile-cta"><a class="btn btn-primary" href="contact.html">Book a Consultation</a></li>
-    </ul>
-    <div class="nav-cta">
-      <a class="btn btn-primary" href="contact.html">Book a Consultation</a>
-    </div>
-    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-</header>
-<main id="main">
-<section class="page-hero">
-  <div class="container">
-    <span class="eyebrow reveal">Free Diagnostic</span>
-    <h1 class="reveal d1">The Clinic Growth Assessment.</h1>
-    <p class="lead reveal d2">Answer a few structured questions and see how your practice scores across the four pillars of sustainable growth — with tailored recommendations on where to focus next.</p>
+    <nav class="nav-links" id="navLinks">
+      <a class="nav-item" href="index.html">Home</a>
+      <a class="nav-item" href="about.html">About</a>
+      <a class="nav-item" href="services.html">Services</a>
+      <a class="nav-item" href="clinic-system.html">Clinic System</a>
+      <a class="nav-item active" href="assessment.html">Assessment</a>
+      <a class="nav-item" href="packages.html">Packages</a>
+      <a class="nav-item" href="strategic-projects.html">Strategic Projects</a>
+      <a class="nav-item" href="insights.html">Insights</a>
+      <a class="nav-item" href="contact.html">Contact</a>
+    </nav>
+    <a href="contact.html" class="btn btn-primary header-cta">Book a Consultation</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
-</section>
-<section class="section" style="padding-top:24px">
-  <div class="container">
-    <div class="az">
-      <!-- INTRO -->
-      <div id="azIntro" class="az-card">
-        <div class="az-sec">Before we begin</div>
-        <h2 class="az-q" style="margin-bottom:10px">Tell us who this is for.</h2>
-        <p style="color:var(--graphite);margin-bottom:22px">Your answers stay on this page. Nothing is submitted unless you choose to book a consultation.</p>
-        <div class="az-field"><label>Doctor Name</label><input id="azDoc" type="text" placeholder="Dr. ..."></div>
-        <div class="az-field"><label>Clinic / Practice Name</label><input id="azClinic" type="text" placeholder="Clinic name"></div>
-        <div class="az-pillars">
-          <div class="az-pill"><div class="n">01</div><div class="t">Digital Presence</div></div>
-          <div class="az-pill"><div class="n">02</div><div class="t">Patient Acquisition</div></div>
-          <div class="az-pill"><div class="n">03</div><div class="t">Operations &amp; Systems</div></div>
-          <div class="az-pill"><div class="n">04</div><div class="t">Growth Readiness</div></div>
-        </div>
-        <button class="btn btn-primary" id="azStart">Start the Assessment <span class="arrow">&rarr;</span></button>
-      </div>
+</header>
+<main>
+<section class="container">
+  <div class="az">
 
-      <!-- SECTION INTRO -->
-      <div id="azSect" class="az-card az-sect-intro" style="display:none">
-        <div class="k" id="azSectK"></div>
-        <h2 id="azSectH"></h2>
-        <p id="azSectP"></p>
-        <button class="btn btn-primary" id="azSectGo">Continue <span class="arrow">&rarr;</span></button>
-      </div>
-
-      <!-- QUIZ -->
-      <div id="azQuiz" style="display:none">
-        <div class="az-prog"><div class="az-prog-track"><span id="azBar"></span></div></div>
-        <div class="az-card">
-          <div class="az-sec" id="azSecTag"></div>
-          <div class="az-q" id="azQ"></div>
-          <div class="az-opts" id="azOpts"></div>
-          <div class="az-nav">
-            <button class="az-back" id="azBack" disabled>&larr; Back</button>
-            <span class="az-count" id="azCount">1 / 19</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- RESULT -->
-      <div id="azResult" style="display:none">
-        <div class="az-card">
-          <div class="az-forname" id="azForName"></div>
-          <div class="az-ring">
-            <svg width="180" height="180" viewBox="0 0 180 180">
-              <circle cx="90" cy="90" r="80" fill="none" stroke="var(--line)" stroke-width="12"/>
-              <circle id="azRingFill" cx="90" cy="90" r="80" fill="none" stroke="var(--copper)" stroke-width="12" stroke-linecap="round" stroke-dasharray="502" stroke-dashoffset="502"/>
-            </svg>
-            <div class="v"><div class="num" id="azScore">0</div><div class="of">OUT OF 100</div></div>
-          </div>
-          <div class="az-tier" id="azTier"></div>
-          <p class="az-diag" id="azDiag"></p>
-          <div id="azBars"></div>
-
-          <!-- gate teaser -->
-          <div id="azTease" style="text-align:center;margin-top:26px;padding-top:26px;border-top:1px solid var(--line)">
-            <h2 style="margin-bottom:8px">Your personalized recommendations are ready.</h2>
-            <p style="color:var(--graphite);max-width:520px;margin:0 auto 22px">Enter your details to unlock the full report — the specific services and next steps matched to your practice — and we'll send you a copy.</p>
-            <button class="btn btn-primary" id="azGetReport">Unlock My Full Report <span class="arrow">&rarr;</span></button>
-          </div>
-
-          <!-- contact gate form -->
-          <div id="azGate" style="display:none;max-width:460px;margin:26px auto 0">
-            <div class="az-field"><label>Your Name</label><input id="azGName" type="text" placeholder="Full name"></div>
-            <div class="az-field"><label>Phone / WhatsApp</label><input id="azGPhone" type="tel" placeholder="+20 ..."></div>
-            <div class="az-field"><label>Email</label><input id="azGEmail" type="email" placeholder="you@example.com"></div>
-            <div id="azGErr" style="color:#B4593E;font-size:14px;margin-bottom:10px;min-height:18px"></div>
-            <button class="btn btn-primary" id="azSend" style="width:100%">Send my report</button>
-            <p style="text-align:center;font-size:12.5px;color:var(--platinum);margin-top:12px">We'll only use this to send your report and follow up about your practice.</p>
-          </div>
-
-          <!-- full report (revealed after capture) -->
-          <div id="azFull" style="display:none">
-            <h2 class="az-rx-head">Recommended Direction</h2>
-            <div class="az-rx-sub">Where Mednixis can help — matched to your practice</div>
-            <div id="azRx"></div>
-            <p id="azCtaLine" style="text-align:center;font-size:15px;color:var(--navy);max-width:520px;margin:24px auto 0"></p>
-            <div class="az-cta">
-              <a class="btn btn-primary" id="azBook" href="contact.html">Book a Consultation <span class="arrow">&rarr;</span></a>
-              <button class="btn btn-navy" id="azPdf" type="button">Download PDF &darr;</button>
-              <a class="btn btn-copper" href="clinic-system.html">See the Clinic System</a>
-            </div>
-          </div>
-
-          <button class="az-restart" id="azRestart">Retake the assessment</button>
-        </div>
-      </div>
-
+    <!-- INTRO -->
+    <div id="azIntro" class="az-card">
+      <span class="eyebrow">Private Clinic Diagnostic</span>
+      <h1>The Mednixis Clinic Growth Assessment</h1>
+      <p class="sub">Your clinic is producing results. But is it built to grow?</p>
+      <p style="color:var(--graphite);margin-bottom:8px">Complete a confidential assessment of the structures behind your clinic &mdash; patient acquisition, digital presence, operations and growth readiness.</p>
+      <p style="color:var(--navy);font-weight:600;margin-top:18px">In approximately four minutes, you will receive:</p>
+      <ul class="deliver">
+        <li>Your Clinic Growth Score</li>
+        <li>Your organizational maturity stage</li>
+        <li>Your strongest growth asset</li>
+        <li>Your primary constraint</li>
+        <li>Your strategic blind spot</li>
+        <li>A recommended direction for your clinic</li>
+      </ul>
+      <div class="az-field"><label>Doctor Name</label><input id="azDoc" type="text" placeholder="Dr. ..."></div>
+      <div class="az-field"><label>Clinic / Practice Name</label><input id="azClinic" type="text" placeholder="Clinic name"></div>
+      <button class="btn btn-primary" id="azStart" style="margin-top:8px">Begin the Assessment <span class="arrow">&rarr;</span></button>
+      <p class="privacy-note">Your answers are processed privately. Contact information is only submitted if you choose to receive your complete diagnosis or request a strategic review.</p>
     </div>
+
+    <!-- SECTION INTRO -->
+    <div id="azSect" class="az-card az-sect-intro" style="display:none">
+      <div class="k" id="azSectK"></div>
+      <h2 id="azSectH"></h2>
+      <p id="azSectP"></p>
+      <button class="btn btn-primary" id="azSectGo">Continue <span class="arrow">&rarr;</span></button>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="azQuiz" style="display:none">
+      <div class="az-prog"><div class="az-prog-track"><span id="azBar"></span></div></div>
+      <div class="az-card">
+        <div class="az-sec" id="azSecTag"></div>
+        <div class="az-q" id="azQ"></div>
+        <div class="az-opts" id="azOpts"></div>
+        <div class="az-nav">
+          <button class="az-back" id="azBack" disabled>&larr; Back</button>
+          <span class="az-count" id="azCount">1 / 19</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT (score-first) -->
+    <div id="azResult" style="display:none">
+      <div class="az-card">
+        <div class="az-forname" id="azForName" style="display:none">Prepared for<b></b></div>
+        <div class="az-scorewrap"><div class="az-score" id="azScore">0<span>/100</span></div></div>
+        <div class="az-class" id="azClass"></div>
+        <p class="az-shortdiag" id="azShortDiag"></p>
+        <div class="az-pillars" id="azPillars"></div>
+        <div class="az-block" id="azConstraintBlock">
+          <div class="lbl">Primary Constraint</div>
+          <div class="val" id="azConstraintVal"></div>
+          <p id="azConstraintText"></p>
+        </div>
+        <div class="az-block blind">
+          <div class="lbl">Strategic Blind Spot</div>
+          <p id="azBlindspot"></p>
+        </div>
+
+        <!-- gate teaser -->
+        <div id="azTease" style="text-align:center;margin-top:24px;padding-top:24px;border-top:1px solid var(--line)">
+          <h2 style="font-size:24px;margin-bottom:8px">Your complete private diagnosis is ready.</h2>
+          <p style="color:var(--graphite);max-width:520px;margin:0 auto 20px">Your strongest asset, three recommended priorities and recommended Mednixis direction &mdash; delivered privately to your inbox.</p>
+          <button class="btn btn-primary" id="azReveal">Reveal My Strategic Diagnosis <span class="arrow">&rarr;</span></button>
+        </div>
+
+        <!-- gate form -->
+        <div id="azGate" class="az-gate" style="display:none">
+          <h2>Your score is ready.</h2>
+          <p class="g-sub">Where should we send your private diagnosis?</p>
+          <div class="az-field"><label>Full Name</label><input id="azGName" type="text" placeholder="Full name"></div>
+          <div class="az-field"><label>Email</label><input id="azGEmail" type="email" placeholder="you@example.com"></div>
+          <div class="az-field"><label>WhatsApp &mdash; optional</label><input id="azGPhone" type="tel" placeholder="+20 ..."></div>
+          <div class="gerr" id="azGErr"></div>
+          <button class="btn btn-primary" id="azSend" style="width:100%">Reveal My Strategic Diagnosis <span class="arrow">&rarr;</span></button>
+          <p class="privacy-note" style="text-align:center">Your information will only be used to deliver your report and communicate about this assessment. Your results will not be published or shared.</p>
+        </div>
+
+        <!-- full diagnosis (revealed after capture) -->
+        <div id="azFull" style="display:none">
+          <div class="az-emailconf" id="azEmailConf"></div>
+          <h2 style="font-size:26px;text-align:center;margin-bottom:6px">Your Strategic Diagnosis</h2>
+          <div class="dsec" style="text-align:center;margin-bottom:28px">
+            <div class="dt" id="azDiagTitle"></div>
+            <p id="azDiagPara"></p>
+          </div>
+          <div class="dsec">
+            <div class="dh">Strongest Growth Asset</div>
+            <div class="dt" id="azAssetTitle"></div>
+            <p id="azAssetText"></p>
+          </div>
+          <div class="dsec">
+            <div class="dh">Primary Constraint</div>
+            <div class="dt" id="azConstraintTitle2"></div>
+            <p id="azConstraintText2"></p>
+          </div>
+          <div class="dsec">
+            <div class="dh">Strategic Blind Spot</div>
+            <p id="azBlindspot2"></p>
+          </div>
+          <div class="dsec">
+            <div class="dh">Recommended Priorities</div>
+            <div id="azPriorities"></div>
+          </div>
+          <div class="pathway-box">
+            <div class="pw-l">Recommended Mednixis Direction</div>
+            <div class="pw-t" id="azPathwayTitle"></div>
+            <p id="azPathwayText"></p>
+          </div>
+          <div class="az-cta">
+            <a class="btn btn-primary" id="azInterp" href="contact.html">Request a Private Interpretation <span class="arrow">&rarr;</span></a>
+          </div>
+          <p class="interp-note">Your automated assessment identifies signals. A private interpretation examines what these signals mean within the specific context of your practice. A limited number of strategic interpretations are reviewed each month.</p>
+        </div>
+
+        <button class="az-restart" id="azRestart">Retake the assessment</button>
+      </div>
+    </div>
+
   </div>
 </section>
 </main>
 <footer class="site-footer">
   <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a class="logo" href="index.html" aria-label="Mednixis home">
-          <svg class="logo-mark" viewBox="0 0 60 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <!-- serif M strokes -->
-  <path d="M4 48 L4 6 L30 36 L56 6 L56 48" stroke="#0F1720" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <!-- copper sweep overlay -->
-  <path class="sweep-path" d="M6 8 Q30 52 54 8" stroke="#B48E76" stroke-width="3" stroke-linecap="round" fill="none"/>
-</svg>
-          <span class="logo-word">Mednixis</span>
-        </a>
-        <p>A premium healthcare management and growth firm based in Egypt, helping healthcare organizations build stronger brands, better systems, and scalable growth strategies.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="strategic-projects.html">Strategic Projects</a></li>
-          <li><a href="insights.html">Insights</a></li>
-          <li><a href="packages.html">Packages</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="healthcare-management.html">Healthcare Management</a></li>
-          <li><a href="branding-marketing.html">Branding &amp; Marketing</a></li>
-          <li><a href="research-strategy.html">Research &amp; Strategy</a></li>
-          <li><a href="growth-digital-systems.html">Growth &amp; Digital Systems</a></li>
-          <li><a href="medical-events.html">Medical Events</a></li>
-          <li><a href="clinic-system.html">Clinic System</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <p><a href="mailto:contact@mednixis.com">contact@mednixis.com</a></p>
-        <p><a href="tel:+201119995307">+20 111 999 5307</a></p>
-        <p><a href="https://instagram.com/mednixis" target="_blank" rel="noopener">@mednixis</a></p>
-        <a class="btn btn-copper" href="contact.html" style="margin-top:20px">Book a Consultation</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; <span id="year"></span> Mednixis. All rights reserved.</span>
-      <a href="privacy.html">Privacy Policy</a>
-    </div>
+    <p style="text-align:center;color:var(--platinum);font-size:14px">&copy; 2026 Mednixis &mdash; Healthcare Management &amp; Growth &middot; contact@mednixis.com</p>
   </div>
 </footer>
-
-<script src="js/main.js" defer></script>
 <script>
+// nav toggle
+(function(){var t=document.getElementById('navToggle'),n=document.getElementById('navLinks');if(t)t.onclick=function(){n.classList.toggle('open')};})();
+
+var EMAILJS_PUBLIC="MTiJMK0VcaKK1mJZC", EMAILJS_SERVICE="service_841zv8k", EMAILJS_TEMPLATE="template_f9fzk5u";
+try{ emailjs.init({publicKey:EMAILJS_PUBLIC}); }catch(e){}
+
+// ============================================================
+// MEDNIXIS DIAGNOSIS ENGINE  (shared by website + rep tool)
+// Pure function: takes answers[] (indices) + pct{} + score, returns full diagnosis object.
+// Designed to be pasted into both tools verbatim.
+// ============================================================
+var DIAG = (function(){
+
+  // --- 5 classifications ---
+  function classify(score){
+    if(score<=39) return "Foundation Stage";
+    if(score<=59) return "Growth Constrained";
+    if(score<=74) return "Growth Capable";
+    if(score<=89) return "Scale Ready";
+    return "Institution Grade";
+  }
+
+  // Question index map (matches the 19-question array order)
+  // 3 goal, 4 frustration, 5 website, 6 search, 7 patient-source, 8 campaigns,
+  // 9 records, 10 reminders, 11 plan, 12 brand, 13 social, 14 reviews,
+  // 15 acq-cost, 16 revenue-numbers, 17 one-person, 18 tried-help
+  var Q = {goal:3, frust:4, website:5, search:6, source:7, campaigns:8,
+           records:9, reminders:10, plan:11, brand:12, social:13, reviews:14,
+           acqcost:15, revenue:16, oneperson:17, triedhelp:18};
+
+  // helper: is answer index for a question <= threshold (weak) etc.
+  function a(ans,key){ return ans[Q[key]]; }
+
+  // --- diagnosis pattern detection (checked most-specific first; first match = primary) ---
+  // volume: ans[2] 0<100,1 100-300,2 300-800,3 800+
+  function detectPattern(ans, pct){
+    var patterns=[];
+    var moderateVolume = ans[2]>=1;
+
+    // 1) Founder-dependent (most specific)
+    if( a(ans,'oneperson')>=2 && a(ans,'plan')>=2 && a(ans,'revenue')>=2 ){
+      patterns.push({key:"founder",
+        title:"Personal control rather than organizational structure",
+        paragraph:"The practice currently operates through personal control rather than organizational structure. Important decisions, knowledge and continuity remain concentrated in one person, creating a constraint on delegation and scalable growth.",
+        blindspot:"If the clinic cannot operate without constant intervention, it is not yet a scalable organization."});
+    }
+    // 2) Expansion risk
+    if( a(ans,'goal')===3 && (pct["Operations & Systems"]<60 || pct["Growth Readiness"]<60) ){
+      patterns.push({key:"expansion_risk",
+        title:"Ambition ahead of operational readiness",
+        paragraph:"The ambition to expand is currently ahead of the clinic's operational readiness. Expanding before standardizing workflows, reporting and patient experience could reproduce existing weaknesses across a larger organization.",
+        blindspot:"A new branch does not solve structural problems. It multiplies them."});
+    }
+    // 3) Reputation-dependent
+    if( a(ans,'source')===2 && a(ans,'brand')>=2 && a(ans,'acqcost')>=2 ){
+      patterns.push({key:"reputation",
+        title:"Medical reputation without institutional infrastructure",
+        paragraph:"Your practice has medical authority, but that authority has not yet been converted into an institutional clinic brand. Growth currently depends heavily on individual reputation, which sustains demand but limits predictability, delegation and future expansion.",
+        blindspot:"The doctor is recognized. The clinic itself may not yet own the relationship."});
+    }
+    // 4) Busy but operationally weak (requires real volume)
+    if( moderateVolume && a(ans,'records')>=1 && a(ans,'reminders')>=1 && a(ans,'revenue')>=1 && pct["Operations & Systems"]<60 ){
+      patterns.push({key:"busy_weak",
+        title:"Activity without operational visibility",
+        paragraph:"The clinic is generating activity without sufficient operational visibility. Patients are being served, but the systems behind booking, follow-up, performance and retention are not structured enough to reveal where growth is being gained or lost.",
+        blindspot:"Higher patient volume may increase pressure faster than it increases value."});
+    }
+    // 5) Marketing without measurement
+    if( a(ans,'campaigns')<=1 && a(ans,'acqcost')>=2 ){
+      patterns.push({key:"marketing_no_measure",
+        title:"Visibility without a measurement system",
+        paragraph:"The clinic is creating visibility without a complete growth measurement system. Marketing activity exists, but its contribution to bookings, revenue and patient retention cannot yet be evaluated reliably.",
+        blindspot:"The clinic may be paying for attention it cannot convert or measure."});
+    }
+    // 6) Digitally weak but reputable
+    if( (a(ans,'source')===1 || a(ans,'source')===2) && pct["Digital Presence"]<50 ){
+      patterns.push({key:"digital_weak",
+        title:"Offline reputation ahead of digital authority",
+        paragraph:"The clinic's offline reputation is stronger than its digital authority. Existing trust is creating demand, but patients who discover or evaluate the clinic digitally may not experience the same level of confidence.",
+        blindspot:"The digital experience may be undervaluing the medical experience."});
+    }
+
+    if(patterns.length===0){
+      // fallback: generic based on lowest pillar
+      patterns.push({
+        key:"generic",
+        title:"Growth potential ahead of growth infrastructure",
+        paragraph:"Your practice has a real foundation, but several of the systems required for predictable and scalable performance are not yet fully established. Growth currently depends more on individual effort than on a coordinated clinic-wide system.",
+        blindspot:"Without structured systems, additional demand may increase pressure without increasing long-term value."
+      });
+    }
+    return patterns; // return all matched; [0] is primary
+  }
+
+  // --- strongest asset (highest pillar) ---
+  function strongestAsset(pct, ans){
+    var order=["Digital Presence","Patient Acquisition","Operations & Systems","Growth Readiness"];
+    var best=order[0]; order.forEach(function(p){ if(pct[p]>pct[best]) best=p; });
+    var map={
+      "Digital Presence":{title:"Digital visibility",text:"The clinic already reaches and engages patients through digital channels. This is a strong platform to convert visibility into predictable, measurable patient flow."},
+      "Patient Acquisition":{title:"Existing patient demand",text:"The clinic already attracts patients consistently. This demand is a valuable foundation to build measurable, scalable acquisition on top of."},
+      "Operations & Systems":{title:"Operational structure",text:"The clinic already runs on real systems rather than improvisation. This structure is the foundation that makes growth safe to scale."},
+      "Growth Readiness":{title:"Existing professional authority",text:"The clinic already possesses something many new healthcare brands lack: an established source of patient trust. This creates a valuable foundation for stronger institutional positioning."}
+    };
+    // if reputation is the story, prefer authority framing
+    if(ans && ans[Q.source]===2){ return {pillar:best, title:"Established professional authority", text:"The clinic already possesses patient trust built on medical reputation. This is a powerful foundation for building institutional, clinic-level authority."}; }
+    return {pillar:best, title:map[best].title, text:map[best].text};
+  }
+
+  // --- primary constraint (lowest pillar) ---
+  function primaryConstraint(pct){
+    var order=["Operations & Systems","Digital Presence","Patient Acquisition","Growth Readiness"];
+    var low=order[0]; ["Digital Presence","Patient Acquisition","Operations & Systems","Growth Readiness"].forEach(function(p){ if(pct[p]<pct[low]) low=p; });
+    var map={
+      "Digital Presence":{title:"Digital invisibility",text:"Patients who search for or evaluate the clinic online may not find a presence strong enough to build confidence, limiting how much new demand the clinic can capture."},
+      "Patient Acquisition":{title:"Unpredictable patient acquisition",text:"New patients arrive without a measurable, repeatable system, making growth difficult to forecast, control or scale."},
+      "Operations & Systems":{title:"Operational invisibility",text:"The clinic has limited visibility over how patients move from inquiry to booking, consultation, follow-up and return, making it hard to see where growth is gained or lost."},
+      "Growth Readiness":{title:"Limited structural readiness",text:"The systems, plan and brand needed to grow predictably are not yet fully in place, so growth depends more on effort than on structure."}
+    };
+    return {pillar:low, pct:pct[low], title:map[low].title, text:map[low].text};
+  }
+
+  // --- three priorities from two lowest pillars + goal ---
+  function priorities(pct, ans){
+    var order=["Digital Presence","Patient Acquisition","Operations & Systems","Growth Readiness"];
+    var sorted=order.slice().sort(function(x,y){return pct[x]-pct[y];});
+    var low1=sorted[0], low2=sorted[1];
+    var P={
+      "Operations & Systems":{t:"Structure the patient journey",d:"Document and improve every stage between patient inquiry, booking, consultation, follow-up and return, so nothing is lost between steps."},
+      "Digital Presence":{t:"Build a credible digital front door",d:"Establish a clinic website, booking and search presence that matches the quality of the in-clinic experience."},
+      "Patient Acquisition":{t:"Make acquisition measurable",d:"Track where patients come from and what each one costs, so marketing can be evaluated and scaled with confidence."},
+      "Growth Readiness":{t:"Convert reputation into institutional authority",d:"Build a clinic-level identity and documented plan that can generate trust and continuity independently of one individual."}
+    };
+    var VIS={t:"Establish operational visibility",d:"Create shared booking, patient-tracking and performance-reporting systems so decisions are based on reliable information."};
+    var list=[];
+    list.push(P[low1]);
+    // second priority: operational visibility if ops is weak, else the second-lowest pillar
+    if(low1==="Operations & Systems" || low2==="Operations & Systems"){ list.push(VIS); }
+    else { list.push(P[low2]); }
+    // third: authority conversion if reputation-dependent, else remaining low pillar
+    if(ans[Q.source]===2){ list.push(P["Growth Readiness"]); }
+    else { list.push(P[low2]===list[1]?P[sorted[2]]:P[low2]); }
+    // de-dup by title
+    var seen={}, out=[];
+    list.forEach(function(x){ if(x && !seen[x.t]){seen[x.t]=1; out.push(x);} });
+    // ensure 3
+    order.forEach(function(p){ if(out.length<3 && !seen[P[p].t]){seen[P[p].t]=1; out.push(P[p]);} });
+    return out.slice(0,3);
+  }
+
+  // --- one recommended pathway ---
+  function pathway(ans, pct, score, patternKey){
+    // profile signals
+    var years=ans[1]; // 0 pre-launch,1 <2y,2 2-5,3 >5
+    var type=ans[0];  // 0 single,1 multi,2 center,3 hospital
+    var goalExpand = ans[Q.goal]===3;
+    // hospital/center/investor
+    if(type===3){ return {title:"Strategic Healthcare Partnership", text:"A senior engagement for hospitals, centers and healthcare investors, focused on strategy, operations and institutional growth at scale."}; }
+    // pre-launch / brand new
+    if(years===0){ return {title:"Launch Architecture", text:"A structured launch engagement that builds the clinic's systems, brand and patient journey correctly from the start."}; }
+    // expansion goal + reasonable readiness
+    if(goalExpand && pct["Operations & Systems"]>=50){ return {title:"Scale Readiness Program", text:"A structured engagement to standardize operations, reporting and patient experience so the clinic can expand without multiplying its weaknesses."}; }
+    // reputation-dependent / digitally weak but reputable -> brand authority
+    if(patternKey==="reputation" || patternKey==="digital_weak"){ return {title:"Brand Authority Transformation", text:"A focused engagement that converts individual medical reputation into an institutional clinic brand with a credible digital presence."}; }
+    // marketing without measurement / weak acquisition tracking -> growth infrastructure
+    if(patternKey==="marketing_no_measure" || pct["Patient Acquisition"]<50){ return {title:"Growth Infrastructure Program", text:"A structured engagement that builds measurable patient-acquisition and tracking systems so demand becomes predictable and scalable."}; }
+    // default for operating clinics with structural weakness
+    return {title:"Clinic System Transformation", text:"A structured engagement focused on patient journey, operational systems, performance visibility and institutional brand development."};
+  }
+
+  // --- master build ---
+  function build(ans, pct, score){
+    var cls=classify(score);
+
+    // 85+ : congratulatory, no constraint/priorities framing
+    if(score>=85){
+      var asset0=strongestAsset(pct,ans);
+      var shortDiagHi = score>=90
+        ? "Your clinic operates at an institutional standard across every pillar, with the systems in place to scale and lead its market."
+        : "Your clinic is well-built and close to scale-ready; refining a few remaining systems would prepare it for confident expansion.";
+      var pathHi = ans[Q.goal]===3
+        ? {title:"Scale Readiness Program", text:"A structured engagement to prepare your already-strong clinic for confident expansion into new services or locations."}
+        : {title:"Strategic Healthcare Partnership", text:"A senior partnership to protect your clinic's lead, compound its performance and plan its next stage of growth."};
+      return {
+        score:score, classification:cls, isStrong:true,
+        diagnosisTitle:"A top-performing clinic", 
+        diagnosis:"Your clinic performs at a high standard across all four pillars. There are no critical structural gaps holding it back — the opportunity now is to protect this position, compound what is working, and prepare for the next stage of growth.",
+        shortDiagnosis:shortDiagHi,
+        asset:asset0,
+        constraint:{pillar:"", pct:0, title:"No critical constraint", text:"Your clinic shows no critical weakness across the four pillars."},
+        blindspot:"The main risk at this level is complacency: strong clinics lose their edge when they stop investing in the systems that got them there.",
+        priorities:[
+          {t:"Protect the lead", d:"Institutionalize what is working so performance does not depend on continued individual effort."},
+          {t:"Compound growth", d:"Reinvest in the strongest channels to widen the gap with competitors."},
+          {t:"Prepare to scale", d:"Ready the clinic's systems and brand for expansion into new services or locations."}
+        ],
+        pathway:pathHi, pattern:"strong", pct:pct
+      };
+    }
+
+    var pats=detectPattern(ans,pct);
+    var primary=pats[0];
+    var asset=strongestAsset(pct,ans);
+    var constraint=primaryConstraint(pct);
+    var pri=priorities(pct,ans);
+    var path=pathway(ans,pct,score,primary.key);
+    // short one-sentence diagnosis for website (<=30 words) - derive from stage
+    var shortDiag;
+    if(score<=39) shortDiag="Your clinic has growth potential, but its performance still depends more on individual effort and reputation than on an organized, clinic-wide growth system.";
+    else if(score<=59) shortDiag="Your clinic works, but several core systems behind acquisition, operations and growth are not yet strong enough to make growth predictable.";
+    else if(score<=74) shortDiag="Your clinic has solid foundations and real momentum; targeted improvements in your weakest areas would unlock more predictable, scalable growth.";
+    else if(score<=89) shortDiag="Your clinic is well-built and close to scale-ready; refining a few remaining systems would prepare it for confident expansion.";
+    else shortDiag="Your clinic operates at an institutional standard across every pillar, with the systems in place to scale and lead its market.";
+
+    return {
+      score:score, classification:cls,
+      diagnosisTitle:primary.title, diagnosis:primary.paragraph, shortDiagnosis:shortDiag,
+      asset:asset, constraint:constraint, blindspot:primary.blindspot,
+      priorities:pri, pathway:path, pattern:primary.key, pct:pct
+    };
+  }
+
+  return {build:build, classify:classify};
+})();
+
 (function(){
-  var Q=[{"section": "Practice Profile", "pillar": null, "q": "What type of practice is this?", "opts": [["Single-doctor private clinic", null], ["Multi-doctor clinic / polyclinic", null], ["Specialty medical center", null], ["Hospital / large facility", null]]}, {"section": "Practice Profile", "pillar": null, "q": "How long has the practice been operating?", "opts": [["Pre-launch / just opened", null], ["Under 2 years", null], ["2–5 years", null], ["More than 5 years", null]]}, {"section": "Practice Profile", "pillar": null, "q": "Roughly how many patients does it see per month?", "opts": [["Under 100", null], ["100–300", null], ["300–800", null], ["800+", null]]}, {"section": "Practice Profile", "pillar": "Growth Readiness", "q": "What is the single biggest goal for the next year?", "opts": [["Get more new patients", 1], ["Run the clinic more smoothly", 1], ["Build the brand / reputation", 1], ["Expand — new branch or services", 2]]}, {"section": "Practice Profile", "pillar": "Growth Readiness", "q": "What is the most frustrating problem right now?", "opts": [["Not enough new patients", 1], ["Disorganized operations", 1], ["Weak online presence", 1], ["No clear plan to grow", 0]]}, {"section": "Digital Presence", "pillar": "Digital Presence", "q": "How would you describe the clinic's website?", "opts": [["Modern site with online booking", 4], ["Basic informational site", 2], ["Only a social media page", 1], ["No website at all", 0]]}, {"section": "Digital Presence", "pillar": "Digital Presence", "q": "When patients search the specialty in this city, does the clinic show up?", "opts": [["Yes, near the top", 4], ["Somewhere on page one", 3], ["Rarely / hard to find", 1], ["Never checked", 0]]}, {"section": "Patient Acquisition", "pillar": "Patient Acquisition", "q": "Where do most new patients come from?", "opts": [["A managed mix of referrals, search and ads", 4], ["Mostly word of mouth", 2], ["Mostly one doctor's reputation", 1], ["Unpredictable / not sure", 0]]}, {"section": "Patient Acquisition", "pillar": "Patient Acquisition", "q": "Does the clinic run and measure marketing campaigns?", "opts": [["Yes, planned and tracked", 4], ["Yes, but not measured", 2], ["Tried once or twice", 1], ["Never", 0]]}, {"section": "Operations & Systems", "pillar": "Operations & Systems", "q": "How are patient records and bookings managed?", "opts": [["A proper digital system the team shares", 4], ["Mix of digital and paper", 2], ["Mostly paper / notebook", 1], ["No clear system", 0]]}, {"section": "Operations & Systems", "pillar": "Operations & Systems", "q": "Do patients get automatic reminders and follow-ups?", "opts": [["Yes, automated (e.g. WhatsApp)", 4], ["Manually, sometimes", 2], ["Rarely", 1], ["Never", 0]]}, {"section": "Growth Readiness", "pillar": "Growth Readiness", "q": "Is there a written growth plan with clear targets?", "opts": [["Yes, documented with targets", 4], ["A general direction only", 2], ["Just in the doctor's head", 1], ["No plan", 0]]}, {"section": "Growth Readiness", "pillar": "Growth Readiness", "q": "How consistent is the brand across everything patients see?", "opts": [["Fully consistent identity", 4], ["Mostly consistent", 3], ["Inconsistent", 1], ["No real brand", 0]]}, {"section": "Deeper Analysis", "pillar": "Digital Presence", "q": "How active is the clinic on social media?", "opts": [["Consistent, planned content", 4], ["Posts occasionally", 2], ["Rarely posts", 1], ["No presence", 0]]}, {"section": "Deeper Analysis", "pillar": "Patient Acquisition", "q": "Are patient reviews actively collected and managed?", "opts": [["Yes, actively requested and managed", 4], ["Some reviews, unmanaged", 2], ["Very few", 1], ["None", 0]]}, {"section": "Deeper Analysis", "pillar": "Patient Acquisition", "q": "Is the cost to acquire a new patient known and tracked?", "opts": [["Yes, tracked", 4], ["Rough idea", 2], ["Not really", 1], ["No concept of it", 0]]}, {"section": "Deeper Analysis", "pillar": "Operations & Systems", "q": "Are there clear, trustworthy numbers on revenue and performance?", "opts": [["Yes, reliable reports", 4], ["Can estimate", 2], ["Only a rough sense", 1], ["No visibility", 0]]}, {"section": "Deeper Analysis", "pillar": "Growth Readiness", "q": "Does the clinic depend on one key person to function?", "opts": [["No — systems run it", 4], ["Somewhat", 2], ["Heavily", 1], ["Entirely one person", 0]]}, {"section": "Deeper Analysis", "pillar": "Growth Readiness", "q": "Has the practice tried outside help (agency/consultant) before?", "opts": [["Yes, with good structure", 4], ["Yes, but it didn't stick", 2], ["Considered it", 2], ["Never", 1]]}], PILLARS=["Digital Presence", "Patient Acquisition", "Operations & Systems", "Growth Readiness"], RX={"Digital Presence": [{"service": "Growth & Digital Systems", "items": ["Website journey planning", "Booking system structure", "Digital patient experience mapping", "Patient follow-up systems"]}, {"service": "Branding & Marketing", "items": ["Website structure and copy direction", "Social media identity", "Content creation", "Brand guidelines"]}], "Patient Acquisition": [{"service": "Branding & Marketing", "items": ["Brand strategy", "Medical positioning", "Medical campaign concepts", "Patient communication materials", "Doctor personal branding"]}, {"service": "Growth & Digital Systems", "items": ["CRM setup direction", "Lead management workflows", "Patient follow-up systems"]}], "Operations & Systems": [{"service": "Healthcare Management", "items": ["Clinic and center operational audits", "Patient journey mapping", "Staff workflow optimization", "KPI system design", "Internal process documentation"]}, {"service": "Growth & Digital Systems", "items": ["Booking system structure", "Performance reporting systems", "Data dashboard planning"]}], "Growth Readiness": [{"service": "Research & Strategy", "items": ["Market research", "Feasibility studies", "Expansion planning", "Business model development", "Service opportunity mapping"]}, {"service": "Healthcare Management", "items": ["KPI system design", "Revenue flow analysis", "Department performance review"]}]}, PMAX={"Growth Readiness": 19, "Digital Presence": 12, "Patient Acquisition": 16, "Operations & Systems": 12};
+  var Q=[{"section": "Practice Profile", "pillar": null, "q": "What type of practice is this?", "opts": [["Single-doctor private clinic", null], ["Multi-doctor clinic / polyclinic", null], ["Specialty medical center", null], ["Hospital / large facility", null]]}, {"section": "Practice Profile", "pillar": null, "q": "How long has the practice been operating?", "opts": [["Pre-launch / just opened", null], ["Under 2 years", null], ["2–5 years", null], ["More than 5 years", null]]}, {"section": "Practice Profile", "pillar": null, "q": "Roughly how many patients does it see per month?", "opts": [["Under 100", null], ["100–300", null], ["300–800", null], ["800+", null]]}, {"section": "Practice Profile", "pillar": "Growth Readiness", "q": "What must this practice achieve within the next 12 months?", "opts": [["Get more new patients", 1], ["Run the clinic more smoothly", 1], ["Build the brand / reputation", 1], ["Expand — new branch or services", 2]]}, {"section": "Practice Profile", "pillar": "Growth Readiness", "q": "Which constraint is creating the greatest pressure on the practice?", "opts": [["Not enough new patients", 1], ["Disorganized operations", 1], ["Weak online presence", 1], ["No clear plan to grow", 0]]}, {"section": "Digital Presence", "pillar": "Digital Presence", "q": "How would you describe the clinic's website?", "opts": [["Modern site with online booking", 4], ["Basic informational site", 2], ["Only a social media page", 1], ["No website at all", 0]]}, {"section": "Digital Presence", "pillar": "Digital Presence", "q": "When patients search the specialty in this city, does the clinic show up?", "opts": [["Yes, near the top", 4], ["Somewhere on page one", 3], ["Rarely / hard to find", 1], ["Never checked", 0]]}, {"section": "Patient Acquisition", "pillar": "Patient Acquisition", "q": "Where do most new patients come from?", "opts": [["A managed mix of referrals, search and ads", 4], ["Mostly word of mouth", 2], ["Mostly one doctor's reputation", 1], ["Unpredictable / not sure", 0]]}, {"section": "Patient Acquisition", "pillar": "Patient Acquisition", "q": "Does the clinic run and measure marketing campaigns?", "opts": [["Yes, planned and tracked", 4], ["Yes, but not measured", 2], ["Tried once or twice", 1], ["Never", 0]]}, {"section": "Operations & Systems", "pillar": "Operations & Systems", "q": "How are patient records and bookings managed?", "opts": [["A proper digital system the team shares", 4], ["Mix of digital and paper", 2], ["Mostly paper / notebook", 1], ["No clear system", 0]]}, {"section": "Operations & Systems", "pillar": "Operations & Systems", "q": "Do patients get automatic reminders and follow-ups?", "opts": [["Yes, automated (e.g. WhatsApp)", 4], ["Manually, sometimes", 2], ["Rarely", 1], ["Never", 0]]}, {"section": "Growth Readiness", "pillar": "Growth Readiness", "q": "Is there a written growth plan with clear targets?", "opts": [["Yes, documented with targets", 4], ["A general direction only", 2], ["Just in the doctor's head", 1], ["No plan", 0]]}, {"section": "Growth Readiness", "pillar": "Growth Readiness", "q": "How consistent is the brand across everything patients see?", "opts": [["Fully consistent identity", 4], ["Mostly consistent", 3], ["Inconsistent", 1], ["No real brand", 0]]}, {"section": "Deeper Analysis", "pillar": "Digital Presence", "q": "How active is the clinic on social media?", "opts": [["Consistent, planned content", 4], ["Posts occasionally", 2], ["Rarely posts", 1], ["No presence", 0]]}, {"section": "Deeper Analysis", "pillar": "Patient Acquisition", "q": "Are patient reviews actively collected and managed?", "opts": [["Yes, actively requested and managed", 4], ["Some reviews, unmanaged", 2], ["Very few", 1], ["None", 0]]}, {"section": "Deeper Analysis", "pillar": "Patient Acquisition", "q": "Is the cost to acquire a new patient known and tracked?", "opts": [["Yes, tracked", 4], ["Rough idea", 2], ["Not really", 1], ["No concept of it", 0]]}, {"section": "Deeper Analysis", "pillar": "Operations & Systems", "q": "Are there clear, trustworthy numbers on revenue and performance?", "opts": [["Yes, reliable reports", 4], ["Can estimate", 2], ["Only a rough sense", 1], ["No visibility", 0]]}, {"section": "Deeper Analysis", "pillar": "Growth Readiness", "q": "How dependent is the practice on one person for daily decisions and continuity?", "opts": [["No — systems run it", 4], ["Somewhat", 2], ["Heavily", 1], ["Entirely one person", 0]]}, {"section": "Deeper Analysis", "pillar": "Growth Readiness", "q": "Has the practice previously worked with an external growth or management partner?", "opts": [["Yes, with good structure", 4], ["Yes, but it didn't stick", 2], ["Considered it", 2], ["Never", 1]]}], PILLARS=["Digital Presence", "Patient Acquisition", "Operations & Systems", "Growth Readiness"], PMAX={"Growth Readiness": 19, "Digital Presence": 12, "Patient Acquisition": 16, "Operations & Systems": 12};
   var answers=new Array(Q.length).fill(null), cur=0, meta={doc:"",clinic:""};
   var $=function(id){return document.getElementById(id)};
   var SECT={
-   "Practice Profile":["Part 1","Practice Profile","A few quick questions to understand your practice."],
-   "Digital Presence":["Part 2","Deep Dive","Now we look closely at each of the four growth pillars."],
-   "Deeper Analysis":["Part 3","Sharpening the Picture","A final set of questions to refine your recommendations."]
+   "Practice Profile":["Part 1","Practice Profile","A few questions to understand the structure of your practice."],
+   "Digital Presence":["Part 2","The Four Pillars","Now we examine each of the four pillars of sustainable growth."],
+   "Deeper Analysis":["Part 3","Sharpening the Picture","A final set of questions to refine your diagnosis."]
   };
   var sectionOrder=[];(function(){var seen={};for(var i=0;i<Q.length;i++){var s=Q[i].section;if(SECT[s]&&!seen[s]){seen[s]=1;sectionOrder.push({at:i,sec:s});}}})();
   function sectionAt(i){for(var k=0;k<sectionOrder.length;k++)if(sectionOrder[k].at===i)return sectionOrder[k].sec;return null;}
@@ -320,9 +547,8 @@ try{ MDX_SB=window.supabase.createClient("https://lblmaumusgovxciuyzbm.supabase.
   $("azStart").onclick=function(){meta.doc=$("azDoc").value.trim();meta.clinic=$("azClinic").value.trim();$("azIntro").style.display="none";cur=0;maybeSection();scrollUp();};
   $("azSectGo").onclick=function(){$("azSect").style.display="none";$("azQuiz").style.display="block";render();scrollUp();};
   $("azBack").onclick=function(){if(cur>0){cur--;if(sectionAt(cur)){cur++;}render();}};
-  $("azRestart").onclick=function(){answers=new Array(Q.length).fill(null);cur=0;$("azResult").style.display="none";$("azGate").style.display="none";$("azFull").style.display="none";$("azIntro").style.display="block";$("azBar").style.width="0";scrollUp();};
-  // Only scroll on section transitions / result — never on per-answer advance (that caused the jump)
-  function scrollUp(){var el=document.querySelector(".az");if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-96;window.scrollTo({top:y<0?0:y,behavior:"smooth"});}
+  $("azRestart").onclick=function(){answers=new Array(Q.length).fill(null);cur=0;["azResult","azGate","azFull","azSect","azQuiz"].forEach(function(id){$(id).style.display="none";});$("azTease").style.display="block";$("azIntro").style.display="block";$("azBar").style.width="0";scrollUp();};
+  function scrollUp(){var el=document.querySelector(".az");if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-90;window.scrollTo({top:y<0?0:y,behavior:"smooth"});}
 
   function maybeSection(){var sec=sectionAt(cur);if(sec){var i=SECT[sec];$("azSectK").textContent=i[0];$("azSectH").textContent=i[1];$("azSectP").textContent=i[2];$("azQuiz").style.display="none";$("azSect").style.display="block";}else{$("azQuiz").style.display="block";render();}}
 
@@ -338,232 +564,105 @@ try{ MDX_SB=window.supabase.createClient("https://lblmaumusgovxciuyzbm.supabase.
     $("azBar").style.width=(cur/Q.length*100)+"%";$("azCount").textContent=(cur+1)+" / "+Q.length;$("azBack").disabled=cur===0;
   }
 
+  var RESULT=null;
   function finish(){
     var raw={};PILLARS.forEach(function(p){raw[p]=0;});
     Q.forEach(function(it,idx){var opt=it.opts[answers[idx]];if(!opt)return;var pts=opt[1];if(pts===null||it.pillar===null)return;raw[it.pillar]+=pts;});
     var pct={},tp=0,tm=0;PILLARS.forEach(function(p){var mx=PMAX[p]||1;pct[p]=Math.round(raw[p]/mx*100);tp+=raw[p];tm+=mx;});
     var score=Math.round(tp/tm*100);
-    $("azQuiz").style.display="none";$("azSect").style.display="none";$("azResult").style.display="block";
-    $("azForName").textContent=meta.doc?("Prepared for "+meta.doc+(meta.clinic?" · "+meta.clinic:"")):(meta.clinic||"");
-    $("azScore").textContent=score;
-    var C=502;setTimeout(function(){$("azRingFill").style.transition="stroke-dashoffset 1.1s var(--ease)";$("azRingFill").style.strokeDashoffset=(C-C*score/100);},120);
-    var tier,cls,diag;
-    if(score>=80){tier="Scaling";cls="t-scaling";diag="Strong foundations across the board. Your practice is ready to expand — the focus now is compounding what works and scaling without losing quality.";}
-    else if(score>=60){tier="Established";cls="t-established";diag="You have a solid, working practice — but real growth is being left on the table. Tightening a few key areas would meaningfully lift patient flow and revenue.";}
-    else if(score>=40){tier="Developing";cls="t-developing";diag="Your practice runs, but clear gaps are holding back its potential. Addressing them in the right order turns steady into growing.";}
-    else{tier="Foundational";cls="t-foundational";diag="Significant untapped potential. The biggest gaps are also the fastest wins once the right systems are in place.";}
-    $("azTier").textContent=tier;$("azTier").className="az-tier "+cls;$("azDiag").textContent=diag;
-    var barsEl=$("azBars");barsEl.innerHTML="";
-    PILLARS.forEach(function(p){var v=pct[p],color=v>=75?"#2F7A4E":v>=45?"#B0793F":"#B4593E",label=v>=75?"Strong":v>=45?"Developing":"Needs focus";
-      var row=document.createElement("div");row.className="az-bar";
-      row.innerHTML='<div class="az-bar-top"><b>'+p+'</b><span>'+label+' · '+v+'%</span></div><div class="az-bar-track"><div class="az-bar-fill" style="background:'+color+'"></div></div>';
-      barsEl.appendChild(row);(function(f,t){setTimeout(function(){f.style.width=t+"%";},250);})(row.querySelector(".az-bar-fill"),v);});
-    var rxEl=$("azRx");rxEl.innerHTML="";
-    // Weakness = any pillar below 60% (still worth flagging individually)
-    var weak=[];PILLARS.forEach(function(p){if(pct[p]<60)weak.push(p);});
-    // recommendation logic keyed on overall score: 85+ = congrats, below = always recommend
-    var recText="";
-    if(score>=85){
-      var c=document.createElement("div");c.className="az-rx";
-      c.innerHTML='<div class="area ok">Excellent — a top-performing practice</div><div style="font-size:14.5px;color:var(--graphite)">Congratulations. Your practice scores in the top tier across the board. There are no critical gaps holding you back — the opportunity now is to protect and compound this lead. Mednixis can partner with you to scale further, enter new markets, and stay ahead as you grow.</div>';
-      rxEl.appendChild(c);
-      recText="EXCELLENT — TOP-PERFORMING PRACTICE\nNo critical gaps. Recommended: a strategic growth partnership to protect the lead, scale, and expand.";
-    } else {
-      // below 85: recommend. If specific weak pillars exist, prescribe those; otherwise recommend broad refinement.
-      var targets = weak.length ? weak : PILLARS.slice().sort(function(a,bb){return pct[a]-pct[bb];}).slice(0,2);
-      var recLines=[];
-      targets.forEach(function(p){
-        var rx=RX[p]||[],combo=rx.length>1;
-        var c=document.createElement("div");c.className="az-rx";
-        var flagged = pct[p]<60;
-        var html='<div class="area">'+(flagged?'Opportunity':'Room to strengthen')+' · '+p+' ('+pct[p]+'%)</div>';
-        if(combo)html+='<div class="combo">This is best solved with a combination of services:</div>';
-        recLines.push((flagged?"OPPORTUNITY":"STRENGTHEN")+" — "+p+" ("+pct[p]+"%)");
-        rx.forEach(function(b){
-          html+='<div class="svc">'+b.service+'</div><ul>';
-          recLines.push("  "+b.service+":");
-          b.items.forEach(function(it){html+='<li>'+it+'</li>';recLines.push("    - "+it);});
-          html+='</ul>';
-        });
-        c.innerHTML=html;rxEl.appendChild(c);
-      });
-      recText=recLines.join("\n");
-    }
-    RECTEXT=recText;
-    // set personalized book CTA text
-    $("azBook").innerHTML = 'Book a Consultation <span class="arrow">&rarr;</span>';
-    $("azCtaLine").textContent = weak.length ? ("Your biggest opportunity is "+weak[0]+". Book a consultation to close it.") : "You're performing strongly. Book a consultation to plan your next phase of growth.";
-    // stash results for the email/booking payload
-    RESULT={score:score,tier:tier,pct:pct,weak:weak,answers:buildAnswerSummary()};
-    DIAGTEXT=diag;
-    // ---- Save lead to Mednixis Command Center (flag no-contact) ----
-    RESULT.savedId=null;
-    (function(){
-      if(!MDX_SB)return;
-      var constraint=weak.length?weak[0]:PILLARS.slice().sort(function(a,bb){return pct[a]-pct[bb];})[0];
-      var row={
-        doctor_name:meta.doc||null, clinic_name:meta.clinic||null,
-        score:score, tier:tier, primary_constraint:constraint,
-        pillar_digital:pct["Digital Presence"], pillar_acquisition:pct["Patient Acquisition"],
-        pillar_operations:pct["Operations & Systems"], pillar_growth:pct["Growth Readiness"],
-        diagnosis:diag, recommended_pathway:null, source:"website", stage:"new",
-        answers:{summary:RESULT.answers, recommendations:RECTEXT},
-        is_partial:false, notes:"(no contact yet — completed assessment)"
-      };
-      MDX_SB.from("leads").insert(row).select().single().then(function(r){
-        if(r&&r.data){ RESULT.savedId=r.data.id; }
-      }).catch(function(){});
-    })();
+    var dg=DIAG.build(answers,pct,score);
+    RESULT={score:score,pct:pct,dg:dg};
 
-    // Meta Lead on completion
+    $("azQuiz").style.display="none";$("azSect").style.display="none";$("azResult").style.display="block";
+    if(meta.doc||meta.clinic){$("azForName").style.display="block";$("azForName").querySelector("b").textContent=(meta.doc||"")+(meta.clinic?(meta.doc?" · ":"")+meta.clinic:"");}
+    // animate score count
+    var target=score,cnt=0,step=Math.max(1,Math.round(target/40));
+    var iv=setInterval(function(){cnt+=step;if(cnt>=target){cnt=target;clearInterval(iv);}$("azScore").innerHTML=cnt+'<span>/100</span>';},18);
+    var cmap={"Foundation Stage":"c-foundation","Growth Constrained":"c-constrained","Growth Capable":"c-capable","Scale Ready":"c-scale","Institution Grade":"c-institution"};
+    $("azClass").textContent=dg.classification;$("azClass").className="az-class "+(cmap[dg.classification]||"c-capable");
+    $("azShortDiag").textContent=dg.shortDiagnosis;
+
+    // pillar cards (lowest highlighted)
+    var lowest=dg.constraint.pillar;
+    var pc=$("azPillars");pc.innerHTML="";
+    PILLARS.forEach(function(p){
+      var isLow=(p===lowest);
+      var d=document.createElement("div");d.className="az-pcard"+(isLow?" lowest":"");
+      d.innerHTML=(isLow?'<span class="tag">Primary Constraint</span>':'')+'<div class="pv">'+pct[p]+'%</div><div class="pl">'+p+'</div>';
+      pc.appendChild(d);
+    });
+    // constraint + blindspot on-page
+    if(dg.isStrong){
+      $("azConstraintBlock").style.display="none";
+    } else {
+      $("azConstraintBlock").style.display="block";
+      $("azConstraintVal").textContent=dg.constraint.pillar+" — "+dg.constraint.pct+"%";
+      $("azConstraintText").textContent=dg.constraint.text;
+    }
+    $("azBlindspot").textContent=dg.blindspot;
+
     try{if(typeof fbq==="function")fbq("track","Lead",{content_name:"Clinic Growth Assessment",value:score});}catch(e){}
     scrollUp();
   }
 
-  // Build a readable Q/A + pillar summary string for the email
-  function buildAnswerSummary(){
-    var lines=[];
-    Q.forEach(function(it,idx){var a=it.opts[answers[idx]];lines.push((idx+1)+". "+it.q+"  ->  "+(a?a[0]:"(skipped)"));});
-    return lines.join("\n");
-  }
+  // reveal gate
+  $("azReveal").onclick=function(){$("azTease").style.display="none";$("azGate").style.display="block";$("azGate").scrollIntoView({behavior:"smooth",block:"center"});};
 
-  // ---- contact gate + submission ----
-  var RESULT=null, RECTEXT="", DIAGTEXT="";
-  $("azGetReport").onclick=function(){ $("azTease").style.display="none"; $("azGate").style.display="block"; $("azGate").scrollIntoView({behavior:"smooth",block:"center"}); };
-  $("azBook").onclick=function(){
-    // carry the assessment into the booking form via sessionStorage, then go to contact
-    if(RESULT){try{sessionStorage.setItem("mdx_assessment", assessmentText());}catch(e){}}
-  };
-  function assessmentText(){
-    if(!RESULT)return "";
-    var s="MEDNIXIS CLINIC GROWTH ASSESSMENT\n";
-    s+="Doctor: "+(meta.doc||"(not given)")+"\nClinic: "+(meta.clinic||"(not given)")+"\n";
-    s+="Score: "+RESULT.score+"/100  ("+RESULT.tier+")\n\nPILLARS:\n";
-    PILLARS.forEach(function(p){s+=" - "+p+": "+RESULT.pct[p]+"%\n";});
-    s+="\nWEAK AREAS: "+(RESULT.weak.length?RESULT.weak.join(", "):"none")+"\n";
-    s+="\nRECOMMENDED DIRECTION:\n"+(RECTEXT||"(none)")+"\n";
-    s+="\nANSWERS:\n"+RESULT.answers;
-    return s;
-  }
-
-  // submit the emailed report via FormSubmit AJAX (no page redirect)
+  // send
   $("azSend").onclick=function(){
-    var nm=$("azGName").value.trim(), ph=$("azGPhone").value.trim(), em=$("azGEmail").value.trim();
-    if(!nm||!ph||!em){ $("azGErr").textContent="Please fill name, phone and email."; return; }
-    if(!/^[^@]+@[^@]+\.[^@]+$/.test(em)){ $("azGErr").textContent="Please enter a valid email."; return; }
+    var nm=$("azGName").value.trim(), em=$("azGEmail").value.trim(), ph=$("azGPhone").value.trim();
+    if(!nm||!em){$("azGErr").textContent="Please enter your name and email.";return;}
+    if(!/^[^@]+@[^@]+\.[^@]+$/.test(em)){$("azGErr").textContent="Please enter a valid email.";return;}
     $("azGErr").textContent="";
-    var payload={
-      _subject:"New Clinic Assessment — "+(meta.doc||nm)+" ("+RESULT.score+"/100)",
-      _template:"box",
-      "Doctor Name":meta.doc||nm, "Clinic":meta.clinic||"", "Contact Name":nm,
-      "Phone":ph, "Email":em, "Score":RESULT.score+"/100 ("+RESULT.tier+")",
-      "Weak Areas":RESULT.weak.length?RESULT.weak.join(", "):"none",
-      "Recommended Direction":RECTEXT||"(none)",
-      "Full Assessment":assessmentText()
-    };
+    var dg=RESULT.dg;
+    // build priorities as text + html
+    var prTextLines=[]; dg.priorities.forEach(function(p,i){prTextLines.push((i+1)+". "+p.t+" — "+p.d);});
+    var priText=prTextLines.join("\n");
+    var priHtml=""; dg.priorities.forEach(function(p,i){priHtml+='<div class="pri"><div class="n">0'+(i+1)+'</div><div><div class="pt">'+p.t+'</div><div class="pd">'+p.d+'</div></div></div>';});
 
-    // ---- Update the saved lead with contact info in Command Center ----
-    (function(){
-      if(!MDX_SB)return;
-      var patch={email:em, phone:ph, notes:"Contact captured via website assessment"};
-      if(!meta.doc && nm) patch.doctor_name=nm;
-      if(RESULT.savedId){ MDX_SB.from("leads").update(patch).eq("id",RESULT.savedId).then(function(){}).catch(function(){}); }
-      else { // if the initial save hadn't returned yet, insert a fresh complete row
-        MDX_SB.from("leads").insert({doctor_name:meta.doc||nm, clinic_name:meta.clinic||null, email:em, phone:ph,
-          score:RESULT.score, tier:RESULT.tier, primary_constraint:(RESULT.weak[0]||null),
-          pillar_digital:RESULT.pct["Digital Presence"], pillar_acquisition:RESULT.pct["Patient Acquisition"],
-          pillar_operations:RESULT.pct["Operations & Systems"], pillar_growth:RESULT.pct["Growth Readiness"],
-          diagnosis:DIAGTEXT, source:"website", stage:"new", answers:{summary:RESULT.answers, recommendations:RECTEXT}
-        }).then(function(){}).catch(function(){});
-      }
-    })();
-    // Reveal the report immediately — the doctor gave their info, they get the report no matter what.
+    // reveal full diagnosis IMMEDIATELY (email is fire-and-forget)
     $("azGate").style.display="none";
     $("azFull").style.display="block";
+    $("azEmailConf").innerHTML="&#9989; A private copy of your complete diagnosis has been sent to <b>"+em+"</b>.";
+    $("azDiagTitle").textContent=dg.diagnosisTitle;
+    $("azDiagPara").textContent=dg.diagnosis;
+    $("azAssetTitle").textContent=dg.asset.title;$("azAssetText").textContent=dg.asset.text;
+    $("azConstraintTitle2").textContent=dg.constraint.title;$("azConstraintText2").textContent=dg.constraint.text;
+    $("azBlindspot2").textContent=dg.blindspot;
+    $("azPriorities").innerHTML=priHtml;
+    $("azPathwayTitle").textContent=dg.pathway.title;$("azPathwayText").textContent=dg.pathway.text;
+    $("azInterp").innerHTML="Request a Private Interpretation <span class='arrow'>&rarr;</span>";
+    // carry to booking
+    try{sessionStorage.setItem("mdx_assessment", assessmentText(nm,em,ph,priText));}catch(e){}
     $("azFull").scrollIntoView({behavior:"smooth",block:"start"});
-    // Send the email in the background (fire-and-forget; failure never blocks the report).
+
+    // fire EmailJS to doctor (branded) - fire and forget
+    var params={
+      to_email:em, doctor_name:(meta.doc||nm), score:String(RESULT.score),
+      classification:dg.classification, diagnosis:dg.diagnosis,
+      asset_title:dg.asset.title, asset_text:dg.asset.text,
+      constraint_title:dg.constraint.title, constraint_text:dg.constraint.text,
+      blindspot:dg.blindspot, priorities:priText,
+      pathway_title:dg.pathway.title, pathway_text:dg.pathway.text
+    };
     try{
-      fetch("https://formsubmit.co/ajax/contact@mednixis.com",{
-        method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
-        body:JSON.stringify(payload)
-      }).catch(function(){});
+      emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, params).catch(function(){});
     }catch(e){}
   };
-  // ---- PDF download (self-contained, no library) ----
-  $("azPdf").onclick=function(){ if(RESULT) buildWebPDF(); };
-  function buildWebPDF(){
-    var W=595,H=842,M=54, ops=[], PG=[], y;
-    var B=String.fromCharCode(92), NL=String.fromCharCode(10);
-    function rgb(r,g,b){return (r/255).toFixed(3)+" "+(g/255).toFixed(3)+" "+(b/255).toFixed(3);}
-    function escp(t){return String(t).split(B).join(B+B).split("(").join(B+"(").split(")").join(B+")");}
-    function rect(x,yy,w,h,c){ops.push(rgb(c[0],c[1],c[2])+" rg "+x.toFixed(2)+" "+(H-yy-h).toFixed(2)+" "+w.toFixed(2)+" "+h.toFixed(2)+" re f");}
-    function tw(s,size){var w=0;for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);w+=(c>=65&&c<=90)?0.66:(c===32?0.28:0.5);}return w*size;}
-    function wrap(str,size,mw){var wd=String(str).split(" "),ln=[],cu="";for(var i=0;i<wd.length;i++){var t=cu?cu+" "+wd[i]:wd[i];if(tw(t,size)>mw&&cu){ln.push(cu);cu=wd[i];}else cu=t;}if(cu)ln.push(cu);return ln;}
-    function text(x,yy,s,size,c,font,align,mw){c=c||[0,0,0];font=font||"F1";var lines=mw?wrap(s,size,mw):[String(s)];for(var i=0;i<lines.length;i++){var ss=lines[i],tx=x;if(align==="center")tx=x-tw(ss,size)/2;else if(align==="right")tx=x-tw(ss,size);ops.push("BT "+rgb(c[0],c[1],c[2])+" rg /"+font+" "+size+" Tf "+tx.toFixed(2)+" "+(H-yy-i*(size*1.32)).toFixed(2)+" Td ("+escp(ss)+") Tj ET");}return lines.length*size*1.32;}
-    function newpage(){PG.push(ops.join(NL));ops=[];y=64;}
-    function ensure(sp){if(y+sp>H-60)newpage();}
-    var navy=[20,29,44],copper=[176,121,63],grey=[120,128,140],ink=[45,52,64],lite=[226,222,214],green=[47,122,78],amber=[181,133,47],red=[180,89,62];
-    var tier=RESULT.tier,tcol=tier==="Scaling"?green:tier==="Established"?copper:tier==="Developing"?amber:red;
-    var doc=meta.doc||"", clinic=meta.clinic||"";
 
-    rect(0,0,W,120,navy);
-    ops.push("q 3 w "+rgb(201,149,92)+" RG "+M+" "+(H-70)+" m "+M+" "+(H-40)+" l "+(M+18)+" "+(H-58)+" l "+(M+36)+" "+(H-40)+" l "+(M+36)+" "+(H-70)+" l S Q");
-    text(M+52,44,"MEDNIXIS",20,[246,243,236],"F2");
-    text(M+52,66,"HEALTHCARE MANAGEMENT & GROWTH",8.5,[201,149,92],"F1");
-    text(W-M,44,"Clinic Growth Assessment",10,[210,210,210],"F1","right");
-    var today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
-    text(W-M,64,today,10,[210,210,210],"F1","right");
-    y=158;
-    var pf=(doc?doc:"")+(clinic?(doc?"  -  ":"")+clinic:"");
-    if(pf){text(M,y,"Prepared for: "+pf,16,navy,"F2");y+=28;}
-    text(M,y+40,String(RESULT.score),56,navy,"F2");
-    text(M+(RESULT.score>=100?104:(RESULT.score>9?72:44)),y+40,"/ 100",13,grey,"F1");
-    text(M,y+76,tier,24,tcol,"F2");y+=98;
-    y+=text(M,y,DIAGTEXT,11,ink,"F1",null,W-2*M)+18;
-    rect(M,y,W-2*M,1,lite);y+=22;text(M,y,"Pillar Breakdown",14,navy,"F2");y+=20;
-    PILLARS.forEach(function(p){var v=RESULT.pct[p],col=v>=75?green:v>=45?copper:red,lab=v>=75?"Strong":v>=45?"Developing":"Needs focus";
-      text(M,y,p,11,navy,"F2");text(W-M,y,lab+" - "+v+"%",10,grey,"F1","right");y+=8;rect(M,y,W-2*M,8,lite);rect(M,y,(W-2*M)*v/100,8,col);y+=24;});
-    y+=8;ensure(60);rect(M,y,W-2*M,1,lite);y+=22;text(M,y,"Recommended Direction",15,navy,"F2");y+=8;
-    text(M,y+10,"Where Mednixis can help - matched to this practice",10,grey,"F1");y+=32;
-    if(RESULT.score>=85){
-      ensure(70);rect(M,y,W-2*M,64,[248,243,235]);rect(M,y,3,64,copper);
-      text(M+16,y+22,"Excellent - a top-performing practice",11,green,"F2");
-      text(M+16,y+40,"No critical gaps. Recommended: a strategic growth partnership to protect the lead, scale, and expand into new markets.",10,ink,"F1",null,W-2*M-32);y+=80;
-    } else {
-      var targets = RESULT.weak.length?RESULT.weak:PILLARS.slice().sort(function(a,bb){return RESULT.pct[a]-RESULT.pct[bb];}).slice(0,2);
-      targets.forEach(function(p){var rx=RX[p]||[],combo=rx.length>1,flagged=RESULT.pct[p]<60;
-        var h=44;rx.forEach(function(bk){h+=22+bk.items.length*15;});if(combo)h+=16;ensure(h+14);var top=y;
-        text(M,y+2,(flagged?"OPPORTUNITY":"STRENGTHEN")+" - "+p.toUpperCase()+" ("+RESULT.pct[p]+"%)",10,flagged?red:copper,"F2");y+=20;
-        if(combo){text(M,y,"Best solved with a combination of services:",10,grey,"F1");y+=18;}
-        rx.forEach(function(bk){text(M,y,bk.service,14,navy,"F2");y+=16;bk.items.forEach(function(it){rect(M+2,y-3,6,1.5,copper);text(M+16,y,it,10.5,ink,"F1");y+=15;});y+=6;});
-        rect(M-14,top-8,3,(y-top+4),copper);y+=12;});
-    }
-    ensure(80);rect(M,y,W-2*M,1,lite);y+=20;text(M,y,"Ready to close the gap?",13,navy,"F2");y+=18;
-    text(M,y,"Book a strategic consultation with the Mednixis team to turn this assessment into a plan.",10.5,ink,"F1",null,W-2*M);y+=24;
-    text(M,y,"mednixis.com  -  contact@mednixis.com  -  +20 111 999 5307",10.5,copper,"F2");
-    newpage();
-    function u8(s){return new TextEncoder().encode(s).length;}
-    var nP=PG.length, objs=[];
-    objs.push("<< /Type /Catalog /Pages 2 0 R >>");
-    var kids=[];for(var i=0;i<nP;i++)kids.push((3+i)+" 0 R");
-    objs.push("<< /Type /Pages /Kids ["+kids.join(" ")+"] /Count "+nP+" >>");
-    var fH=3+nP,fT=4+nP,cS=5+nP;
-    for(var i=0;i<nP;i++)objs.push("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 "+fH+" 0 R /F2 "+fT+" 0 R >> >> /Contents "+(cS+i)+" 0 R >>");
-    objs.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
-    objs.push("<< /Type /Font /Subtype /Type1 /BaseFont /Times-Bold >>");
-    for(var i=0;i<nP;i++){var cc=PG[i];objs.push("<< /Length "+u8(cc)+" >>"+NL+"stream"+NL+cc+NL+"endstream");}
-    var parts=[],off=[],pos=0;function push(s){parts.push(s);pos+=u8(s);}
-    push("%PDF-1.4"+NL);
-    for(var i=0;i<objs.length;i++){off.push(pos);push((i+1)+" 0 obj"+NL+objs[i]+NL+"endobj"+NL);}
-    var xp=pos,xref="xref"+NL+"0 "+(objs.length+1)+NL+"0000000000 65535 f "+NL;
-    for(var i=0;i<off.length;i++)xref+=("0000000000"+off[i]).slice(-10)+" 00000 n "+NL;
-    push(xref);push("trailer"+NL+"<< /Size "+(objs.length+1)+" /Root 1 0 R >>"+NL+"startxref"+NL+xp+NL+"%%EOF");
-    var blob=new Blob(parts,{type:"application/pdf"}),url=URL.createObjectURL(blob);
-    var nm=(doc||clinic||"Clinic").replace(/[^a-z0-9]+/gi,"-");
-    var a=document.createElement("a");a.href=url;a.download="Mednixis-Assessment-"+nm+".pdf";
-    document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},2000);
+  function assessmentText(nm,em,ph,priText){
+    var dg=RESULT.dg, NL="\n";
+    var s="MEDNIXIS CLINIC GROWTH ASSESSMENT"+NL;
+    s+="Doctor: "+(meta.doc||nm)+NL+"Clinic: "+(meta.clinic||"")+NL+"Contact: "+nm+" | "+em+(ph?" | "+ph:"")+NL+NL;
+    s+="Score: "+RESULT.score+"/100 ("+dg.classification+")"+NL+NL;
+    s+="PILLARS:"+NL;PILLARS.forEach(function(p){s+=" - "+p+": "+RESULT.pct[p]+"%"+NL;});
+    s+=NL+"DIAGNOSIS: "+dg.diagnosisTitle+NL+dg.diagnosis+NL;
+    s+=NL+"STRONGEST ASSET: "+dg.asset.title+NL+dg.asset.text+NL;
+    s+=NL+"PRIMARY CONSTRAINT: "+dg.constraint.title+NL+dg.constraint.text+NL;
+    s+=NL+"BLIND SPOT: "+dg.blindspot+NL;
+    s+=NL+"PRIORITIES:"+NL+priText+NL;
+    s+=NL+"RECOMMENDED DIRECTION: "+dg.pathway.title+NL+dg.pathway.text;
+    return s;
   }
 })();
 </script>
-</body>
-</html>
