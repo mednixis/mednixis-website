@@ -180,14 +180,14 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
 .site-header.scrolled { border-bottom-color: var(--line); }
 
 .nav-inner {
-  max-width: var(--max-w);
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 var(--pad-x);
   height: 86px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 24px;
 }
 
 /* Logo — renders the M monogram as inline SVG */
@@ -287,7 +287,7 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-@media (max-width: 1140px) {
+@media (max-width: 1400px) {
   .nav-toggle { display: block; }
   .nav-cta { display: none; }
   .nav-links {
@@ -313,7 +313,7 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
   .dropdown a:hover { background: transparent; padding-left: 0; color: var(--copper); }
   .nav-links .mobile-cta { display: block; margin-top: 10px; }
 }
-@media (min-width: 1141px) { .nav-links .mobile-cta { display: none; } }
+@media (min-width: 1401px) { .nav-links .mobile-cta { display: none; } }
 
 /* ── Hero ────────────────────────────────────────────── */
 
@@ -826,7 +826,7 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
 }
 
 /* ── NAV FIX — collapse earlier, fix mobile overlay ─── */
-@media (max-width: 1160px) {
+@media (max-width: 1400px) {
   .nav-toggle { display: block !important; }
   .nav-cta { display: none !important; }
   .nav-links {
@@ -870,7 +870,7 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
   .dropdown a:hover { background: transparent !important; padding-left: 0 !important; }
   .nav-links .mobile-cta { display: block !important; margin-top: 10px !important; }
 }
-@media (min-width: 1161px) {
+@media (min-width: 1401px) {
   .nav-toggle { display: none !important; }
   .nav-cta { display: block !important; }
   .nav-links .mobile-cta { display: none !important; }
@@ -895,7 +895,7 @@ h3 { font-size: clamp(22px, 2.4vw, 30px); }
 }
 
 /* ── MOBILE NAV OVERLAY COMPLETE FIX ────────────────── */
-@media (max-width: 1160px) {
+@media (max-width: 1400px) {
   .nav-links {
     position: fixed !important;
     top: 0 !important;
