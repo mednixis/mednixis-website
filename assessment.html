@@ -606,7 +606,17 @@ var DIAG = (function(){
     $("azPathwayTitle").textContent=dg.pathway.title;$("azPathwayText").textContent=dg.pathway.text;
     try{sessionStorage.setItem("mdx_assessment", assessmentText(nm,em,ph,priText));}catch(e){}
     $("azFull").scrollIntoView({behavior:"smooth",block:"start"});
-    var params={to_email:em,doctor_name:(meta.doc||nm),score:String(RESULT.score),classification:dg.classification,diagnosis:dg.diagnosis,asset_title:dg.asset.title,asset_text:dg.asset.text,constraint_title:dg.constraint.title,constraint_text:dg.constraint.text,blindspot:dg.blindspot,priorities:priText,pathway_title:dg.pathway.title,pathway_text:dg.pathway.text};
+    var meansMap={
+      "Foundation Stage":"Clinics at this stage typically depend on individual effort and reputation. The next 6–12 months are the window to put real systems in place before growth stalls.",
+      "Growth Constrained":"Clinics at this stage are working but leaving growth on the table. Tightening the weakest systems now usually unlocks the fastest gains.",
+      "Growth Capable":"Clinics at this stage have real momentum. The next step is converting solid foundations into predictable, scalable growth before competitors catch up.",
+      "Scale Ready":"Clinics at this stage usually have 12–18 months before their current systems begin to limit growth. This is the moment to prepare for confident expansion.",
+      "Institution Grade":"Clinics at this stage operate at an institutional standard. The priority now is protecting the lead and scaling without losing quality."
+    };
+    var whatThisMeans=meansMap[dg.classification]||"";
+    var pillarsText=PILLARS.map(function(p){return p+": "+RESULT.pct[p]+"%";}).join("\n");
+    var today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+    var params={to_email:em,doctor_name:(meta.doc||nm),clinic_name:(meta.clinic||""),report_date:today,score:String(RESULT.score),classification:dg.classification,what_this_means:whatThisMeans,pillars:pillarsText,pillar_digital:String(RESULT.pct["Digital Presence"]),pillar_acquisition:String(RESULT.pct["Patient Acquisition"]),pillar_operations:String(RESULT.pct["Operations & Systems"]),pillar_readiness:String(RESULT.pct["Growth Readiness"]),diagnosis:dg.diagnosis,asset_title:dg.asset.title,asset_text:dg.asset.text,constraint_title:dg.constraint.title,constraint_text:dg.constraint.text,blindspot:dg.blindspot,priorities:priText,pathway_title:dg.pathway.title,pathway_text:dg.pathway.text};
     try{emailjs.send(EMAILJS_SERVICE,EMAILJS_TEMPLATE,params).catch(function(){});}catch(e){}
   };
   function assessmentText(nm,em,ph,priText){var dg=RESULT.dg,NL="\n";var s="MEDNIXIS CLINIC GROWTH ASSESSMENT"+NL;s+="Doctor: "+(meta.doc||nm)+NL+"Clinic: "+(meta.clinic||"")+NL+"Contact: "+nm+" | "+em+(ph?" | "+ph:"")+NL+NL;s+="Score: "+RESULT.score+"/100 ("+dg.classification+")"+NL+NL+"PILLARS:"+NL;PILLARS.forEach(function(p){s+=" - "+p+": "+RESULT.pct[p]+"%"+NL;});s+=NL+"DIAGNOSIS: "+dg.diagnosisTitle+NL+dg.diagnosis+NL+NL+"STRONGEST ASSET: "+dg.asset.title+NL+dg.asset.text+NL+NL+"PRIMARY CONSTRAINT: "+dg.constraint.title+NL+dg.constraint.text+NL+NL+"BLIND SPOT: "+dg.blindspot+NL+NL+"PRIORITIES:"+NL+priText+NL+NL+"RECOMMENDED DIRECTION: "+dg.pathway.title+NL+dg.pathway.text;return s;}
