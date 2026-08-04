@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="canonical" href="https://mednixis.com/assessment.html">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','1302566011665592');fbq('track','PageView');
@@ -313,6 +314,10 @@ fbq('init','1302566011665592');fbq('track','PageView');
 <script>
 var EMAILJS_PUBLIC="MTiJMK0VcaKK1mJZC", EMAILJS_SERVICE="service_841zv8k", EMAILJS_TEMPLATE="template_f9fzk5u";
 try{ emailjs.init({publicKey:EMAILJS_PUBLIC}); }catch(e){}
+/* Supabase (Command Center backend) */
+var SB_URL="https://lblmaumusgovxciuyzbm.supabase.co";
+var SB_ANON="sb_publishable_aRP6R1XUsIv7AgUun4EsCA_hd8xmLz8";
+var _sb=null; try{ if(window.supabase){ _sb=window.supabase.createClient(SB_URL,SB_ANON); } }catch(e){}
 // ============================================================
 // MEDNIXIS DIAGNOSIS ENGINE  (shared by website + rep tool)
 // Pure function: takes answers[] (indices) + pct{} + score, returns full diagnosis object.
@@ -618,8 +623,34 @@ var DIAG = (function(){
     var today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
     var params={to_email:em,doctor_name:(meta.doc||nm),clinic_name:(meta.clinic||""),report_date:today,score:String(RESULT.score),classification:dg.classification,what_this_means:whatThisMeans,pillars:pillarsText,pillar_digital:String(RESULT.pct["Digital Presence"]),pillar_acquisition:String(RESULT.pct["Patient Acquisition"]),pillar_operations:String(RESULT.pct["Operations & Systems"]),pillar_readiness:String(RESULT.pct["Growth Readiness"]),diagnosis:dg.diagnosis,asset_title:dg.asset.title,asset_text:dg.asset.text,constraint_title:dg.constraint.title,constraint_text:dg.constraint.text,blindspot:dg.blindspot,priorities:priText,pathway_title:dg.pathway.title,pathway_text:dg.pathway.text};
     try{emailjs.send(EMAILJS_SERVICE,EMAILJS_TEMPLATE,params).catch(function(){});}catch(e){}
+    // Save the full lead to the Command Center (Supabase). Fire-and-forget.
+    try{ saveLeadToBackend(nm,em,ph,priText); }catch(e){}
   };
   function assessmentText(nm,em,ph,priText){var dg=RESULT.dg,NL="\n";var s="MEDNIXIS CLINIC GROWTH ASSESSMENT"+NL;s+="Doctor: "+(meta.doc||nm)+NL+"Clinic: "+(meta.clinic||"")+NL+"Contact: "+nm+" | "+em+(ph?" | "+ph:"")+NL+NL;s+="Score: "+RESULT.score+"/100 ("+dg.classification+")"+NL+NL+"PILLARS:"+NL;PILLARS.forEach(function(p){s+=" - "+p+": "+RESULT.pct[p]+"%"+NL;});s+=NL+"DIAGNOSIS: "+dg.diagnosisTitle+NL+dg.diagnosis+NL+NL+"STRONGEST ASSET: "+dg.asset.title+NL+dg.asset.text+NL+NL+"PRIMARY CONSTRAINT: "+dg.constraint.title+NL+dg.constraint.text+NL+NL+"BLIND SPOT: "+dg.blindspot+NL+NL+"PRIORITIES:"+NL+priText+NL+NL+"RECOMMENDED DIRECTION: "+dg.pathway.title+NL+dg.pathway.text;return s;}
+
+  function saveLeadToBackend(contactName, contactEmail, contactPhone, priText){
+    if(!_sb || !RESULT) return;
+    var dg=RESULT.dg, pct=RESULT.pct;
+    var conShort=(dg.constraint.pillar==="Operations & Systems")?"Operations":dg.constraint.pillar;
+    var answersArr=[];
+    try{ for(var i=0;i<Q.length;i++){ var opt=Q[i].opts[answers[i]]; answersArr.push({q:Q[i].q, a:opt?opt[0]:null}); } }catch(e){}
+    var row={
+      source:"website", stage:"new",
+      doctor_name:(meta.doc||contactName||""), clinic_name:(meta.clinic||""),
+      contact_name:contactName||"", email:contactEmail||"", phone:contactPhone||"",
+      score:RESULT.score, tier:dg.classification, classification:dg.classification,
+      primary_constraint:conShort,
+      pillar_digital:pct["Digital Presence"], pillar_acquisition:pct["Patient Acquisition"],
+      pillar_operations:pct["Operations & Systems"], pillar_growth:pct["Growth Readiness"],
+      short_diagnosis:dg.shortDiagnosis, diagnosis_title:dg.diagnosisTitle, diagnosis:dg.diagnosis,
+      asset_title:dg.asset.title, asset_text:dg.asset.text,
+      constraint_title:dg.constraint.title, constraint_text:dg.constraint.text,
+      blind_spot:dg.blindspot, priorities:priText,
+      pathway_title:dg.pathway.title, pathway_text:dg.pathway.text, recommended_pathway:dg.pathway.title,
+      full_answers:answersArr
+    };
+    try{ _sb.from("leads").insert(row).then(function(){},function(){}); }catch(e){}
+  }
 })();
 </script>
 </body>
