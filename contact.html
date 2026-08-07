@@ -36,6 +36,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -315,6 +316,46 @@ src="https://www.facebook.com/tr?id=1302566011665592&ev=PageView&noscript=1"
       }
     }
   }catch(e){}
+})();
+</script>
+<script>
+/* Save every contact-form submission to the Command Center (Supabase) as a lead,
+   tagged source="form". Runs before FormSubmit redirects. */
+(function(){
+  var SB_URL="https://lblmaumusgovxciuyzbm.supabase.co";
+  var SB_ANON="sb_publishable_aRP6R1XUsIv7AgUun4EsCA_hd8xmLz8";
+  var _sb=null; try{ if(window.supabase) _sb=window.supabase.createClient(SB_URL,SB_ANON); }catch(e){}
+  var form=document.querySelector("form.form-grid")||document.querySelector("form");
+  if(!form||!_sb) return;
+  var saved=false;
+  form.addEventListener("submit", function(ev){
+    if(saved) return; // already handled -> let it submit
+    try{
+      var fromAssessment=false; try{ fromAssessment=!!sessionStorage.getItem("mdx_assessment"); }catch(e){}
+      if(fromAssessment){ saved=true; return; } // assessment already saved a richer lead
+      ev.preventDefault(); // hold the redirect until we've saved the lead
+      function val(id){var el=document.getElementById(id);return el?el.value.trim():"";}
+      var name=val("name"), org=val("org"), email=val("email"), phone=val("phone");
+      var challenge=val("challenge"), message=val("message"), position=val("position");
+      var btype=val("type"), service=val("service"), stage=val("stage"), location=val("location");
+      var notes="Form request — " + (position?("Position: "+position+"; "):"")
+        + (btype?("Type: "+btype+"; "):"") + (service?("Service: "+service+"; "):"")
+        + (location?("Location: "+location+"; "):"") + (challenge?("Challenge: "+challenge+"; "):"")
+        + (message?("Message: "+message):"");
+      var row={
+        source:"form", stage:"new",
+        doctor_name:name||"(form)", clinic_name:org||"", contact_name:name||"",
+        email:email||"", phone:phone||"",
+        score:null, tier:"Form Lead", classification:"Form Lead",
+        primary_constraint:null, diagnosis:(challenge||message||"Contact form submission"),
+        notes:notes
+      };
+      var go=function(){ saved=true; try{ form.submit(); }catch(e){} };
+      var done=false, finish=function(){ if(done)return; done=true; go(); };
+      _sb.from("leads").insert(row).then(finish, finish);
+      setTimeout(finish, 1200); // fallback: never hang the user more than ~1.2s
+    }catch(e){ saved=true; try{ form.submit(); }catch(_){} }
+  });
 })();
 </script>
 </body>
