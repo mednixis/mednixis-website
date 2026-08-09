@@ -45,6 +45,12 @@ fbq('init','1302566011665592');fbq('track','PageView');
 .az-radio{width:19px;height:19px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;position:relative}
 .az-opt.sel .az-radio{border-color:var(--copper)}
 .az-opt.sel .az-radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--copper)}
+.az-opt.az-multi .az-radio{border-radius:5px}
+.az-opt.az-multi.sel .az-radio::after{border-radius:2px;inset:3px}
+.az-multihint{font-size:13px;color:var(--platinum);margin:14px 0 4px;letter-spacing:.02em}
+.az-continue{width:100%;margin-top:10px;padding:16px;border:none;border-radius:2px;background:var(--copper);color:#fff;font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.az-continue:disabled{background:var(--copper-pale);color:var(--platinum);cursor:not-allowed}
+.az-continue:not(:disabled):active{background:var(--copper-soft)}
 .az-nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px}
 .az-back{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--platinum);background:none;border:none;cursor:pointer}
 .az-back:hover{color:var(--navy)}.az-back[disabled]{opacity:0;pointer-events:none}
@@ -538,6 +544,8 @@ var DIAG = (function(){
 })();
 (function(){
   var Q=[{"section": "Practice Profile", "pillar": null, "q": "What type of practice is this?", "opts": [["Single-doctor private clinic", null], ["Multi-doctor clinic / polyclinic", null], ["Specialty medical center", null], ["Hospital / large facility", null]]}, {"section": "Practice Profile", "pillar": null, "q": "How long has the practice been operating?", "opts": [["Pre-launch / just opened", null], ["Under 2 years", null], ["2–5 years", null], ["More than 5 years", null]]}, {"section": "Practice Profile", "pillar": null, "q": "Roughly how many patients does it see per month?", "opts": [["Under 100", null], ["100–300", null], ["300–800", null], ["800+", null]]}, {"section": "Practice Profile", "pillar": "Growth Readiness", "q": "What must this practice achieve within the next 12 months?", "opts": [["Get more new patients", 1], ["Run the clinic more smoothly", 1], ["Build the brand / reputation", 1], ["Expand — new branch or services", 2]]}, {"section": "Practice Profile", "pillar": "Growth Readiness", "q": "Which constraint is creating the greatest pressure on the practice?", "opts": [["Not enough new patients", 1], ["Disorganized operations", 1], ["Weak online presence", 1], ["No clear plan to grow", 0]]}, {"section": "Digital Presence", "pillar": "Digital Presence", "q": "How would you describe the clinic's website?", "opts": [["Modern site with online booking", 4], ["Basic informational site", 2], ["Only a social media page", 1], ["No website at all", 0]]}, {"section": "Digital Presence", "pillar": "Digital Presence", "q": "When patients search the specialty in this city, does the clinic show up?", "opts": [["Yes, near the top", 4], ["Somewhere on page one", 3], ["Rarely / hard to find", 1], ["Never checked", 0]]}, {"section": "Patient Acquisition", "pillar": "Patient Acquisition", "q": "Where do most new patients come from?", "opts": [["A managed mix of referrals, search and ads", 4], ["Mostly word of mouth", 2], ["Mostly one doctor's reputation", 1], ["Unpredictable / not sure", 0]]}, {"section": "Patient Acquisition", "pillar": "Patient Acquisition", "q": "Does the clinic run and measure marketing campaigns?", "opts": [["Yes, planned and tracked", 4], ["Yes, but not measured", 2], ["Tried once or twice", 1], ["Never", 0]]}, {"section": "Operations & Systems", "pillar": "Operations & Systems", "q": "How are patient records and bookings managed?", "opts": [["A proper digital system the team shares", 4], ["Mix of digital and paper", 2], ["Mostly paper / notebook", 1], ["No clear system", 0]]}, {"section": "Operations & Systems", "pillar": "Operations & Systems", "q": "Do patients get automatic reminders and follow-ups?", "opts": [["Yes, automated (e.g. WhatsApp)", 4], ["Manually, sometimes", 2], ["Rarely", 1], ["Never", 0]]}, {"section": "Growth Readiness", "pillar": "Growth Readiness", "q": "Is there a written growth plan with clear targets?", "opts": [["Yes, documented with targets", 4], ["A general direction only", 2], ["Just in the doctor's head", 1], ["No plan", 0]]}, {"section": "Growth Readiness", "pillar": "Growth Readiness", "q": "How consistent is the brand across everything patients see?", "opts": [["Fully consistent identity", 4], ["Mostly consistent", 3], ["Inconsistent", 1], ["No real brand", 0]]}, {"section": "Deeper Analysis", "pillar": "Digital Presence", "q": "How active is the clinic on social media?", "opts": [["Consistent, planned content", 4], ["Posts occasionally", 2], ["Rarely posts", 1], ["No presence", 0]]}, {"section": "Deeper Analysis", "pillar": "Patient Acquisition", "q": "Are patient reviews actively collected and managed?", "opts": [["Yes, actively requested and managed", 4], ["Some reviews, unmanaged", 2], ["Very few", 1], ["None", 0]]}, {"section": "Deeper Analysis", "pillar": "Patient Acquisition", "q": "Is the cost to acquire a new patient known and tracked?", "opts": [["Yes, tracked", 4], ["Rough idea", 2], ["Not really", 1], ["No concept of it", 0]]}, {"section": "Deeper Analysis", "pillar": "Operations & Systems", "q": "Are there clear, trustworthy numbers on revenue and performance?", "opts": [["Yes, reliable reports", 4], ["Can estimate", 2], ["Only a rough sense", 1], ["No visibility", 0]]}, {"section": "Deeper Analysis", "pillar": "Growth Readiness", "q": "How dependent is the practice on one person for daily decisions and continuity?", "opts": [["No — systems run it", 4], ["Somewhat", 2], ["Heavily", 1], ["Entirely one person", 0]]}, {"section": "Deeper Analysis", "pillar": "Growth Readiness", "q": "Has the practice previously worked with an external growth or management partner?", "opts": [["Yes, with good structure", 4], ["Yes, but it didn't stick", 2], ["Considered it", 2], ["Never", 1]]}], PILLARS=["Digital Presence", "Patient Acquisition", "Operations & Systems", "Growth Readiness"], PMAX={"Growth Readiness": 19, "Digital Presence": 12, "Patient Acquisition": 16, "Operations & Systems": 12};
+  // Questions that can have more than one answer (multi-select). Scored by highest-value pick.
+  var MULTI={3:true, 4:true, 7:true};
   var answers=new Array(Q.length).fill(null), cur=0, meta={doc:"",clinic:""};
   var $=function(id){return document.getElementById(id)};
   var SECT={
@@ -558,22 +566,57 @@ var DIAG = (function(){
   function render(){
     var it=Q[cur];$("azSecTag").textContent=it.section;$("azQ").textContent=it.q;
     var o=$("azOpts");o.innerHTML="";
+    var isMulti=MULTI[cur];
     it.opts.forEach(function(opt,i){
-      var d=document.createElement("div");d.className="az-opt"+(answers[cur]===i?" sel":"");
+      var sel = isMulti ? (Array.isArray(answers[cur]) && answers[cur].indexOf(i)>=0) : (answers[cur]===i);
+      var d=document.createElement("div");d.className="az-opt"+(sel?" sel":"")+(isMulti?" az-multi":"");
       d.innerHTML='<span class="az-radio"></span><span>'+opt[0]+'</span>';
-      d.onclick=function(){answers[cur]=i;if(cur<Q.length-1){setTimeout(function(){cur++;if(sectionAt(cur)){maybeSection();scrollUp();}else render();},170);}else setTimeout(finish,170);};
+      if(isMulti){
+        d.onclick=function(){
+          if(!Array.isArray(answers[cur]))answers[cur]=[];
+          var idx=answers[cur].indexOf(i);
+          if(idx>=0)answers[cur].splice(idx,1); else answers[cur].push(i);
+          render(); // re-render to update selection; do NOT auto-advance
+        };
+      } else {
+        d.onclick=function(){answers[cur]=i;if(cur<Q.length-1){setTimeout(function(){cur++;if(sectionAt(cur)){maybeSection();scrollUp();}else render();},170);}else setTimeout(finish,170);};
+      }
       o.appendChild(d);
     });
+    // multi-select needs an explicit Continue button
+    if(isMulti){
+      var has=Array.isArray(answers[cur])&&answers[cur].length>0;
+      var cont=document.createElement("button");
+      cont.className="az-continue"; cont.textContent=has?"Continue":"Select at least one";
+      cont.disabled=!has;
+      cont.onclick=function(){ if(!has)return; if(cur<Q.length-1){cur++;if(sectionAt(cur)){maybeSection();scrollUp();}else render();}else finish(); };
+      var hint=document.createElement("div");hint.className="az-multihint";hint.textContent="Choose all that apply";
+      o.appendChild(hint); o.appendChild(cont);
+    }
     $("azBar").style.width=(cur/Q.length*100)+"%";$("azCount").textContent=(cur+1)+" / "+Q.length;$("azBack").disabled=cur===0;
+  }
+
+  // convert answers to a single-index array for scoring + engine (multi -> highest-points option)
+  function flatAnswers(){
+    return answers.map(function(a,idx){
+      if(Array.isArray(a)){
+        if(!a.length)return null;
+        var best=a[0],bestPts=-1;
+        a.forEach(function(oi){var opt=Q[idx].opts[oi];var pts=opt&&opt[1]!=null?opt[1]:0;if(pts>bestPts){bestPts=pts;best=oi;}});
+        return best;
+      }
+      return a;
+    });
   }
 
   var RESULT=null;
   function finish(){
+    var flat=flatAnswers();
     var raw={};PILLARS.forEach(function(p){raw[p]=0;});
-    Q.forEach(function(it,idx){var opt=it.opts[answers[idx]];if(!opt)return;var pts=opt[1];if(pts===null||it.pillar===null)return;raw[it.pillar]+=pts;});
+    Q.forEach(function(it,idx){var opt=it.opts[flat[idx]];if(!opt)return;var pts=opt[1];if(pts===null||it.pillar===null)return;raw[it.pillar]+=pts;});
     var pct={},tp=0,tm=0;PILLARS.forEach(function(p){var mx=PMAX[p]||1;pct[p]=Math.round(raw[p]/mx*100);tp+=raw[p];tm+=mx;});
     var score=Math.round(tp/tm*100);
-    var dg=DIAG.build(answers,pct,score);
+    var dg=DIAG.build(flat,pct,score);
     RESULT={score:score,pct:pct,dg:dg};
     $("azQuiz").style.display="none";$("azSect").style.display="none";$("azResult").style.display="block";
     if(meta.doc||meta.clinic){$("azForName").style.display="block";$("azForName").querySelector("b").textContent=(meta.doc||"")+(meta.clinic?(meta.doc?" · ":"")+meta.clinic:"");}
@@ -633,7 +676,14 @@ var DIAG = (function(){
     var dg=RESULT.dg, pct=RESULT.pct;
     var conShort=(dg.constraint.pillar==="Operations & Systems")?"Operations":dg.constraint.pillar;
     var answersArr=[];
-    try{ for(var i=0;i<Q.length;i++){ var opt=Q[i].opts[answers[i]]; answersArr.push({q:Q[i].q, a:opt?opt[0]:null}); } }catch(e){}
+    try{ for(var i=0;i<Q.length;i++){
+      if(Array.isArray(answers[i])){
+        var picks=answers[i].map(function(oi){var o=Q[i].opts[oi];return o?o[0]:null;}).filter(Boolean);
+        answersArr.push({q:Q[i].q, a:picks.join("; ")});
+      } else {
+        var opt=Q[i].opts[answers[i]]; answersArr.push({q:Q[i].q, a:opt?opt[0]:null});
+      }
+    } }catch(e){}
     var row={
       source:"website", stage:"new",
       doctor_name:(meta.doc||contactName||""), clinic_name:(meta.clinic||""),
