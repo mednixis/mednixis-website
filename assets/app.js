@@ -582,7 +582,7 @@ function sendLead(scored,worst,overall,band){
   setTimeout(function(){ f.remove(); },4000);
 
   /* b) Command Center — Supabase leads table */
-  if(LEAD_SUPABASE_URL && LEAD_SUPABASE_KEY && LEAD_SUPABASE_KEY.indexOf('PASTE_')!==0){
+  if(LEAD_SUPABASE_URL && LEAD_SUPABASE_KEY && LEAD_SUPABASE_KEY.indexOf('PASTE')<0){
     var row={
       source:'website_assessment',
       name: LEAD.name||null,
@@ -599,20 +599,38 @@ function sendLead(scored,worst,overall,band){
         var ch=q.o.filter(function(o){return o[1]===answers[i];})[0];
         return {q:q.t, a:ch?ch[0]:null, points:answers[i]};
       }),
-      status:'new',
-      created_at: new Date().toISOString()
+      status:'new'
     };
-    fetch(LEAD_SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/'+LEAD_TABLE,{
-      method:'POST',
-      headers:{'Content-Type':'application/json',
-        'apikey':LEAD_SUPABASE_KEY,
-        'Authorization':'Bearer '+LEAD_SUPABASE_KEY,
-        'Prefer':'return=minimal'},
-      body:JSON.stringify(row)
-    }).then(function(r){
-      if(!r.ok) r.text().then(function(t){console.warn('Supabase lead rejected:',r.status,t);});
-      else console.log('Lead saved to Command Center');
-    }).catch(function(e){console.warn('Supabase unreachable:',e);});
+    window.MEDNIXIS_LAST_LEAD = row;   /* inspectable in console */
+
+    var url = LEAD_SUPABASE_URL.replace(/\/$/,'') + '/rest/v1/' + LEAD_TABLE;
+
+    /* new sb_publishable_ keys want apikey only; legacy anon JWTs
+       also accept Bearer. Try the modern form, fall back once.  */
+    function push(withBearer){
+      var h={'Content-Type':'application/json',
+             'apikey':LEAD_SUPABASE_KEY,
+             'Prefer':'return=representation'};
+      if(withBearer) h['Authorization']='Bearer '+LEAD_SUPABASE_KEY;
+      return fetch(url,{method:'POST',headers:h,body:JSON.stringify(row)})
+        .then(function(r){
+          return r.text().then(function(t){ return {ok:r.ok,status:r.status,body:t}; });
+        });
+    }
+
+    push(false).then(function(res){
+      if(res.ok){ console.log('%c✓ Lead saved to Command Center','color:#5E9E88',res.body); return; }
+      console.warn('Supabase attempt 1 failed —',res.status,res.body);
+      return push(true).then(function(res2){
+        if(res2.ok){ console.log('%c✓ Lead saved (Bearer)','color:#5E9E88',res2.body); }
+        else{ console.error('✗ Supabase rejected the lead —',res2.status,res2.body,
+              '\nURL:',url,'\nRow:',row); }
+      });
+    }).catch(function(e){
+      console.error('✗ Supabase unreachable:',e,'\nURL:',url);
+    });
+  } else {
+    console.warn('Supabase not configured — LEAD_SUPABASE_URL / KEY are empty. Email only.');
   }
 }
 
