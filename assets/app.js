@@ -64,7 +64,9 @@ var FORM_TARGET = 'https://formsubmit.co/contact@mednixis.com';
    Never use the secret key here — it bypasses RLS.          */
 var LEAD_SUPABASE_URL = 'https://lblmaumusgovxciuyzbm.supabase.co';
 var LEAD_SUPABASE_KEY = 'sb_publishable_aRP6R1XUsIv7AgUun4EsCA_hd8xmLz8';
-var LEAD_TABLE        = 'website_leads';
+var LEAD_TABLE        = 'leads';          // the Command Center table
+var LEAD_SOURCE       = 'WEBSITE';        // shows as the tag on the card
+var LEAD_STAGE_NEW    = 'new';            // must match your NEW column value
 
 /* Serverless route for the navigator + written reading —
    see AI_ENDPOINT below. Deploy /api/claude.js. */
@@ -583,23 +585,59 @@ function sendLead(scored,worst,overall,band){
 
   /* b) Command Center — Supabase leads table */
   if(LEAD_SUPABASE_URL && LEAD_SUPABASE_KEY && LEAD_SUPABASE_KEY.indexOf('PASTE')<0){
+    /* map onto the Command Center leads schema.
+       Four pillars, matched by what each dimension measures:
+         digital      ← systems & data      / launch readiness
+         acquisition  ← positioning         / concept
+         operations   ← operations          / operating model
+         growth       ← patient journey     / market evidence   */
+    var P = scored.reduce(function(o,s){ o[s.id]=s.pct; return o; },{});
+    var pre = (B===BANKS.prelaunch);
+    var C = B.c[worst.id];
+
     var row={
-      source:'website_assessment',
-      name: LEAD.name||null,
-      phone: LEAD.phone||null,
-      email: LEAD.email||null,
-      organisation: LEAD.org||null,
-      assessment_path: path,
-      score: overall,
-      band: band,
+      /* who */
+      doctor_name:  LEAD.name || null,
+      contact_name: LEAD.name || null,
+      clinic_name:  LEAD.org  || null,
+      email:        LEAD.email|| null,
+      phone:        LEAD.phone|| null,
+
+      /* the reading */
+      score:              overall,
+      tier:               band,
+      classification:     band,
       primary_constraint: worst.name,
-      recommended_division: B.c[worst.id].div,
-      dimension_scores: scored.reduce(function(o,s){o[s.id]=s.pct;return o;},{}),
-      answers: B.q.map(function(q,i){
-        var ch=q.o.filter(function(o){return o[1]===answers[i];})[0];
-        return {q:q.t, a:ch?ch[0]:null, points:answers[i]};
-      }),
-      status:'new'
+      pillar_digital:     pre ? (P.readiness|0) : (P.systems|0),
+      pillar_acquisition: pre ? (P.concept|0)   : (P.positioning|0),
+      pillar_operations:  pre ? (P.model|0)     : (P.operations|0),
+      pillar_growth:      pre ? (P.market|0)    : (P.journey|0),
+
+      /* the narrative */
+      diagnosis_title:     'Primary constraint: ' + worst.name,
+      short_diagnosis:     worst.name + ' — ' + band + ' (' + overall + '/100)',
+      diagnosis:           C.text,
+      what_this_means:     C.text,
+      constraint_title:    worst.name,
+      constraint_text:     C.text,
+      recommended_pathway: C.div,
+      pathway_title:       C.div,
+      pathway_text:        C.scope,
+
+      /* provenance */
+      answers:      B.q.map(function(q,i){
+                      var ch=q.o.filter(function(o){return o[1]===answers[i];})[0];
+                      return {question:q.t, answer:ch?ch[0]:null, points:answers[i], dimension:q.d};
+                    }),
+      full_answers: { path: path, band: band, overall: overall,
+                      dimensions: P, completed_at: new Date().toISOString() },
+      source:       LEAD_SOURCE,
+      stage:        LEAD_STAGE_NEW,
+      is_partial:   !(LEAD.phone || LEAD.email),
+      prepared_by:  'Website assessment',
+      notes:        path + ' · ' + band + ' · ' + overall + '/100 · constraint: '
+                    + worst.name + ' → ' + C.div
+                    + ((LEAD.phone||LEAD.email) ? '' : ' · NO CONTACT DETAILS GIVEN')
     };
     window.MEDNIXIS_LAST_LEAD = row;   /* inspectable in console */
 
