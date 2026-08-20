@@ -65,8 +65,29 @@ var FORM_TARGET = 'https://formsubmit.co/contact@mednixis.com';
 var LEAD_SUPABASE_URL = 'https://lblmaumusgovxciuyzbm.supabase.co';
 var LEAD_SUPABASE_KEY = 'sb_publishable_aRP6R1XUsIv7AgUun4EsCA_hd8xmLz8';
 var LEAD_TABLE        = 'leads';          // the Command Center table
-var LEAD_SOURCE       = 'WEBSITE';        // shows as the tag on the card
+var LEAD_SOURCE       = 'website';        // lowercase — matches the Command Center
 var LEAD_STAGE_NEW    = 'new';            // must match your NEW column value
+
+/* Match the Command Center's own taxonomy so website leads
+   join the existing charts instead of creating new buckets. */
+var CC_CONSTRAINT = {
+  /* operating path */
+  positioning:'Patient Acquisition', operations:'Operations',
+  journey:'Growth Readiness',        systems:'Digital Presence',
+  /* pre-launch path */
+  concept:'Patient Acquisition',     model:'Operations',
+  market:'Growth Readiness',         readiness:'Digital Presence'
+};
+/* Tier label by score. Adjust the labels to whatever your
+   dashboard already uses — run:  select distinct tier from leads; */
+/* identical to tierLabel() in the Command Center */
+function CC_TIER(s){
+  return s<40 ? 'Foundation Stage'
+       : s<60 ? 'Growth Constrained'
+       : s<75 ? 'Growth Capable'
+       : s<90 ? 'Scale Ready'
+              : 'Institution Grade';
+}
 
 /* Serverless route for the navigator + written reading —
    see AI_ENDPOINT below. Deploy /api/claude.js. */
@@ -605,20 +626,20 @@ function sendLead(scored,worst,overall,band){
 
       /* the reading */
       score:              overall,
-      tier:               band,
-      classification:     band,
-      primary_constraint: worst.name,
+      tier:               CC_TIER(overall),
+      classification:     CC_TIER(overall),
+      primary_constraint: CC_CONSTRAINT[worst.id] || worst.name,
       pillar_digital:     pre ? (P.readiness|0) : (P.systems|0),
       pillar_acquisition: pre ? (P.concept|0)   : (P.positioning|0),
       pillar_operations:  pre ? (P.model|0)     : (P.operations|0),
       pillar_growth:      pre ? (P.market|0)    : (P.journey|0),
 
       /* the narrative */
-      diagnosis_title:     'Primary constraint: ' + worst.name,
-      short_diagnosis:     worst.name + ' — ' + band + ' (' + overall + '/100)',
+      diagnosis_title:     'Primary constraint: ' + (CC_CONSTRAINT[worst.id]||worst.name),
+      short_diagnosis:     (CC_CONSTRAINT[worst.id]||worst.name) + ' — ' + band + ' (' + overall + '/100)',
       diagnosis:           C.text,
       what_this_means:     C.text,
-      constraint_title:    worst.name,
+      constraint_title:    CC_CONSTRAINT[worst.id] || worst.name,
       constraint_text:     C.text,
       recommended_pathway: C.div,
       pathway_title:       C.div,
