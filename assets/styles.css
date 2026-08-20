@@ -452,3 +452,9 @@ a.artrow{text-decoration:none;display:grid}
 a.btn,a.btn-ghost{display:inline-block}
 .fbot a{color:var(--pewter);text-decoration:none;border-bottom:1px solid var(--hair);transition:color .3s}
 .fbot a:hover{color:var(--oxblood)}
+
+/* assessment lead step */
+.details{border-top:1px solid var(--hair);padding:clamp(60px,8vw,110px) 0}
+.dform{margin-top:clamp(38px,4.5vw,58px);max-width:720px}
+.dform .f input{font-size:16px}
+.done a.btn-ghost{display:inline-block}

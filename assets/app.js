@@ -49,11 +49,24 @@ function init(name){
    Both are Mednixis-hosted sample-data environments —
    never point these at a live clinic admin.          */
 var DEMO_BACKEND = 'https://mednixis.com/demo.html';
-var DEMO_SITE    = 'https://mednixis.com/website-demo.html';
+var DEMO_SITE    = 'https://drmagedragab.com';
 var LIVE_SITE    = 'https://drmagedragab.com';
 /* FormSubmit endpoint — activate once by submitting
    the form and confirming the email it sends you.    */
 var FORM_ENDPOINT = 'https://formsubmit.co/ajax/contact@mednixis.com';
+
+/* Assessment leads → Mednixis Command Center (Supabase).
+   Fill these in and every completed assessment lands in your
+   leads table. Leave blank and it emails only.
+   The table needs an INSERT policy for the anon role.        */
+var LEAD_SUPABASE_URL = '';   // e.g. 'https://xxxx.supabase.co'
+var LEAD_SUPABASE_KEY = '';   // anon public key
+var LEAD_TABLE        = 'leads';
+
+/* Serverless route for the navigator + written reading —
+   see AI_ENDPOINT below. Deploy /api/claude.js. */
+/* Server-side Claude proxy. Falls back to written copy if unavailable. */
+var AI_ENDPOINT   = '/api/claude';
 
 function initClinicLinks(){
   var b=document.getElementById('demoBackend'), s=document.getElementById('demoSite');
@@ -63,57 +76,28 @@ function initClinicLinks(){
 }
 
 function initForm(){
+  /* thank-you state after FormSubmit redirects back */
+  if(/[?&]sent=1/.test(location.search)){
+    var f=document.getElementById('cform'), s=document.getElementById('csent');
+    if(f) f.style.display='none';
+    if(s) s.style.display='block';
+    var np=document.querySelector('.no-pricing'); if(np) np.style.display='none';
+    return;
+  }
   var form=document.getElementById('cform'); if(!form||form.dataset.on) return;
   form.dataset.on='1';
-  var msg=document.getElementById('fmsg'), btn=document.getElementById('fsubmit');
-
-  form.addEventListener('submit',async function(e){
-    e.preventDefault();
-    msg.className='fmsg'; msg.textContent='';
-
-    /* validation */
+  var msg=document.getElementById('fmsg');
+  form.addEventListener('submit',function(e){
     var bad=false;
-    ['name','email'].forEach(function(n){
-      var el=form.elements[n], ok=el.value.trim().length>1;
-      if(n==='email') ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+    [['Name',2],['Email',0]].forEach(function(p){
+      var el=form.elements[p[0]], val=el.value.trim(), ok;
+      ok = p[0]==='Email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) : val.length>p[1];
       el.classList.toggle('bad',!ok); if(!ok) bad=true;
     });
-    if(bad){ msg.className='fmsg err'; msg.textContent='Name and a valid email are required'; return; }
-    if(form.elements['_honey'].value){ return; }  /* bot */
-
-    var data={};
-    ['name','role','email','phone','organisation','stage','message'].forEach(function(n){
-      if(form.elements[n]) data[n]=form.elements[n].value.trim();
-    });
-    data._subject='Consultation request — '+(data.name||'Mednixis');
-
-    btn.disabled=true; msg.className='fmsg'; msg.textContent='Sending…';
-    try{
-      var res=await fetch(FORM_ENDPOINT,{method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body:JSON.stringify(data)});
-      if(!res.ok) throw new Error('bad status');
-      showDone(data.name);
-    }catch(err){
-      btn.disabled=false;
-      msg.className='fmsg err';
-      msg.innerHTML='Could not send from here — email <a href="mailto:contact@mednixis.com" style="color:inherit">contact@mednixis.com</a>';
-    }
+    if(bad){ e.preventDefault(); msg.className='fmsg err';
+      msg.textContent='Name and a valid email are required'; return; }
+    msg.className='fmsg'; msg.textContent='Sending…';
   });
-
-  function showDone(name){
-    var wrap=form.parentNode;
-    var d=document.createElement('div'); d.className='done';
-    d.innerHTML='<h3></h3><p></p>';
-    d.querySelector('h3').textContent='Received'+(name?', '+name.split(' ')[0]:'')+'.';
-    d.querySelector('p').textContent='We reply within two working days. If it is useful in the meantime, the assessment takes three minutes and gives you a reading before we speak.';
-    var b=document.createElement('button'); b.className='btn-ghost'; b.style.marginTop='24px';
-    b.textContent='Start the assessment →';
-    b.addEventListener('click',function(){window.location.href='assessment.html';});
-    d.appendChild(b);
-    form.replaceWith(d);
-    wrap.querySelector('.no-pricing') && null;
-  }
 }
 function initTour(){
   var TOUR=[
@@ -359,9 +343,10 @@ function initNavigator(){
     if(!q.trim())return;
     add('You',q,'you');inp.value='';hist.push({role:'user',content:q});busy(true,'Reading');
     try{
-      var res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",
+      var res=await fetch(AI_ENDPOINT,{method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,system:SYSTEM,messages:hist})});
+        body:JSON.stringify({max_tokens:1000,system:SYSTEM,messages:hist})});
+      if(!res.ok) throw new Error('proxy '+res.status);
       var data=await res.json();
       var raw=(data.content||[]).filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join("\n");
       hist.push({role:'assistant',content:raw});
@@ -502,7 +487,7 @@ function renderQ(){
     b.querySelector('span:last-child').textContent=o[0];
     b.addEventListener('click',function(){
       answers[cur]=o[1];paintReadout();
-      if(cur<B.q.length-1){cur++;renderQ();}else{finishA();}
+      if(cur<B.q.length-1){cur++;renderQ();}else{askDetails();}
     });
     opts.appendChild(b);
   });
@@ -511,6 +496,100 @@ function renderQ(){
     d.classList.toggle('on',answers[i]!==null);d.classList.toggle('cur',i===cur);});
   paintReadout();
 }
+var LEAD={};
+function askDetails(){
+  var sec=document.getElementById('a-details');
+  if(!sec){ finishA(); return; }
+  document.getElementById('instrument').classList.remove('show');
+  sec.style.display='block';
+  sec.scrollIntoView({behavior:'smooth'});
+  if(sec.dataset.on) return; sec.dataset.on='1';
+
+  function collect(){
+    LEAD={
+      name:  (document.getElementById('d-name').value||'').trim(),
+      phone: (document.getElementById('d-phone').value||'').trim(),
+      email: (document.getElementById('d-email').value||'').trim(),
+      org:   (document.getElementById('d-org').value||'').trim()
+    };
+  }
+  document.getElementById('d-go').addEventListener('click',function(){
+    collect();
+    var m=document.getElementById('d-msg');
+    if(!LEAD.name || (!LEAD.phone && !LEAD.email)){
+      m.className='fmsg err';
+      m.textContent='Name, and either a phone or an email';
+      return;
+    }
+    sec.style.display='none'; finishA();
+  });
+  document.getElementById('d-skip').addEventListener('click',function(){
+    collect(); sec.style.display='none'; finishA();
+  });
+}
+
+/* send the completed assessment as a lead */
+function sendLead(scored,worst,overall,band){
+  var answers_text = B.q.map(function(q,i){
+    var ch=q.o.filter(function(o){return o[1]===answers[i];})[0];
+    return (i+1)+'. '+q.t+'  →  '+(ch?ch[0]:'—');
+  }).join('\n');
+  var dims = scored.map(function(s){return s.name+': '+s.pct+'%';}).join('  |  ');
+  var path = (B===BANKS.prelaunch) ? 'New clinic / pre-launch' : 'Operating practice';
+  var contacted = LEAD.name || LEAD.phone || LEAD.email;
+
+  /* a) email — readable table */
+  var payload={
+    '_subject':'Assessment '+(contacted?'lead':'completed')+' — '+(LEAD.name||'anonymous')+' — '+overall+'/100 — '+worst.name,
+    '_template':'table','_captcha':'false',
+    'Name': LEAD.name||'— not given —',
+    'Phone / WhatsApp': LEAD.phone||'— not given —',
+    'Email': LEAD.email||'— not given —',
+    'Clinic / organisation': LEAD.org||'—',
+    'Assessment path': path,
+    'Overall score': overall+' / 100  ('+band+')',
+    'Primary constraint': worst.name+'  →  recommend '+B.c[worst.id].div,
+    'Dimension scores': dims,
+    'Their answers': answers_text,
+    'Completed': new Date().toLocaleString('en-GB')
+  };
+  if(LEAD.email) payload['_replyto']=LEAD.email;
+  fetch(FORM_ENDPOINT,{method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(payload)}).catch(function(){});
+
+  /* b) Command Center — Supabase leads table */
+  if(LEAD_SUPABASE_URL && LEAD_SUPABASE_KEY){
+    var row={
+      source:'website_assessment',
+      name: LEAD.name||null,
+      phone: LEAD.phone||null,
+      email: LEAD.email||null,
+      organisation: LEAD.org||null,
+      assessment_path: path,
+      score: overall,
+      band: band,
+      constraint: worst.name,
+      recommended_division: B.c[worst.id].div,
+      dimension_scores: scored.reduce(function(o,s){o[s.id]=s.pct;return o;},{}),
+      answers: B.q.map(function(q,i){
+        var ch=q.o.filter(function(o){return o[1]===answers[i];})[0];
+        return {q:q.t, a:ch?ch[0]:null, points:answers[i]};
+      }),
+      status:'new',
+      created_at: new Date().toISOString()
+    };
+    fetch(LEAD_SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/'+LEAD_TABLE,{
+      method:'POST',
+      headers:{'Content-Type':'application/json',
+        'apikey':LEAD_SUPABASE_KEY,
+        'Authorization':'Bearer '+LEAD_SUPABASE_KEY,
+        'Prefer':'return=minimal'},
+      body:JSON.stringify(row)
+    }).catch(function(){});
+  }
+}
+
 function finishA(){
   var scored=B.dims.map(function(d){return {id:d.id,name:d.name,pct:dimScore(d.id).pct};});
   var worst=scored.slice().sort(function(a,b){return a.pct-b.pct;})[0];
@@ -543,6 +622,8 @@ function finishA(){
   (function count(){ n+=Math.max(1,Math.round((overall-n)/6)); if(n>overall)n=overall;
     onum.textContent=n; if(n<overall) requestAnimationFrame(count); })();
   setTimeout(function(){document.getElementById('ome').style.left=overall+'%';},120);
+
+  try{ sendLead(scored,worst,overall,band.name); }catch(e){ console.warn('lead not sent',e); }
 
   document.getElementById('rtag').textContent=B.rtag;
   document.getElementById('rtitle').innerHTML='Your primary constraint is <em>'+worst.name.toLowerCase()+'</em>.';
@@ -584,10 +665,11 @@ async function writeReading(scored,worst,C){
     " Write 3 to 4 sentences of continuous prose, no headings, no lists, no preamble. Address the reader as you."+
     " Explain what their weakest dimension causes in practice, and what a full assessment would examine first. Reply with the prose only.";
   try{
-    var res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",
+    var res=await fetch(AI_ENDPOINT,{method:"POST",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,system:SYSTEM,
+      body:JSON.stringify({max_tokens:1000,system:SYSTEM,
         messages:[{role:"user",content:"Dimension scores: "+lines+". Weakest: "+worst.name+".\n\nTheir answers:\n"+picked}]})});
+    if(!res.ok) throw new Error('proxy '+res.status);
     var data=await res.json();
     var txt=(data.content||[]).filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join("\n").trim();
     if(!txt) throw new Error('empty');

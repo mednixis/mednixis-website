@@ -68,19 +68,26 @@
       <p class="lede rv" style="margin-top:28px;max-width:50ch">Whether you are launching a clinic, restructuring a medical centre, or preparing a brand for expansion — tell us about the operation, the current challenges, and the growth goals.</p>
       <div class="no-pricing rv">Scope and engagement model are set after the assessment. We do not publish packages or pricing.</div>
 
-      <form class="cform rv" id="cform" novalidate>
+      <form class="cform rv" id="cform"
+            action="https://formsubmit.co/contact@mednixis.com" method="POST">
+        <input type="hidden" name="_subject" value="New consultation request — Mednixis">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://mednixis.com/contact.html?sent=1">
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
         <div class="frow">
-          <label class="f"><span>Your name</span><input name="name" type="text" autocomplete="name" required></label>
-          <label class="f"><span>Role</span><input name="role" type="text" placeholder="Owner, consultant, investor…" autocomplete="organization-title"></label>
+          <label class="f"><span>Your name</span><input name="Name" type="text" autocomplete="name" required></label>
+          <label class="f"><span>Role</span><input name="Role" type="text" placeholder="Owner, consultant, investor…" autocomplete="organization-title"></label>
         </div>
         <div class="frow">
-          <label class="f"><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
-          <label class="f"><span>Phone or WhatsApp</span><input name="phone" type="tel" autocomplete="tel"></label>
+          <label class="f"><span>Email</span><input name="Email" type="email" autocomplete="email" required></label>
+          <label class="f"><span>Phone or WhatsApp</span><input name="Phone" type="tel" autocomplete="tel"></label>
         </div>
         <div class="frow">
-          <label class="f"><span>Organisation</span><input name="organisation" type="text" autocomplete="organization"></label>
+          <label class="f"><span>Organisation</span><input name="Organisation" type="text" autocomplete="organization"></label>
           <label class="f"><span>Where are you now</span>
-            <select name="stage">
+            <select name="Stage">
               <option>Operating practice</option>
               <option>New clinic or project, pre-launch</option>
               <option>Multi-site group or hospital</option>
@@ -89,15 +96,20 @@
             </select></label>
         </div>
         <label class="f full"><span>What is bothering you most right now</span>
-          <textarea name="message" rows="4" placeholder="The operation, the current challenge, and what you want it to look like in a year."></textarea></label>
+          <textarea name="Message" rows="4" placeholder="The operation, the current challenge, and what you want it to look like in a year."></textarea></label>
 
-        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="fsend">
           <button class="btn" type="submit" id="fsubmit">Request a consultation</button>
           <span class="fmsg" id="fmsg"></span>
         </div>
         <div class="fnote">We reply within two working days. Nothing you send here is shared outside Mednixis.</div>
       </form>
+
+      <div class="done" id="csent" style="display:none">
+        <h3>Received.</h3>
+        <p>We reply within two working days. If it is useful in the meantime, the assessment takes three minutes and gives you a reading before we speak.</p>
+        <a class="btn-ghost" href="assessment.html" style="margin-top:24px">Start the assessment →</a>
+      </div>
       <div class="cinfo rv">
         <div><div class="k">Email</div><div class="v"><a href="mailto:contact@mednixis.com">contact@mednixis.com</a></div></div>
         <div><div class="k">Phone</div><div class="v"><a href="tel:+201119995307">+20 111 999 5307</a></div></div>
