@@ -53,7 +53,10 @@ var DEMO_SITE    = 'https://drmagedragab.com';
 var LIVE_SITE    = 'https://drmagedragab.com';
 /* FormSubmit endpoint — activate once by submitting
    the form and confirming the email it sends you.    */
-var FORM_ENDPOINT = 'https://formsubmit.co/ajax/contact@mednixis.com';
+/* FormSubmit — native POST everywhere, so emails arrive as the
+   branded table. Activate once by submitting the contact form
+   and clicking the confirmation email FormSubmit sends you.   */
+var FORM_TARGET = 'https://formsubmit.co/contact@mednixis.com';
 
 /* Assessment leads → Mednixis Command Center (Supabase).
    Fill these in and every completed assessment lands in your
@@ -89,7 +92,7 @@ function initForm(){
   var msg=document.getElementById('fmsg');
   form.addEventListener('submit',function(e){
     var bad=false;
-    [['Name',2],['Email',0]].forEach(function(p){
+    [['Full_Name',2],['Email',0]].forEach(function(p){
       var el=form.elements[p[0]], val=el.value.trim(), ok;
       ok = p[0]==='Email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) : val.length>p[1];
       el.classList.toggle('bad',!ok); if(!ok) bad=true;
@@ -538,25 +541,45 @@ function sendLead(scored,worst,overall,band){
   var path = (B===BANKS.prelaunch) ? 'New clinic / pre-launch' : 'Operating practice';
   var contacted = LEAD.name || LEAD.phone || LEAD.email;
 
-  /* a) email — readable table */
-  var payload={
-    '_subject':'Assessment '+(contacted?'lead':'completed')+' — '+(LEAD.name||'anonymous')+' — '+overall+'/100 — '+worst.name,
-    '_template':'table','_captcha':'false',
-    'Name': LEAD.name||'— not given —',
-    'Phone / WhatsApp': LEAD.phone||'— not given —',
+  /* a) email — posted through a hidden form so FormSubmit
+        renders its table template, exactly like the old site.
+        Targeting a hidden iframe keeps the page in place.      */
+  var frameName='fs_lead_frame';
+  if(!document.getElementById(frameName)){
+    var ifr=document.createElement('iframe');
+    ifr.name=frameName; ifr.id=frameName; ifr.style.display='none';
+    document.body.appendChild(ifr);
+  }
+  var f=document.createElement('form');
+  f.method='POST'; f.target=frameName;
+  f.action=FORM_TARGET;
+  f.style.display='none';
+
+  var fields={
+    '_subject':'Assessment '+(contacted?'Lead':'Completed')+' — '+(LEAD.name||'Anonymous')+' — '+overall+'/100',
+    '_template':'table',
+    '_captcha':'false',
+    'Full_Name': LEAD.name||'— not given —',
+    'Phone': LEAD.phone||'— not given —',
     'Email': LEAD.email||'— not given —',
-    'Clinic / organisation': LEAD.org||'—',
-    'Assessment path': path,
-    'Overall score': overall+' / 100  ('+band+')',
-    'Primary constraint': worst.name+'  →  recommend '+B.c[worst.id].div,
-    'Dimension scores': dims,
-    'Their answers': answers_text,
-    'Completed': new Date().toLocaleString('en-GB')
+    'Organization': LEAD.org||'—',
+    'Assessment_Path': path,
+    'Overall_Score': overall+' / 100',
+    'Band': band,
+    'Primary_Constraint': worst.name,
+    'Recommended_Division': B.c[worst.id].div,
+    'Dimension_Scores': dims,
+    'Their_Answers': answers_text,
+    'Completed_At': new Date().toLocaleString('en-GB')
   };
-  if(LEAD.email) payload['_replyto']=LEAD.email;
-  fetch(FORM_ENDPOINT,{method:'POST',
-    headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body:JSON.stringify(payload)}).catch(function(){});
+  Object.keys(fields).forEach(function(k){
+    var i=document.createElement('input');
+    i.type='hidden'; i.name=k; i.value=fields[k];
+    f.appendChild(i);
+  });
+  document.body.appendChild(f);
+  try{ f.submit(); }catch(e){ console.warn('lead email failed',e); }
+  setTimeout(function(){ f.remove(); },4000);
 
   /* b) Command Center — Supabase leads table */
   if(LEAD_SUPABASE_URL && LEAD_SUPABASE_KEY){

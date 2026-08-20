@@ -70,33 +70,67 @@
 
       <form class="cform rv" id="cform"
             action="https://formsubmit.co/contact@mednixis.com" method="POST">
-        <input type="hidden" name="_subject" value="New consultation request — Mednixis">
+        <input type="hidden" name="_subject" value="New Consultation Request — Mednixis">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://mednixis.com/contact.html?sent=1">
         <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <div class="frow">
-          <label class="f"><span>Your name</span><input name="Name" type="text" autocomplete="name" required></label>
-          <label class="f"><span>Role</span><input name="Role" type="text" placeholder="Owner, consultant, investor…" autocomplete="organization-title"></label>
+          <label class="f"><span>Full name</span><input name="Full_Name" type="text" autocomplete="name" required></label>
+          <label class="f"><span>Position</span><input name="Position" type="text" placeholder="Urologist, owner, investor…" autocomplete="organization-title"></label>
         </div>
         <div class="frow">
-          <label class="f"><span>Email</span><input name="Email" type="email" autocomplete="email" required></label>
-          <label class="f"><span>Phone or WhatsApp</span><input name="Phone" type="tel" autocomplete="tel"></label>
-        </div>
-        <div class="frow">
-          <label class="f"><span>Organisation</span><input name="Organisation" type="text" autocomplete="organization"></label>
-          <label class="f"><span>Where are you now</span>
-            <select name="Stage">
-              <option>Operating practice</option>
-              <option>New clinic or project, pre-launch</option>
-              <option>Multi-site group or hospital</option>
-              <option>Investor or operator</option>
-              <option>Something else</option>
+          <label class="f"><span>Organisation</span><input name="Organization" type="text" autocomplete="organization"></label>
+          <label class="f"><span>Type of practice</span>
+            <select name="Business_Type">
+              <option>Private clinic</option>
+              <option>Multi-site group</option>
+              <option>Hospital</option>
+              <option>Dental clinic</option>
+              <option>Dermatology / aesthetics</option>
+              <option>Urology / men's health practice</option>
+              <option>Diagnostic or radiology centre</option>
+              <option>Healthcare investor</option>
+              <option>Other</option>
             </select></label>
         </div>
-        <label class="f full"><span>What is bothering you most right now</span>
-          <textarea name="Message" rows="4" placeholder="The operation, the current challenge, and what you want it to look like in a year."></textarea></label>
+        <div class="frow">
+          <label class="f"><span>Location</span><input name="Location" type="text" placeholder="Cairo, Egypt"></label>
+          <label class="f"><span>Where you are now</span>
+            <select name="Business_Stage">
+              <option>Established &amp; operating</option>
+              <option>Pre-launch or under 6 months open</option>
+              <option>Expanding to new sites</option>
+              <option>Evaluating an acquisition</option>
+            </select></label>
+        </div>
+        <div class="frow">
+          <label class="f"><span>What you need</span>
+            <select name="Service_Needed">
+              <option>Not sure yet — start with an assessment</option>
+              <option>Healthcare Management</option>
+              <option>Branding &amp; Marketing</option>
+              <option>Research &amp; Strategy</option>
+              <option>Growth &amp; Digital Systems</option>
+              <option>Medical Events</option>
+              <option>The Clinic System</option>
+            </select></label>
+          <label class="f"><span>Preferred contact</span>
+            <select name="Preferred_Contact">
+              <option>WhatsApp</option>
+              <option>Phone call</option>
+              <option>Email</option>
+            </select></label>
+        </div>
+        <div class="frow">
+          <label class="f"><span>Phone or WhatsApp</span><input name="Phone" type="tel" autocomplete="tel"></label>
+          <label class="f"><span>Email</span><input name="Email" type="email" autocomplete="email" required></label>
+        </div>
+        <label class="f full"><span>Your current challenge</span>
+          <textarea name="Current_Challenge" rows="3" placeholder="The one thing costing you the most right now."></textarea></label>
+        <label class="f full"><span>Anything else</span>
+          <textarea name="Message" rows="3" placeholder="Optional."></textarea></label>
 
         <div class="fsend">
           <button class="btn" type="submit" id="fsubmit">Request a consultation</button>
