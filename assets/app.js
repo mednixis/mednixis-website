@@ -59,12 +59,12 @@ var LIVE_SITE    = 'https://drmagedragab.com';
 var FORM_TARGET = 'https://formsubmit.co/contact@mednixis.com';
 
 /* Assessment leads → Mednixis Command Center (Supabase).
-   Fill these in and every completed assessment lands in your
-   leads table. Leave blank and it emails only.
-   The table needs an INSERT policy for the anon role.        */
-var LEAD_SUPABASE_URL = '';   // e.g. 'https://xxxx.supabase.co'
-var LEAD_SUPABASE_KEY = '';   // anon public key
-var LEAD_TABLE        = 'leads';
+   Paste the PUBLISHABLE key below (Settings → API Keys →
+   Publishable key → copy). It starts with sb_publishable_
+   Never use the secret key here — it bypasses RLS.          */
+var LEAD_SUPABASE_URL = 'https://lblmaumusgovxciuyzbm.supabase.co';
+var LEAD_SUPABASE_KEY = 'sb_publishable_aRP6R1XUsIv7AgUun4EsCA_hd8xmLz8';
+var LEAD_TABLE        = 'website_leads';
 
 /* Serverless route for the navigator + written reading —
    see AI_ENDPOINT below. Deploy /api/claude.js. */
@@ -582,7 +582,7 @@ function sendLead(scored,worst,overall,band){
   setTimeout(function(){ f.remove(); },4000);
 
   /* b) Command Center — Supabase leads table */
-  if(LEAD_SUPABASE_URL && LEAD_SUPABASE_KEY){
+  if(LEAD_SUPABASE_URL && LEAD_SUPABASE_KEY && LEAD_SUPABASE_KEY.indexOf('PASTE_')!==0){
     var row={
       source:'website_assessment',
       name: LEAD.name||null,
@@ -592,7 +592,7 @@ function sendLead(scored,worst,overall,band){
       assessment_path: path,
       score: overall,
       band: band,
-      constraint: worst.name,
+      primary_constraint: worst.name,
       recommended_division: B.c[worst.id].div,
       dimension_scores: scored.reduce(function(o,s){o[s.id]=s.pct;return o;},{}),
       answers: B.q.map(function(q,i){
@@ -609,7 +609,10 @@ function sendLead(scored,worst,overall,band){
         'Authorization':'Bearer '+LEAD_SUPABASE_KEY,
         'Prefer':'return=minimal'},
       body:JSON.stringify(row)
-    }).catch(function(){});
+    }).then(function(r){
+      if(!r.ok) r.text().then(function(t){console.warn('Supabase lead rejected:',r.status,t);});
+      else console.log('Lead saved to Command Center');
+    }).catch(function(e){console.warn('Supabase unreachable:',e);});
   }
 }
 
